@@ -3,7 +3,7 @@ const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 
-const data = fs.readFileSync(path.join(__dirname, 'database.json'), 'utf8');
+const data = fs.readFileSync(path.join('./.git/database.json'), 'utf8');
 const conf = JSON.parse(data);
 const mysql = require('mysql2');
 
@@ -24,7 +24,7 @@ connection.connect(function(err) {
 });
 
 
-const config = require('./awsAuth.json');
+const config = require('./.git/awsAuth.json');
 
 const awsAccessKeyId = config.aws.accessKeyId;
 const awsSecretAccessKey = config.aws.secretAccessKey;
