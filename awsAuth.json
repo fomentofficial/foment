@@ -1,0 +1,8 @@
+{
+  "aws": {
+    "accessKeyId": "AKIAX3NL6HYETCK56BB4",
+    "secretAccessKey": "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",
+    "region": "ap-northeast-2",
+    "bucketName": "foment"
+  }
+}
