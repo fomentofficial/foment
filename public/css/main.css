@@ -1,0 +1,425 @@
+
+.Guide {
+    width: 100%;
+    height: 120px;
+    background: var(--ColorSurface);
+    border-bottom: 1px solid var(--ColorBorder10);
+}
+.main_contents{
+    gap: 48px;
+}
+
+.ContentsGrid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 120px 32px;
+    margin-bottom: 64px;
+}
+
+.GridItems {
+    width: 100%;
+    height: 796px;
+    background-color: var(--ColorBase);
+    border-radius: var(--BorderRadius-Lg);
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition-delay: 0.2s !important;
+}
+.Griditems.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.ImgArea {
+    width: 100%;
+    height: 796px;
+    object-fit: cover;
+    margin-bottom: 16px;
+    border-radius: var(--BorderRadius-Lg);
+    overflow: hidden;
+    position: relative;
+}
+
+.ItemImg {
+    width: 100%;
+    height: 100%;
+    transition: var(--transition);
+    object-fit: cover;
+}
+
+.ItemTitle {
+    font-size: var(--Text-SectionTitle);
+    color: var(--ColorTextPrimary);
+}
+
+.TitleArea {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.ItemDescription {
+    font-size: var(--Text-Paragraph);
+    color: var(--ColorTextTertiary);
+    margin-top: 8px;
+}
+
+.ItemBtns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: -20;
+    width: 100%;
+    opacity: 0;
+}
+
+.PreviewBtn {
+    font-family: 'pretendard', 'sans-serif';
+    cursor: pointer;
+    font-size: var(--Text-Button);
+    padding: 2px 20px;
+    line-height: 56px;
+    background: var(--ColorSurface);
+    border-radius: var(--BorderRadius-Md);
+    color: var(--ColorTextPrimary);
+    text-align: center;
+    height: 56px;
+    transition: var(--transition);
+}
+
+.ItemDimmedLayer{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #8e756199;
+    bottom: 0;
+    opacity: 0;
+}
+
+.ItemArrow{
+    position: absolute;
+    top: 32px;
+    right: 0px;
+    width: 32px;
+    height: 32px;
+    opacity: 0;
+}
+
+.BtnGroups{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    padding: 48px;
+}
+
+.MakeBtn {
+    cursor: pointer;
+    font-family: 'pretendard', 'sans-serif';
+    font-size: var(--Text-Button);
+    padding: 2px 20px;
+    line-height: 56px;
+    background: #372D25;
+    border-radius: var(--BorderRadius-Md);
+    color: var(--ColorSurface);
+    text-align: center;
+    height: 56px;
+    transition: var(--transition);
+}
+.MakeBtn:hover{
+    opacity: 0.8;
+}
+
+.MakeInvitation {
+    width: 100%;
+    text-decoration: none;
+}
+
+.BgDimmed {
+    display: none;
+    position: fixed;
+    backdrop-filter: saturate(180%) blur(7px);
+    background-color: rgb(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+}
+
+.BgDimmed.is-active {
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.InvitationPage {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 440px;
+    height: 800px;
+    background-color: white;
+    z-index: 10001;
+}
+
+.TopBanner{
+    width: 100%;
+    height: 36px;
+    background: var(--ColorTintGold);
+    display: flex;
+    justify-content: center;
+}
+.TopBannerInner{
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ColorSurface);
+    font-size: var(--Text-Supported);
+}
+
+.header{
+    position: sticky;
+    top: 0;
+}
+
+.PreviewIframe{
+    width: 375px;
+    height: 812px;
+    border: none;
+}
+
+.MainBannerSection{
+    width: 100%;
+    height: 428px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.LeftBanner{
+    background: var(--ColorBase);
+    flex: 2 0 0px;
+    height: 100%;
+    border-radius: var(--BorderRadius-Lg);
+}
+
+.RightBanner{
+    flex: 1 0 0px;
+    background: var(--ColorBase);
+    height: 100%;
+    border-radius: var(--BorderRadius-Lg);
+}
+
+.BackgroundBG{
+    position: fixed;
+    background: var(--ColorSurface);
+    z-index: -1;
+    height: 100vh;
+    width: 100%;
+}
+
+.GuideWrap{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    height: 110px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition-delay: 0.2s !important;
+}
+
+.GuideWrap.is-visible{
+    opacity: 1;
+    transform: translateY(0px);
+}
+.GuideItem{
+    width: 100%;
+    border-right: 1px solid var(--ColorBorderSolid);
+}
+
+.GuideItem:last-child{
+    border: none;
+}
+.GuideTitle{
+    font-size: var(--Text-SectionTitle);
+    color: var(--ColorTextPrimary);
+    text-align: center;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.GuideDes{
+    font-size: var(--Text-BodyText);
+    color: var(--ColorTextTertiary);
+    text-align: center;
+    line-height: 1.5;
+}
+
+.ItemPrice{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--Text-SectionTitle);
+}
+
+.OriginPrice{
+    color: var(--ColorTextSecondary);
+    text-decoration: line-through;
+}
+
+.PercentageBadge{
+    background-color: var(--ColorTintGold);
+    border-radius: 4px;
+    padding: 2px 8px;
+    color: var(--ColorSurface);
+}
+
+.DiscountPrice{
+    color: var(--ColorTintGold);
+    font-size: var(--Text-Subtitle);
+    font-weight: 700;
+}
+
+.SNSSection{
+    width: 100%;
+    background-color: #fcfcfc;
+}
+.SNSInfoWrap{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: var(--ColorTextPrimary);
+}
+.SNSInfoTitle{
+    font-size: var(--Text-Subtitle);
+    font-weight: 700;
+}
+.SNSInfoDes{
+    font-weight: 300;
+}
+
+.SNSWrap{
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 0 auto;
+    padding: 64px 20px 64px 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition-delay: 0.2s !important;
+}
+.SNSWrap.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.SNSItemGrid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.SNSItem{
+    position: relative;
+    width: 100%;
+    background: white;
+}
+
+.CompanyBlog, .CompanyInsta {
+    width: 20px;
+    height: 20px;
+}
+
+.CompanySNS{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.Banner{
+    position: relative;
+}
+.BannerInner{
+    position: absolute;
+    width: 100%;
+    background-color: #8e756199;
+    height: 100%;
+    border-radius: var(--BorderRadius-Lg);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.BannerDecoWrap{
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition-delay: 0.2s !important;
+}
+
+.BannerDecoWrap.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.BannerDecoWrap{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.LeftBannerImg, .RightBannerImg{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border-radius: var(--BorderRadius-Lg);
+}
+
+.BannerDeco{
+    font-family: 'Bilbo Swash Caps', cursive;
+    text-align: center;
+    color: var(--ColorSurface);
+    font-size: 52px;
+}
+
+.BannerDecoSub{
+    text-align: center;
+    color: var(--ColorSurface);
+    line-height: 1.5;
+}
+
+.InstaImg{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.InstaIDWrap{
+    color: var(--ColorSurface);
+    font-weight: 300;
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    display: flex;
+    gap: 8px;
+    z-index: 1;
+}
+
+.InstaDimmed{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(180deg,rgba(159,131,110,0) 0%,rgb(159,131,110) 100%);
+}

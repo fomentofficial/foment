@@ -1,0 +1,329 @@
+<html lang="kor">
+<head>
+    <head><%- include('partials/head.ejs') %></head>
+</head>
+
+<body>
+    <!-- <div class="BgDimmed">
+        <div class="InvitationPage">
+
+        </div>
+    </div> -->
+    <div class="PreviewArea">
+        <div class="PreviewPage"></div>
+        <div class="BgDimmed" id="PreviewDimmed">
+            <iframe class="PreviewIframe" src="../data/123zxczxc.html"></iframe>
+            <button class="close-button">
+                <img src="../Resource/assets/Icon/Del.svg" alt="">
+            </button>
+        </div>
+    </div>
+    
+    <!-- 배경 -->
+    <div class="BackgroundBG"></div>
+    <!-- 헤더 -->
+    <div class="TopBanner">
+        <div class="TopBannerInner">네이버 스토어 리뷰 등록시 20% 할인쿠폰 / 주문 즉시 바로 사용 가능</div>
+    </div>
+    <%- include('partials/header.ejs') %>
+
+    <!-- 컨텐츠 영역 -->
+    <div class="main_contents">
+
+        <!-- 메인배너 2종 -->
+        <div class="MainBannerSection">
+            <div class="Banner">
+                <div class="BannerInner">
+                    <div class="BannerDecoWrap">
+                        <div class="BannerDeco">For Your Special Moments</div>
+                        <div class="BannerDecoSub">당신의 가장 아름다운 순간을 담은 모바일 청첩장</div>
+                    </div>
+                </div>
+                <img class="LeftBannerImg" src="../Resource/mainasset/Banner_1.jpg" alt="">
+            </div>
+            <div class="Banner">
+                <div class="BannerInner">
+                    <div class="BannerDecoWrap">
+                        <div class="BannerDeco">
+                            Review Event
+                        </div>
+                        <div class="BannerDecoSub">
+                            스토어에 청첩장 후기만 작성하면<br>네이버 포인트로 50% 환급
+                        </div>
+                    </div>
+                </div>
+                <img class="RightBannerImg" src="../Resource/mainasset/Banner_2.jpg" alt="">
+            </div>
+        </div>
+
+        <!-- 가이드 -->
+        <div class="GuideWrap">
+            <div class="GuideItem">
+                <div class="GuideTitle">
+                    선 무료제작 후 결제
+                </div>
+                <div class="GuideDes">
+                    시안을 무료로, 무제한으로 제작해보고<br>마음에 들면 결제해주세요
+                </div>
+            </div>
+            <div class="GuideItem">
+                <div class="GuideTitle">
+                    디자인 선택, 만들기, 끝!
+                </div>
+                <div class="GuideDes">
+                    마음에 드는 디자인을 선택하고,<br>정보만 입력하면 저절로 생성되는 모바일 청첩장
+                </div>
+            </div>
+            <div class="GuideItem">
+                <div class="GuideTitle">
+                    후기만 입력하면 50% 할인되는 가격
+                </div>
+                <div class="GuideDes">
+                    스토어에 청첩장 후기만 작성하면<br>네이버 포인트로 50% 환급
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 컨텐츠 영역 -->
+        <div class="ContentsGrid">
+
+            <!-- 컨텐츠 아이템 -->
+            <div class="GridItems" id="InvitItem1">
+                <div class="ImgArea">
+                    <a class="InvitationItem" href="detail.html">
+                        <img class="ItemImg" src="../Resource/mainasset/Item_Sample1.png" alt="">
+                    </a>
+                    <div class="ItemDimmedLayer"></div>
+                    <div class="ItemArrow">
+                        <img src="../Resource/assets/Icon/itemarrow.svg" alt="">
+                    </div>
+                    <div class="ItemBtns">
+                        <div class="BtnGroups">
+                            <div class="PreviewBtn" id="template1">미리보기</div>
+                            <a class="MakeInvitation" href="/detail">
+                                <div class="MakeBtn">제작하기</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="TitleArea">
+                    <div class="TitleWrap">
+                        <a class="MakeInvitation" href="/detail">
+                            <div class="ItemTitle">심플이즈더베스트</div>
+                            <div class="ItemDescription">Simple</div>
+                        </a>
+                    </div>
+                    <div class="ItemPrice">
+                        <div class="OriginPrice">21,900</div>
+                        <div class="PercentageBadge">20%</div>
+                        <div class="DiscountPrice">12,900 won</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 컨텐츠 아이템 -->
+            <div class="GridItems" id="InvitItem1">
+                <div class="ImgArea">
+                    <a class="InvitationItem" href="detail.html">
+                        <img class="ItemImg" src="../Resource/mainasset/Item_Sample1.png" alt="">
+                    </a>
+                    <div class="ItemDimmedLayer"></div>
+                    <div class="ItemArrow">
+                        <img src="../Resource/assets/Icon/itemarrow.svg" alt="">
+                    </div>
+                    <div class="ItemBtns">
+                        <div class="BtnGroups">
+                            <div class="PreviewBtn" id="template1">미리보기</div>
+                            <a class="MakeInvitation" href="/detail">
+                                <div class="MakeBtn">제작하기</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="TitleArea">
+                    <div class="TitleWrap">
+                        <a class="MakeInvitation" href="/detail">
+                            <div class="ItemTitle">심플이즈더베스트</div>
+                            <div class="ItemDescription">Simple</div>
+                        </a>
+                    </div>
+                    <div class="ItemPrice">
+                        <div class="OriginPrice">21,900</div>
+                        <div class="PercentageBadge">20%</div>
+                        <div class="DiscountPrice">12,900 won</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 컨텐츠 아이템 -->
+            <div class="GridItems" id="InvitItem1">
+                <div class="ImgArea">
+                    <a class="InvitationItem" href="detail.html">
+                        <img class="ItemImg" src="../Resource/mainasset/Item_Sample1.png" alt="">
+                    </a>
+                    <div class="ItemDimmedLayer"></div>
+                    <div class="ItemArrow">
+                        <img src="../Resource/assets/Icon/itemarrow.svg" alt="">
+                    </div>
+                    <div class="ItemBtns">
+                        <div class="BtnGroups">
+                            <div class="PreviewBtn" id="template1">미리보기</div>
+                            <a class="MakeInvitation" href="/detail">
+                                <div class="MakeBtn">제작하기</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="TitleArea">
+                    <div class="TitleWrap">
+                        <a class="MakeInvitation" href="/detail">
+                            <div class="ItemTitle">심플이즈더베스트</div>
+                            <div class="ItemDescription">Simple</div>
+                        </a>
+                    </div>
+                    <div class="ItemPrice">
+                        <div class="OriginPrice">21,900</div>
+                        <div class="PercentageBadge">20%</div>
+                        <div class="DiscountPrice">12,900 won</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 컨텐츠 아이템 -->
+            <div class="GridItems" id="InvitItem1">
+                <div class="ImgArea">
+                    <a class="InvitationItem" href="detail.html">
+                        <img class="ItemImg" src="../Resource/mainasset/Item_Sample1.png" alt="">
+                    </a>
+                    <div class="ItemDimmedLayer"></div>
+                    <div class="ItemArrow">
+                        <img src="../Resource/assets/Icon/itemarrow.svg" alt="">
+                    </div>
+                    <div class="ItemBtns">
+                        <div class="BtnGroups">
+                            <div class="PreviewBtn" id="template1">미리보기</div>
+                            <a class="MakeInvitation" href="/detail">
+                                <div class="MakeBtn">제작하기</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="TitleArea">
+                    <div class="TitleWrap">
+                        <a class="MakeInvitation" href="/detail">
+                            <div class="ItemTitle">심플이즈더베스트</div>
+                            <div class="ItemDescription">Simple</div>
+                        </a>
+                    </div>
+                    <div class="ItemPrice">
+                        <div class="OriginPrice">21,900</div>
+                        <div class="PercentageBadge">20%</div>
+                        <div class="DiscountPrice">12,900 won</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="SNSSection">
+        <div class="SNSWrap">
+            <div class="SNSInfoWrap">
+                <div class="SNSInfoTitle">포먼트에서 제작된 모바일 청첩장들을 확인하세요</div>
+                <div class="SNSInfoDes">인스타그램 @foment_official 에서 고객님들의 생생한 모바일 청첩장을 확인하실 수 있어요</div>
+            </div>
+            <div class="SNSItemGrid">
+                <a class="SNSItem" href="#">
+                    <div class="InstaIDWrap">
+                        <div class="InstaLogo">
+                            <img src="../Resource/assets/Icon/Instagram_white.svg" alt="">
+                        </div>
+                        <div class="InstaID">foment_official</div>
+                    </div>
+                    <div class="InstaDimmed"></div>
+                    <img class="InstaImg"  src="../Resource/mainasset/instagram/instaimg1.jpg" alt="">
+                </a>
+
+                <a class="SNSItem" href="#">
+                    <div class="InstaIDWrap">
+                        <div class="InstaLogo">
+                            <img src="../Resource/assets/Icon/Instagram_white.svg" alt="">
+                        </div>
+                        <div class="InstaID">foment_official</div>
+                    </div>
+                    <div class="InstaDimmed"></div>
+                    <img class="InstaImg"  src="../Resource/mainasset/instagram/instaimg2.jpg" alt="">
+                </a>
+
+                <a class="SNSItem" href="#">
+                    <div class="InstaIDWrap">
+                        <div class="InstaLogo">
+                            <img src="../Resource/assets/Icon/Instagram_white.svg" alt="">
+                        </div>
+                        <div class="InstaID">foment_official</div>
+                    </div>
+                    <div class="InstaDimmed"></div>
+                    <img class="InstaImg"  src="../Resource/mainasset/instagram/instaimg3.jpg" alt="">
+                </a>
+
+                <a class="SNSItem" href="#">
+                    <div class="InstaIDWrap">
+                        <div class="InstaLogo">
+                            <img src="../Resource/assets/Icon/Instagram_white.svg" alt="">
+                        </div>
+                        <div class="InstaID">foment_official</div>
+                    </div>
+                    <div class="InstaDimmed"></div>
+                    <img class="InstaImg"  src="../Resource/mainasset/instagram/instaimg4.jpg" alt="">
+                </a>
+
+                <a class="SNSItem" href="#">
+                    <div class="InstaIDWrap">
+                        <div class="InstaLogo">
+                            <img src="../Resource/assets/Icon/Instagram_white.svg" alt="">
+                        </div>
+                        <div class="InstaID">foment_official</div>
+                    </div>
+                    <div class="InstaDimmed"></div>
+                    <img class="InstaImg"  src="../Resource/mainasset/instagram/instaimg5.jpg" alt="">
+                </a>
+
+                <a class="SNSItem" href="#">
+                    <div class="InstaIDWrap">
+                        <div class="InstaLogo">
+                            <img src="../Resource/assets/Icon/Instagram_white.svg" alt="">
+                        </div>
+                        <div class="InstaID">foment_official</div>
+                    </div>
+                    <div class="InstaDimmed"></div>
+                    <img class="InstaImg"  src="../Resource/mainasset/instagram/instaimg6.jpg" alt="">
+                </a>
+
+                <a class="SNSItem" href="#">
+                    <div class="InstaIDWrap">
+                        <div class="InstaLogo">
+                            <img src="../Resource/assets/Icon/Instagram_white.svg" alt="">
+                        </div>
+                        <div class="InstaID">foment_official</div>
+                    </div>
+                    <div class="InstaDimmed"></div>
+                    <img class="InstaImg"  src="../Resource/mainasset/instagram/instaimg7.jpg" alt="">
+                </a>
+
+                <a class="SNSItem" href="#">
+                    <div class="InstaIDWrap">
+                        <div class="InstaLogo">
+                            <img src="../Resource/assets/Icon/Instagram_white.svg" alt="">
+                        </div>
+                        <div class="InstaID">foment_official</div>
+                    </div>
+                    <div class="InstaDimmed"></div>
+                    <img class="InstaImg"  src="../Resource/mainasset/instagram/instaimg8.jpg" alt="">
+                </a>
+                
+            </div>
+        </div>
+    </div>
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>

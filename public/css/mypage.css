@@ -1,0 +1,127 @@
+.InvitationCautionInfo{
+    padding: 24px;
+    background: var(--ColorSurface);
+    border-radius: var(--BorderRadius-Md);
+    border: 1px solid var(--ColorBorderSolid);
+}
+.CautionTitle{
+    font-size: var(--Text-SectionTitle);
+    color: var(--ColorTextPrimary);
+}
+
+.CautionInfo{
+    color: var(--ColorTextSecondary);
+    line-height: 1.6;
+    font-size: var(--Text-Paragraph);
+    list-style: none;
+    padding: 0;
+}
+
+.HistoryWrap{
+    background: var(--ColorSurface);
+    border-radius: var(--BorderRadius-Md);
+    border: 1px solid var(--ColorBorderSolid);
+    padding: 16px 24px;
+}
+.HistoryItem{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.HistoryItemWrapHead{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+.InviteTypeTItle{
+    font-size: var(--Text-Title);
+    color: var(--ColorTextPrimary);
+    margin-bottom: 8px;
+}
+.HistoryImg{
+    width: 320px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: var(--BorderRadius-Xs);
+}
+.DelDate, .CreateDate{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    font-size: var(--Text-Supported);
+    color: var(--ColorTextTertiary);
+}
+
+.sectionline{
+    width: 1px;
+    height: 8px;
+    background: var(--ColorTextTertiary);
+  }
+  
+.InviteURLWrap{
+    padding: 8px 16px;
+    border: 1px solid var(--ColorBorderSolid);
+    border-radius: var(--BorderRadius-Xs);
+    background: var(--ColorBrand);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+.InviteInfoWrap{
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 160px;
+    justify-content: space-between;
+}
+.InviteURLInfo{
+    font-size: var(--Text-Button);
+}
+.InviteURLCopy{
+    cursor: pointer;
+    padding: 4px 12px;
+    border-radius: var(--BorderRadius-Xs);
+    font-size: var(--Text-Button);
+    background: var(--ColorSurface);
+}
+.InfoTitleHead{
+    display: flex;
+    justify-content: space-between;
+}
+.HistoryItemWrapTail{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.TypeInfo{
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+}
+#BtnInviteView{
+    background: var(--ColorTintBlack);
+    color: var(--ColorSurface);
+}
+#HistoryWrapNull{
+    display: none;
+    padding: 48px;
+    background: none;
+    border: none;
+}
+#HistoryNull{
+    justify-content: center;
+    font-size: var(--Text-Paragraph);
+    color: var(--ColorTextPrimary);
+}
+
+.HistorySection{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 120px;
+}

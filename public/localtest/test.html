@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/detail.css">
+  <script src="https://code.jquery.com/jquery-3.6.2.js" integrity="sha256-pkn2CUZmheSeyssYw3vMp1+xyub4m+e+QK4sQskvuo4=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.3.0/bootbox.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
+  <style>
+    .fadein {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    
+    .fadein.is-visible {
+      opacity: 1;
+    }
+    
+  </style>
+  <title>Document</title>
+</head>
+<body>
+
+  <div class="fadein">
+    <h1>Welcome!</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus hendrerit orci at quam fringilla, sed venenatis augue pharetra.</p>
+  </div>
+  
+  
+   <script type="text/javascript">
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio > 0) {
+          entry.target.classList.add('is-visible');
+        } else {
+          entry.target.classList.remove('is-visible');
+        }
+      });
+    });
+    
+    const fadeinElements = document.querySelectorAll('.fadein');
+    fadeinElements.forEach(element => {
+      observer.observe(element);
+    });
+    
+
+    
+    
+    
+
+  </script>
+    
+
+</body>
+</html>
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"
+><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>포먼트 청첩../../title>
+  <link rel="stylesheet" href="../../c../../common.css">
+  <link rel="stylesheet" href="../../c../../detail.css">
+  <link rel="stylesheet" href="../../c../../main.css">
+  <link rel="stylesheet" href="../../c../../font.css">
+  <link rel="preconnect" href="http../..//fonts.googleapis.com">
+  <link rel="preconnect" href="http../..//fonts.gstatic.com" crossorigin="">
+  <link href="http../..//fonts.googleapis.c../../css2?family=Cormorant+Garamond:wght@300;500&amp;display=swap" rel="stylesheet"><script type="te../../javascript" src="../../dapi.kakao.c../../../../ma../../sdk.js?appkey=aead73005a77433d268644553628caba&amp;libraries=services"../../script><script src="../../http../../t1.kakaocdn.n../../kakao_js_s../../2.1../../kakao.min.js" integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"../../script><script src="../../t1.daumcdn.n../../mapjsa../../bund../../postco../../pr../../postcode.v2.js"../../script><script script="" src="../../http../../apis.openapi.sk.c../../tm../../vectorjs?version=1&amp;appKey=x1DDg2svJkaH73F7kDOD11W4C0siglCT1iCJ4tNu"../../script><script src="../../http../../code.jquery.c../../jquery-3.6.2.js" integrity="sha256-pkn2CUZmheSeyssYw3vMp1+xyub4m+e+QK4sQskvuo4=" crossorigin="anonymous"../../script><script type="te../../javascript" src="../../htt../../ajax.googleapis.c../../aj../../li../../jque../../1.11../../jquery.min.js"../../script><script src="../../http../../code.jquery.c../../../../1.12../../jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"../../script><script src="../../http../../fengyuanchen.github.../../cropp../../../../cropper.js"../../script><script src="../../http../../unpkg.c../../axi../../di../../axios.min.js"../../script><script type="te../../javascript" src="../../http../../static.nid.naver.c../../../../naverLogin_implicit-1.0.3.js" charset="utf-8"../../script><script src="../../http../../static.nid.naver.c../../../../naveridlogin_js_sdk_2.0.2.js" charset="utf-8"../../script><script src="../../../../../../common.js"../../script>

@@ -1,0 +1,37 @@
+{
+  "name": "foment-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ejslint": "ejslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fomentofficial/foment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fomentofficial/foment/issues"
+  },
+  "homepage": "https://github.com/fomentofficial/foment#readme",
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-plugin-ejs": "^0.0.2",
+    "eslint-plugin-react": "^7.32.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1351.0",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.0.3",
+    "ejs-mate": "^4.0.0",
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.2.0",
+    "uuid": "^9.0.0"
+  }
+}

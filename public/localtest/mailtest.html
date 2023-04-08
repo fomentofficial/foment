@@ -1,0 +1,19 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="mailtest.js"></script>
+</head>
+<body>
+	<div>
+		<form id="gform" method="POST" onsubmit="submitForm()">
+    			<input id="message" name="message" type="text" >
+			<br/>
+  			<input id="attachments" name="attachments"  type="file"  onchange="fileChange()" multiple>
+			<br/>
+   			<input id="date" name="date" type="date" >
+			<br/>
+    			<input type="submit" value="전송">
+		</form>
+	</div>
+</body>
+</html>
