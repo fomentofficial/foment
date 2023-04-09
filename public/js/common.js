@@ -1973,8 +1973,8 @@ async function saveInvitation() {
     console.log('GalleryType Data:' + JSON.stringify(GalleryTypeData));
 
     // └─ 이미지그룹 JSON
-    const ImgGroup = document.querySelector('.multiimg');
-    const ImgGroupElements = document.querySelectorAll('.img-thumb');
+
+    const ImgGroupElements = document.querySelectorAll('.grid-thumb');
     const ImgGroupElementData = Array.from(ImgGroupElements).map(element => element.src);
     console.log('ImgGroup Data:' + JSON.stringify(ImgGroupElementData));
 
@@ -2162,13 +2162,13 @@ document.addEventListener('DOMContentLoaded', () => {
           function saveInvitationWithImages(imageUrls) {
             const sideContents = document.querySelector('.side_contents').outerHTML;
             const invURL = document.getElementById('InputURL').value;
-          
+            
             const requestData = {
               url: invURL,
               sideContents: sideContents,
               imageUrls: imageUrls // pass the image urls to the server
             };
-          
+            
             fetch('/api_SaveInvitation', {
               method: 'POST',
               headers: {
@@ -2177,6 +2177,13 @@ document.addEventListener('DOMContentLoaded', () => {
               body: JSON.stringify(requestData)
             }).then(response => {
               console.log(response);
+          
+              // 이미지 표시하기
+              const imgElements = document.querySelectorAll('.grid-thumb');
+              for (let i = 0; i < imgElements.length; i++) {
+                const imgElement = imgElements[i];
+                imgElement.src = imageUrls[i];
+              }
           
               saveInvitation();
               toggleElements();
@@ -2201,7 +2208,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }).catch(error => {
               console.log(error);
             });
-          }
+          }          
           
         });
       }

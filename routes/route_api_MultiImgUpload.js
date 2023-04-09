@@ -39,7 +39,7 @@ router.post('/', upload.array('images'), async (req, res) => {
     // fileNames 배열을 활용하여 이미지 URL을 생성합니다.
     const bucketName = dbConfig.awsBucketName;
     const region = dbConfig.awsRegion;
-    const fileUrls = fileNames.map(fileName => `https://${bucketName}.s3.${region}.amazonaws.com/${fileName}`);
+    const fileUrls = fileNames.map(fileName => `https://${bucketName}.s3.${region}.amazonaws.com/foment_img_storage/${fileName}`);
 
     // 응답으로 fileUrls 배열을 반환합니다.
     res.json({ success: true, message: '이미지가 성공적으로 업로드되었습니다.', fileUrls });
