@@ -796,6 +796,7 @@ window.onload = function () {
     }
 
 
+
     // 버튼 눌러 다중이미지 업로드
     $('body').on('change', '.user_picked_files', function () {
 
@@ -2109,110 +2110,170 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (saveButton) {
         saveButton.addEventListener('click', () => {
-          let inputURL = document.getElementById('InputURL');
-          let urlconfirm = inputURL.value;
-      
-          let fileArray = [];
-          let imageUrls = []; // array to hold the image urls returned by the server
-      
-          for (let i = 0; i < files.length; i++) {
-            var file = files[i];
-            fileArray.push(file);
-      
-            // 이미지 타입 매칭 후 노출
-            if (file.type.match('image.*')) {
-              // 이미지 정보를 FormData에 추가
-              var formData = new FormData();
-              formData.append("images", file);
-      
-              // XMLHttpRequest 객체를 생성하여 FormData를 서버로 전송
-              var xhr = new XMLHttpRequest();
-              xhr.open("POST", "api_MultiImgUpload");
-              xhr.send(formData);
-      
-              xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                  if (xhr.status === 200) {
-                    // 서버로부터의 응답 처리
-                    console.log(xhr.responseText);
-                    let resURL = xhr.responseText
-                    let AWSresURL = JSON.parse(resURL).fileUrls;
-                    console.log(AWSresURL);
-                    imageUrls.push(...AWSresURL); // add the urls to the imageUrls array
-                    if (imageUrls.length === files.length) { // check if all images have been uploaded
-                      saveInvitationWithImages(imageUrls);
-                    }
-                  } else {
-                    console.log('There was a problem with the request.');
-                  }
-                }
-              };
-      
-            } else {
-              alert('the file ' + file.name + ' is not an image<br/>');
-            }
-          }
-      
-          if (!urlconfirm) {
-            alert('미입력된 정보를 모두 입력해주세요');
-            return;
-          }
-          
-          // function to save invitation with images
-          function saveInvitationWithImages(imageUrls) {
-            const sideContents = document.querySelector('.side_contents').outerHTML;
-            const invURL = document.getElementById('InputURL').value;
-            
-            const requestData = {
-              url: invURL,
-              sideContents: sideContents,
-              imageUrls: imageUrls // pass the image urls to the server
-            };
-            
-            fetch('/api_SaveInvitation', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json;charset=UTF-8'
-              },
-              body: JSON.stringify(requestData)
-            }).then(response => {
-              console.log(response);
-          
-              // 이미지 표시하기
-              const imgElements = document.querySelectorAll('.grid-thumb');
-              for (let i = 0; i < imgElements.length; i++) {
-                const imgElement = imgElements[i];
-                imgElement.src = imageUrls[i];
-              }
-          
-              saveInvitation();
-              toggleElements();
-              let templateURL = `http://localhost:3000/data/${invURL}_mypage.html`
-          
-              let savedViewButton = document.getElementById('SavedView');
-              savedViewButton.addEventListener('click', () => {
-                if (templateURL) {
-                  window.open(templateURL, '_blank');
+            let inputURL = document.getElementById('InputURL');
+            let urlconfirm = inputURL.value;
+
+            let fileArray = [];
+            let imageUrls = []; // array to hold the image urls returned by the server
+
+            for (let i = 0; i < files.length; i++) {
+                var file = files[i];
+                fileArray.push(file);
+
+                // 이미지 타입 매칭 후 노출
+                if (file.type.match('image.*')) {
+                    // 이미지 정보를 FormData에 추가
+                    var formData = new FormData();
+                    formData.append("images", file);
+
+                    // 이미지 압축
+                    compressImage(file, function (compressedFile) {
+                        formData.set('images', compressedFile, compressedFile.name);
+
+                        // XMLHttpRequest 객체를 생성하여 FormData를 서버로 전송
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "api_MultiImgUpload");
+                        xhr.send(formData);
+
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === XMLHttpRequest.DONE) {
+                                if (xhr.status === 200) {
+                                    // 서버로부터의 응답 처리
+                                    console.log(xhr.responseText);
+                                    let resURL = xhr.responseText
+                                    let AWSresURL = JSON.parse(resURL).fileUrls;
+                                    console.log(AWSresURL);
+                                    imageUrls.push(...AWSresURL); // add the urls to the imageUrls array
+                                    if (imageUrls.length === files.length) { // check if all images have been uploaded
+                                        saveInvitationWithImages(imageUrls);
+                                    }
+                                } else {
+                                    console.log('There was a problem with the request.');
+                                }
+                            }
+                        };
+
+                    });
                 } else {
-                  console.log('실패');
+                    alert('the file ' + file.name + ' is not an image<br/>');
                 }
-              });
-              if (dimmed) {
-                dimmed.addEventListener('click', toggleElements);
-                scrollPreventEvent.style.overflowY = 'hidden';
-              }
-              if (deleteBtn) {
-                deleteBtn.addEventListener('click', toggleElements);
-                scrollPreventEvent.style.overflowY = 'hidden';
-              }
-            }).catch(error => {
-              console.log(error);
+            }
+
+                // 이미지를 압축하는 함수
+                function compressImage(file, callback) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (event) {
+                        var img = new Image();
+                        img.src = event.target.result;
+                        img.onload = function () {
+                            var canvas = document.createElement('canvas');
+                            var ctx = canvas.getContext('2d');
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                            var MAX_WIDTH = 800;
+                            var MAX_HEIGHT = 600;
+                            var width = img.width;
+                            var height = img.height;
+
+                            if (width > height) {
+                                if (width > MAX_WIDTH) {
+                                    height *= MAX_WIDTH / width;
+                                    width = MAX_WIDTH;
+                                }
+                            } else {
+                                if (height > MAX_HEIGHT) {
+                                    width *= MAX_HEIGHT / height;
+                                    height = MAX_HEIGHT;
+                                }
+                            }
+                            canvas.width = width;
+                            canvas.height = height;
+                            var ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+
+                            canvas.toBlob(function (blob) {
+                                var compressedFile = new File([blob], file.name, { type: file.type, lastModified: Date.now() });
+                                callback(compressedFile);
+                            }, file.type, 0.9);
+                        };
+                    };
+                }
+
+
+
+                // function to save invitation with images
+                function saveInvitationWithImages(imageUrls) {
+                    const sideContents = document.querySelector('.side_contents').outerHTML;
+                    // const updatedSideContents = sideContents.innerHTML;
+                    const invURL = document.getElementById('InputURL').value;
+
+                    const requestData = {
+                        url: invURL,
+                        sideContents: sideContents,
+                        imageUrls: imageUrls // pass the image urls to the server
+                    };
+
+
+                    fetch('/api_SaveInvitation', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=UTF-8'
+                        },
+                        body: JSON.stringify(requestData)
+                    }).then(response => {
+                        console.log(response);
+
+                        // 이미지 표시하기
+                        const imgElements = document.querySelectorAll('.grid-thumb');
+                        for (let i = 0; i < imgElements.length; i++) {
+                            const imgElement = imgElements[i];
+                            imgElement.src = imageUrls[i];
+                        }
+
+                        // // 이미지 URL로 대체하기
+                        // for (let i = 0; i < imgElements.length; i++) {
+                        //     updatedSideContents = updatedSideContents.replace(
+                        //         `"<li class = 'grid-item' file = '" + file.name + "'>" +
+                        //         "<img class = 'grid-thumb' id = 'appendimg' src = '" + e.target.result + "' />" +
+                        //         "</li>"`, 
+                        //         `
+                        //         "<li class = 'grid-item' file = '" + file.name + "'>" +
+                        //         "<img class = 'grid-thumb' id = 'appendimg' src='${imageUrls[i]}' />" +
+                        //         "</li>"`);
+                        // }
+
+
+                        saveInvitation();
+                        toggleElements();
+                        let templateURL = `http://localhost:3000/data/${invURL}_mypage.html`
+
+                        let savedViewButton = document.getElementById('SavedView');
+                        savedViewButton.addEventListener('click', () => {
+                            if (templateURL) {
+                                window.open(templateURL, '_blank');
+                            } else {
+                                console.log('실패');
+                            }
+                        });
+                        if (dimmed) {
+                            dimmed.addEventListener('click', toggleElements);
+                            scrollPreventEvent.style.overflowY = 'hidden';
+                        }
+                        if (deleteBtn) {
+                            deleteBtn.addEventListener('click', toggleElements);
+                            scrollPreventEvent.style.overflowY = 'hidden';
+                        }
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                }
+
             });
-          }          
-          
-        });
-      }
-      
+    }
+
 
     let MYPreview = document.getElementById('BtnInviteView');
     let URLINFO = document.getElementById('InviteURLInfo');

@@ -6,6 +6,11 @@ const ejsMate = require('ejs-mate');
 app.engine('ejs', ejsMate);
 
 app.set('view engine', 'ejs');
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+
 
 // EJS 파일이 저장된 디렉토리 설정
 app.set('views', path.join(__dirname, 'public', 'views'));
