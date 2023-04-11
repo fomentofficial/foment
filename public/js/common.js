@@ -552,7 +552,18 @@ window.onload = function () {
             alert('선택하신 이미지로 대표이미지가 변경되었습니다.');
             $('.photo_them').css("display", "none");
             $('#complete').css("display", "none");
+        
+            var reader = new FileReader();
+            var file = $('#photoBtn')[0].files[0];
+            console.log(file);
+            reader.onload = function (event) {
+                var dataURL = event.target.result;
+                // 읽어들인 파일 내용을 이용해 필요한 작업을 수행
+                console.log(dataURL);
+            };
+            reader.readAsDataURL(file);
         });
+        
     });
 
     // 클래스 영역 순서바꾸기
@@ -629,7 +640,6 @@ window.onload = function () {
             imageOverlay.style.display = "none";
         });
     }
-
 
 
     // 다중업로드한 사진 순서 바꾸기 이동
@@ -798,63 +808,63 @@ window.onload = function () {
 
 
     // 버튼 눌러 다중이미지 업로드
-    $('body').on('change', '.user_picked_files', function () {
+    $('body').on('change', '.user_picked_files', function (event) {
 
-        var files = this.files;
-        files = Array.from(event.dataTransfer.files);
-        var i = 0;
+        files = Array.from(event.target.files);
+        let i = 0;
 
         for (i = 0; i < files.length; i++) {
-                var readImg = new FileReader();
-                var file = files[i];
-                console.log(file);
+            let readImg = new FileReader();
+            let file = files[i];
+            console.log(file);
 
-                // 이미지 삭제
-                $('body').on('click', 'a.cvf_delete_image', deleteImage);
+            // 이미지 삭제
+            $('body').on('click', 'a.cvf_delete_image', deleteImage);
 
-                // 이미지 갯수 확인 후 최대갯수 안내팝업 노출
-                img_count = files.length;
-                if (img_count > 20) {
-                    alert("이미지는 20개까지 첨부하실 수 있습니다.");
-                    img_count = img_count - files.length;
-                    return;
-                }
-
-                // 이미지 타입 매칭 후 노출
-                if (file.type.match('image.*')) {
-                    storedFiles.push(file);
-                    readImg.onload = (function (file) {
-                        return function (e) {
-                            $('.GalleryTitleArea').show();
-                            $('.cvf_uploaded_files').append(
-                                "<li class='multiimg' id='multiimg_" + file.name + "' file = '" + file.name + "'>" +
-                                "<img class = 'img-thumb' src = '" + e.target.result + "' />" +
-                                "<a href = '#' class = 'cvf_delete_image' id='deleteimg_" + file.name + "' file = '" + file.name + "' title = 'Cancel'><img class = 'delete-btn' src = '../Resource/assets/Icon/Delete.svg' /></a>" +
-                                "</li>"
-                            );
-                            $('.cvf_uploaded_files').css('overflow-x', 'scroll');
-                            $('.cvf_uploaded_files').css('overflow-y', 'hidden');
-                            $('.grid-container').css('display', 'grid');
-                            $('.grid-container').append(
-                                "<li class = 'grid-item' file = '" + file.name + "'>" +
-                                "<img class = 'grid-thumb' id = 'appendimg' src = '" + e.target.result + "' />" +
-                                "</li>"
-                            );
-
-                            // 업로드한 이미지 상세보기
-                            let thumbnails = document.querySelectorAll(".grid-thumb");
-                            showImagePreview(thumbnails);
-
-                            // 호버시 삭제
-                            addHoverDeleteButton(file);
-                        };
-                    })(file);
-                    readImg.readAsDataURL(file);
-                } else {
-                    alert('the file ' + file.name + ' is not an image<br/>');
-                }
+            // 이미지 갯수 확인 후 최대갯수 안내팝업 노출
+            var img_count = files.length;
+            if (img_count > 20) {
+                alert("이미지는 20개까지 첨부하실 수 있습니다.");
+                img_count = img_count - files.length;
+                return;
             }
+
+            // 이미지 타입 매칭 후 노출
+            if (file.type.match('image.*')) {
+                storedFiles.push(file);
+                readImg.onload = (function (file) {
+                    return function (e) {
+                        $('.GalleryTitleArea').show();
+                        $('.cvf_uploaded_files').append(
+                            "<li class='multiimg' id='multiimg_" + file.name + "' file = '" + file.name + "'>" +
+                            "<img class = 'img-thumb' src = '" + e.target.result + "' />" +
+                            "<a href = '#' class = 'cvf_delete_image' id='deleteimg_" + file.name + "' file = '" + file.name + "' title = 'Cancel'><img class = 'delete-btn' src = '../Resource/assets/Icon/Delete.svg' /></a>" +
+                            "</li>"
+                        );
+                        $('.cvf_uploaded_files').css('overflow-x', 'scroll');
+                        $('.cvf_uploaded_files').css('overflow-y', 'hidden');
+                        $('.grid-container').css('display', 'grid');
+                        $('.grid-container').append(
+                            "<li class = 'grid-item' file = '" + file.name + "'>" +
+                            "<img class = 'grid-thumb' id = 'appendimg' src = '" + e.target.result + "' />" +
+                            "</li>"
+                        );
+
+                        // 업로드한 이미지 상세보기
+                        let thumbnails = document.querySelectorAll(".grid-thumb");
+                        showImagePreview(thumbnails);
+
+                        // 호버시 삭제
+                        addHoverDeleteButton(file);
+                    };
+                })(file);
+                readImg.readAsDataURL(file);
+            } else {
+                alert('the file ' + file.name + ' is not an image<br/>');
+            }
+        }
     });
+
 
 
     // 카카오지도 API
