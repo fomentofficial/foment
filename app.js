@@ -38,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 라우터 모듈 로드
 const dbConfig = require('./dbConfig');
+const TitleImgUpload = require('./routes/route_api_TitleImgUpload.js');
 const saveProgressRouter = require('./routes/route_SaveInvitation');
 const saveHistoryRouter = require('./routes/route_SaveMyPage');
 const EditInvitationRouter = require('./routes/route_EditInvitation');
@@ -46,6 +47,7 @@ const MultiImgUpload = require('./routes/route_api_MultiImgUpload');
 
 app.use(express.json());
 
+app.use('/api_TitleImgUpload', TitleImgUpload);
 app.use('/api_SaveInvitation', saveProgressRouter);
 app.use('/api_SaveMyPage', saveHistoryRouter);
 app.use('/api_EditInvitation', EditInvitationRouter);

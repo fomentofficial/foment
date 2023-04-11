@@ -22,10 +22,10 @@ const saveFile = async (req, res) => {
     const {
       imageUrls: imageUrls, // pass the image urls to the server
       url: invURL,
-      sideContents: sideContents
+      sideContents: updatedSideContents
     } = req.body;
 
-    if (!invURL || !sideContents) {
+    if (!invURL || !updatedSideContents) {
       throw new Error('잘못된 요청');
     }
   
@@ -33,12 +33,12 @@ const saveFile = async (req, res) => {
     const detailHtml = await ejs.renderFile(detailEjsPath, {
       imageUrls,
       invURL,
-      sideContents
+      updatedSideContents
     });
 
     const $detail = cheerio.load(detailHtml);
     const headerWithClass = $detail('head *');
-    const classHtml = sideContents.toString();
+    const classHtml = updatedSideContents.toString();
 
     const html = `<!DOCTYPE html>
       <html>

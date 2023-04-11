@@ -801,63 +801,59 @@ window.onload = function () {
     $('body').on('change', '.user_picked_files', function () {
 
         var files = this.files;
+        files = Array.from(event.dataTransfer.files);
         var i = 0;
 
         for (i = 0; i < files.length; i++) {
-            var readImg = new FileReader();
-            var file = files[i];
-            console.log(file);
-            // 이미지 삭제
-
-            $('body').on('click', 'a.cvf_delete_image', deleteImage);
-
-
-            // 이미지 갯수 확인 후 최대갯수 안내팝업 노출
-            img_count = files.length;
-            if (img_count > 20) {
-                alert("이미지는 20개까지 첨부하실 수 있습니다.");
-                img_count = img_count - files.length;
-                return;
-            }
-
-            // 이미지 타입 매칭 후 노출
-            if (file.type.match('image.*')) {
-                storedFiles.push(file);
+                var readImg = new FileReader();
+                var file = files[i];
                 console.log(file);
-                readImg.onload = (function (file) {
 
-                    return function (e) {
-                        $('.GalleryTitleArea').show();
-                        $('.cvf_uploaded_files').append(
-                            "<li class='multiimg' id='multiimg_" + file.name + "' file = '" + file.name + "'>" +
-                            "<img class = 'img-thumb' src = '" + e.target.result + "' />" +
-                            "<a href = '#' class = 'cvf_delete_image' id='deleteimg_" + file.name + "' file = '" + file.name + "' title = 'Cancel'><img class = 'delete-btn' src = '../Resource/assets/Icon/Delete.svg' /></a>" +
-                            "</li>"
-                        );
-                        $('.cvf_uploaded_files').css('overflow-x', 'scroll');
-                        $('.cvf_uploaded_files').css('overflow-y', 'hidden');
-                        $('.grid-container').css('display', 'grid');
-                        $('.grid-container').append(
-                            "<li class = 'grid-item' file = '" + file.name + "'>" +
-                            "<img class = 'grid-thumb' id = 'appendimg' src = '" + e.target.result + "' />" +
-                            "</li>"
-                        );
+                // 이미지 삭제
+                $('body').on('click', 'a.cvf_delete_image', deleteImage);
 
-                        // 업로드한 이미지 상세보기
-                        let thumbnails = document.querySelectorAll(".grid-thumb");
-                        showImagePreview(thumbnails);
+                // 이미지 갯수 확인 후 최대갯수 안내팝업 노출
+                img_count = files.length;
+                if (img_count > 20) {
+                    alert("이미지는 20개까지 첨부하실 수 있습니다.");
+                    img_count = img_count - files.length;
+                    return;
+                }
 
-                        // 호버시 삭제
-                        addHoverDeleteButton(file)
+                // 이미지 타입 매칭 후 노출
+                if (file.type.match('image.*')) {
+                    storedFiles.push(file);
+                    readImg.onload = (function (file) {
+                        return function (e) {
+                            $('.GalleryTitleArea').show();
+                            $('.cvf_uploaded_files').append(
+                                "<li class='multiimg' id='multiimg_" + file.name + "' file = '" + file.name + "'>" +
+                                "<img class = 'img-thumb' src = '" + e.target.result + "' />" +
+                                "<a href = '#' class = 'cvf_delete_image' id='deleteimg_" + file.name + "' file = '" + file.name + "' title = 'Cancel'><img class = 'delete-btn' src = '../Resource/assets/Icon/Delete.svg' /></a>" +
+                                "</li>"
+                            );
+                            $('.cvf_uploaded_files').css('overflow-x', 'scroll');
+                            $('.cvf_uploaded_files').css('overflow-y', 'hidden');
+                            $('.grid-container').css('display', 'grid');
+                            $('.grid-container').append(
+                                "<li class = 'grid-item' file = '" + file.name + "'>" +
+                                "<img class = 'grid-thumb' id = 'appendimg' src = '" + e.target.result + "' />" +
+                                "</li>"
+                            );
 
-                    };
-                })(file);
-                readImg.readAsDataURL(file);
+                            // 업로드한 이미지 상세보기
+                            let thumbnails = document.querySelectorAll(".grid-thumb");
+                            showImagePreview(thumbnails);
+
+                            // 호버시 삭제
+                            addHoverDeleteButton(file);
+                        };
+                    })(file);
+                    readImg.readAsDataURL(file);
+                } else {
+                    alert('the file ' + file.name + ' is not an image<br/>');
+                }
             }
-            else {
-                alert('the file ' + file.name + ' is not an image<br/>');
-            }
-        }
     });
 
 
@@ -2197,7 +2193,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             canvas.toBlob(function (blob) {
                                 var compressedFile = new File([blob], file.name, { type: file.type, lastModified: Date.now() });
                                 callback(compressedFile);
-                            }, file.type, 0.9);
+                            }, file.type, 0.2);
                         };
                     };
                 }
@@ -2206,17 +2202,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // function to save invitation with images
                 function saveInvitationWithImages(imageUrls) {
-                    const sideContents = document.querySelector('.side_contents').outerHTML;
-                    // const updatedSideContents = sideContents.innerHTML;
+                    const sideContentsEl = document.querySelector('.side_contents');
+                    const sideContents = sideContentsEl.outerHTML;
+                    const imageListItems = sideContentsEl.querySelectorAll('.grid-item');
+                
+                    for (let i = 0; i < imageUrls.length; i++) {
+                        const url = imageUrls[i];
+                        const imgElement = imageListItems[i].querySelector('.grid-thumb');
+                        imgElement.src = url;
+                        console.log(url);
+                    }
+                
+                    // 변경된 HTML 코드를 sideContents 변수에 다시 할당
+                    const updatedSideContents = sideContentsEl.outerHTML;
+                
                     const invURL = document.getElementById('InputURL').value;
-
+                
                     const requestData = {
                         url: invURL,
-                        sideContents: sideContents,
+                        sideContents: updatedSideContents, // 변경된 HTML 코드를 전송
                         imageUrls: imageUrls // pass the image urls to the server
                     };
-
-
+                
                     fetch('/api_SaveInvitation', {
                         method: 'POST',
                         headers: {
@@ -2225,31 +2232,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         body: JSON.stringify(requestData)
                     }).then(response => {
                         console.log(response);
-
-                        // 이미지 표시하기
-                        const imgElements = document.querySelectorAll('.grid-thumb');
-                        for (let i = 0; i < imgElements.length; i++) {
-                            const imgElement = imgElements[i];
-                            imgElement.src = imageUrls[i];
-                        }
-
-                        // // 이미지 URL로 대체하기
-                        // for (let i = 0; i < imgElements.length; i++) {
-                        //     updatedSideContents = updatedSideContents.replace(
-                        //         `"<li class = 'grid-item' file = '" + file.name + "'>" +
-                        //         "<img class = 'grid-thumb' id = 'appendimg' src = '" + e.target.result + "' />" +
-                        //         "</li>"`, 
-                        //         `
-                        //         "<li class = 'grid-item' file = '" + file.name + "'>" +
-                        //         "<img class = 'grid-thumb' id = 'appendimg' src='${imageUrls[i]}' />" +
-                        //         "</li>"`);
-                        // }
-
-
+                
                         saveInvitation();
                         toggleElements();
                         let templateURL = `http://localhost:3000/data/${invURL}_mypage.html`
-
+                
                         let savedViewButton = document.getElementById('SavedView');
                         savedViewButton.addEventListener('click', () => {
                             if (templateURL) {
@@ -2270,6 +2257,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.log(error);
                     });
                 }
+                
 
             });
     }
