@@ -488,23 +488,21 @@ window.onload = function () {
 
     }
     // 대표 이미지 업로드 크롭
-    $(function () {
+    $(function() {
         var cropper;
-        // 사진 업로드 버튼
-        $('#photoBtn').on('change', function () {
+    
+        $('#photoBtn').on('change', function() {
             $('.photo_them').css("display", "block");
             $('#complete').css("display", "block");
             $('.them_img').empty().append('<img id="image" src="">');
             var image = $('#image');
             var imgFile = $('#photoBtn').val();
             var fileForm = /(.*?)\.(jpg|jpeg|png)$/;
-
             let BG = document.getElementById('CropDimmed');
-
-            // 이미지가 확장자 확인 후 노출
+    
             if (imgFile.match(fileForm)) {
                 var reader = new FileReader();
-                reader.onload = function (event) {
+                reader.onload = function(event) {
                     image.attr("src", event.target.result);
                     cropper = image.cropper({
                         dragMode: 'move',
@@ -532,39 +530,134 @@ window.onload = function () {
                 return;
             }
         });
-
-        // 대표이미지 업로드 버튼
-
-        $('#complete').on('click', function () {
-            var image = $('#image');
-            var result = $('#preview-image');
-            var canvas;
-            var BG = document.getElementById('CropDimmed');
-            canvas = image.cropper('getCroppedCanvas', {
-                width: 1000,
-                height: 1000
-            });
-            BG.classList.toggle('is-active');
-            result.attr('src', canvas.toDataURL("image/jpg"));
-            $("#preview-image").attr('src', canvas.toDataURL("image/jpg"));
-            $(".uploadsrc").attr('src', canvas.toDataURL("image/jpg"));
-            $(".KaKaosrc").attr('src', canvas.toDataURL("image/jpg"));
-            alert('선택하신 이미지로 대표이미지가 변경되었습니다.');
-            $('.photo_them').css("display", "none");
-            $('#complete').css("display", "none");
-        
-            var reader = new FileReader();
-            var file = $('#photoBtn')[0].files[0];
-            console.log(file);
-            reader.onload = function (event) {
-                var dataURL = event.target.result;
-                // 읽어들인 파일 내용을 이용해 필요한 작업을 수행
-                console.log(dataURL);
-            };
-            reader.readAsDataURL(file);
+    
+        $('#complete').on('click', function() {
+            var files = $('#photoBtn')[0].files;
+            var fileArray = [];
+    
+            for (let i = 0; i < files.length; i++) {
+                var file = files[i];
+                fileArray.push(file);
+    
+                if (file.type.match('image.*')) {
+                    compressImage(file, function(compressedFile) {
+                        var formData = new FormData();
+                        formData.append("images", compressedFile);
+    
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "api_TitleImgUpload");
+                        xhr.send(formData);
+    
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === XMLHttpRequest.DONE) {
+                                if (xhr.status === 200) {
+                                    // 서버로부터의 응답 처리
+                                    console.log(xhr.responseText);
+                                    let resURL = xhr.responseText;
+                                    let imageUrl = JSON.parse(resURL).fileUrls;
+                                    console.log(imageUrl);
+                                    // 기존 이미지 URL 덮어쓰기
+                                    $('#preview-image').attr('src', imageUrl);
+                                    alert('대표 이미지가 변경되었습니다.');
+                                    
+                                    // 수정 시작
+                                    var cropper = $('#image').data('cropper');
+                                    var canvas;
+                                    var BG = document.getElementById('CropDimmed');
+                                    canvas = cropper.getCroppedCanvas({
+                                        width: 4000,
+                                        height: 1000
+                                    });
+                                    // 수정 끝
+                                    
+                                    BG.classList.toggle('is-active');
+                                    $('.photo_them').css("display", "none");
+                                    $('#complete').css("display", "none");
+                                } else {
+                                    console.log('There was a problem with the request.');
+                                }
+                            }
+                        };
+                        
+                    });
+                } else {
+                    alert('the file ' + file.name + ' is not an image<br/>');
+                }
+            }
         });
+    
+        function compressImage(file, callback) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(event) {
+                var img = new Image();
+                img.src = event.target.result;
+                img.onload = function            () {
+                    var canvas = document.createElement('canvas');
+                    var ctx = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    
+                    var MAX_WIDTH = 800;
+                    var MAX_HEIGHT = 600;
+                    var width = img.width;
+                    var height = img.height;
+    
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+    
+                    canvas.toBlob(function(blob) {
+                        var compressedFile = new File([blob], file.name, {
+                            type: file.type,
+                            lastModified: Date.now()
+                        });
+                        callback(compressedFile);
+                    }, file.type, 0.2);
+                };
+            };
+        }
         
+        function getCroppedCanvas(image, cropper, options) {
+            options = options || {};
+            var canvas = document.createElement('canvas');
+            var width = options.width || image.width();
+            var height = options.height || image.height();
+            canvas.width = width;
+            canvas.height = height;
+            cropper.getCroppedCanvas({
+                width: width,
+                height: height,
+            }).toBlob(function(blob) {
+                var newImg = document.createElement('img');
+                var url = URL.createObjectURL(blob);
+                newImg.onload = function() {
+                    canvas.getContext('2d').drawImage(newImg, 0, 0, width, height);
+                    URL.revokeObjectURL(url);
+                };
+                newImg.src = url;
+            });
+            return canvas;
+        }
     });
+    
+
+                
+
+
 
     // 클래스 영역 순서바꾸기
 
@@ -2165,111 +2258,111 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-                // 이미지를 압축하는 함수
-                function compressImage(file, callback) {
-                    var reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = function (event) {
-                        var img = new Image();
-                        img.src = event.target.result;
-                        img.onload = function () {
-                            var canvas = document.createElement('canvas');
-                            var ctx = canvas.getContext('2d');
-                            canvas.width = img.width;
-                            canvas.height = img.height;
-                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            // 이미지를 압축하는 함수
+            function compressImage(file, callback) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function (event) {
+                    var img = new Image();
+                    img.src = event.target.result;
+                    img.onload = function () {
+                        var canvas = document.createElement('canvas');
+                        var ctx = canvas.getContext('2d');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                            var MAX_WIDTH = 800;
-                            var MAX_HEIGHT = 600;
-                            var width = img.width;
-                            var height = img.height;
+                        var MAX_WIDTH = 800;
+                        var MAX_HEIGHT = 600;
+                        var width = img.width;
+                        var height = img.height;
 
-                            if (width > height) {
-                                if (width > MAX_WIDTH) {
-                                    height *= MAX_WIDTH / width;
-                                    width = MAX_WIDTH;
-                                }
-                            } else {
-                                if (height > MAX_HEIGHT) {
-                                    width *= MAX_HEIGHT / height;
-                                    height = MAX_HEIGHT;
-                                }
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
                             }
-                            canvas.width = width;
-                            canvas.height = height;
-                            var ctx = canvas.getContext('2d');
-                            ctx.drawImage(img, 0, 0, width, height);
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        var ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
 
-                            canvas.toBlob(function (blob) {
-                                var compressedFile = new File([blob], file.name, { type: file.type, lastModified: Date.now() });
-                                callback(compressedFile);
-                            }, file.type, 0.2);
-                        };
+                        canvas.toBlob(function (blob) {
+                            var compressedFile = new File([blob], file.name, { type: file.type, lastModified: Date.now() });
+                            callback(compressedFile);
+                        }, file.type, 0.2);
                     };
+                };
+            }
+
+
+
+            // function to save invitation with images
+            function saveInvitationWithImages(imageUrls) {
+                const sideContentsEl = document.querySelector('.side_contents');
+                const sideContents = sideContentsEl.outerHTML;
+                const imageListItems = sideContentsEl.querySelectorAll('.grid-item');
+
+                for (let i = 0; i < imageUrls.length; i++) {
+                    const url = imageUrls[i];
+                    const imgElement = imageListItems[i].querySelector('.grid-thumb');
+                    imgElement.src = url;
+                    console.log(url);
                 }
 
+                // 변경된 HTML 코드를 sideContents 변수에 다시 할당
+                const updatedSideContents = sideContentsEl.outerHTML;
 
+                const invURL = document.getElementById('InputURL').value;
 
-                // function to save invitation with images
-                function saveInvitationWithImages(imageUrls) {
-                    const sideContentsEl = document.querySelector('.side_contents');
-                    const sideContents = sideContentsEl.outerHTML;
-                    const imageListItems = sideContentsEl.querySelectorAll('.grid-item');
-                
-                    for (let i = 0; i < imageUrls.length; i++) {
-                        const url = imageUrls[i];
-                        const imgElement = imageListItems[i].querySelector('.grid-thumb');
-                        imgElement.src = url;
-                        console.log(url);
-                    }
-                
-                    // 변경된 HTML 코드를 sideContents 변수에 다시 할당
-                    const updatedSideContents = sideContentsEl.outerHTML;
-                
-                    const invURL = document.getElementById('InputURL').value;
-                
-                    const requestData = {
-                        url: invURL,
-                        sideContents: updatedSideContents, // 변경된 HTML 코드를 전송
-                        imageUrls: imageUrls // pass the image urls to the server
-                    };
-                
-                    fetch('/api_SaveInvitation', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json;charset=UTF-8'
-                        },
-                        body: JSON.stringify(requestData)
-                    }).then(response => {
-                        console.log(response);
-                
-                        saveInvitation();
-                        toggleElements();
-                        let templateURL = `http://localhost:3000/data/${invURL}_mypage.html`
-                
-                        let savedViewButton = document.getElementById('SavedView');
-                        savedViewButton.addEventListener('click', () => {
-                            if (templateURL) {
-                                window.open(templateURL, '_blank');
-                            } else {
-                                console.log('실패');
-                            }
-                        });
-                        if (dimmed) {
-                            dimmed.addEventListener('click', toggleElements);
-                            scrollPreventEvent.style.overflowY = 'hidden';
+                const requestData = {
+                    url: invURL,
+                    sideContents: updatedSideContents, // 변경된 HTML 코드를 전송
+                    imageUrls: imageUrls // pass the image urls to the server
+                };
+
+                fetch('/api_SaveInvitation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    },
+                    body: JSON.stringify(requestData)
+                }).then(response => {
+                    console.log(response);
+
+                    saveInvitation();
+                    toggleElements();
+                    let templateURL = `http://localhost:3000/data/${invURL}_mypage.html`
+
+                    let savedViewButton = document.getElementById('SavedView');
+                    savedViewButton.addEventListener('click', () => {
+                        if (templateURL) {
+                            window.open(templateURL, '_blank');
+                        } else {
+                            console.log('실패');
                         }
-                        if (deleteBtn) {
-                            deleteBtn.addEventListener('click', toggleElements);
-                            scrollPreventEvent.style.overflowY = 'hidden';
-                        }
-                    }).catch(error => {
-                        console.log(error);
                     });
-                }
-                
+                    if (dimmed) {
+                        dimmed.addEventListener('click', toggleElements);
+                        scrollPreventEvent.style.overflowY = 'hidden';
+                    }
+                    if (deleteBtn) {
+                        deleteBtn.addEventListener('click', toggleElements);
+                        scrollPreventEvent.style.overflowY = 'hidden';
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+            }
 
-            });
+
+        });
     }
 
 
