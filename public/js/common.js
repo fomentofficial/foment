@@ -10,9 +10,9 @@ window.onload = function () {
         const naverAccessToken = sessionStorage.getItem("naver_access_token");
         console.log(naverAccessToken);
         if (naverAccessToken === null) {
-          location.href = 'http://localhost:3000/naver_login';
+          location.href = '/naver_login';
         } else {
-        location.href = 'http://localhost:3000/detail';
+        location.href = '/detail';
         }
       });
     });
