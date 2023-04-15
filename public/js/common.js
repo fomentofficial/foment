@@ -1,6 +1,22 @@
 
 window.onload = function () {
 
+    // 메인에서 카드 선택시
+    const btns = document.querySelectorAll('.MakeInvitation');
+    console.log(btns);
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const naverAccessToken = sessionStorage.getItem("naver_access_token");
+        console.log(naverAccessToken);
+        if (naverAccessToken === null) {
+          location.href = 'http://localhost:3000/naver_login';
+        } else {
+        location.href = 'http://localhost:3000/detail';
+        }
+      });
+    });
+
     function observeElements(observermain, elements) {
         elements.forEach(element => {
             observermain.observe(element);
@@ -154,17 +170,6 @@ window.onload = function () {
 
     }
 
-
-
-    // 네이버 로그아웃
-    const logout = document.getElementById('LogoutBtn');
-    if (logout) {
-        // 클래스가 존재하는 경우에만 실행되는 코드
-        logout.addEventListener('click', () => {
-            location.replace("http://localhost:5500/public/html/index.html");
-            // 로그아웃 처리 코드
-        });
-    }
 
     // 스크롤시 애니메이션 효과 적용
     function observeElements(observer, elements) {
@@ -1850,20 +1855,6 @@ function printHolderGroom() {
 
     document.getElementById("holderinfo").innerText = PrintAccount;
 };
-// // 네이버 로그인 시 정보값
-// var naver_id_login = new naver_id_login("ZwV8tMKR9goChugNiuqV", "http://localhost:5500/public/html/detail.html");
-// // 접근 토큰 값 출력
-// console.log(naver_id_login.oauthParams.access_token);
-// // 네이버 사용자 프로필 조회
-// naver_id_login.get_naver_userprofile("naverSignInCallback()");
-// // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
-// function naverSignInCallback() {
-// console.log(naver_id_login.getProfileData('email'));
-// console.log(naver_id_login.getProfileData('nickname'));
-// console.log(naver_id_login.getProfileData('age'));
-// }
-// // https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id={클라이언트 아이디}&client_secret={클라이언트 시크릿}&access_token={접근 토큰}&service_provider=NAVER
-// // https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=ZwV8tMKR9goChugNiuqV&client_secret=7HgwuyY9it&access_token=AAAAOFZpVKAZqB4n6S-iaXVCD_iG9UUxiep-2GuXxKbR21eMHiTRQeh95Q_FbSHkWs9y_NdqfYGoFsPXwvLoocXSPNo&state=3470a679-d0f7-4ff5-bf18-8b73532a97b4&service_provider=NAVER
 
 
 

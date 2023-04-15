@@ -22,29 +22,12 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+    <script src="../js/login.js"></script>
     <script src="../js/common.js"></script>
 </head>
 <body>
     <!-- 헤더 -->
-    <div class="header">
-        <div class="header_wrap">
-            <div class="LogoWrap">
-                <a class="SymbolLink" href="/">
-                    <img class="LogoSymbol" src="../Resource/Logo_Symbol.svg" alt="">
-                </a>
-                <div class="HeaderTitle">
-                    심플럭셔리 스타일
-                </div>
-            </div>
-            <div class="LoginWrap">
-                <div class="LoginInfo">seokhkang</div>
-                <div class="LoginBound"></div>
-                <div class="LogOut" id="LogoutBtn">
-                    <button class="LoginBtn">로그아웃</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <%- include('partials/header.ejs') %>
 
     <!-- 컨텐츠 영역 -->
     <div class="main_contents">

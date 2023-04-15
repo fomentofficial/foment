@@ -423,3 +423,8 @@
     height: 140px;
     background: linear-gradient(180deg,rgba(159,131,110,0) 0%,rgb(159,131,110) 100%);
 }
+
+.LogOut{
+    font-size: var(--Text-Button);
+    cursor: pointer;
+}
