@@ -2,7 +2,7 @@
 window.onload = function () {
 
     // 메인에서 카드 선택시
-    const btns = document.querySelectorAll('.MakeInvitation');
+    const btns = document.querySelectorAll('.MakeBtn');
     console.log(btns);
 
     btns.forEach(btn => {

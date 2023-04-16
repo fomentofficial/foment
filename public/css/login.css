@@ -1,0 +1,33 @@
+.loginContentsWrap{
+    height: calc(100% - 144px);
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 0 auto;
+    padding: 48px 20px 40px 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginContentsInner{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    height: 400px;
+    align-items: center;
+    gap: 24px;
+    background: var(--ColorSurface);
+    border-radius: var(--BorderRadius-Lg);
+}
+
+.logoImg{
+    width: 120px;
+}
+
+.loginBodyText{
+    font-size: var(--Text-Paragraph);
+    line-height: 1.5;
+    font-weight: 300;
+}

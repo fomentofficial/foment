@@ -1,3 +1,21 @@
+.mypage_contents{
+    height: calc(100vh - 296px);
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 0 auto;
+    padding: 48px 20px 40px 20px;
+    align-items: center;
+}
+
+.mypage_inner{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .InvitationCautionInfo{
     padding: 24px;
     background: var(--ColorSurface);
@@ -120,6 +138,7 @@
 }
 
 .HistorySection{
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 20px;

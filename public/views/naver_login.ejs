@@ -10,10 +10,18 @@
     <%- include('./partials/header.ejs') %>
 
     <!-- 컨텐츠 영역 -->
-    <div class="main_contents">
-        <!-- 네이버 로그인 -->
-        <div class="naver_Wrap">
-            <div id="naver_id_login"></div>
+    <div class="loginContentsWrap">
+        <div class="loginContentsInner">
+            <div class="logoImg">
+                <img class="logoImg" src="../Resource/Logo_Symbol.svg" alt="">
+            </div>
+            <div class="loginBodyText">
+                네이버계정으로 간편하게 가입하고<br>쉽게 모바일 청첩장을 제작하세요
+            </div>
+            <!-- 네이버 로그인 -->
+            <div class="naver_Wrap">
+                <div id="naver_id_login"></div>
+            </div>
         </div>
     </div>
     <div class="footer">
@@ -23,7 +31,7 @@
         <script type="text/javascript">
             var naver_id_login = new naver_id_login("ZwV8tMKR9goChugNiuqV", "http://localhost:3000/naver_login_callback");
             var state = naver_id_login.getUniqState();
-            naver_id_login.setButton("white", 2,40);
+            naver_id_login.setButton("green", 20,45);
             naver_id_login.setDomain("YOUR_SERVICE_URL");
             naver_id_login.setState(state);
             naver_id_login.init_naver_id_login();

@@ -3,7 +3,7 @@
 
 /* 프리텐다드 웹폰트 */
 
-@font-face {
+/* @font-face {
     font-family: 'pretendard';
     src: url('../fonts/Pretendard-Regular.woff2') format('woff2');
     font-weight: 300;
@@ -15,7 +15,7 @@
     src: url('../fonts/Pretendard-SemiBold.woff2') format('woff2');
     font-weight: 500;
     font-display: swap;
-}
+} */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500&display=swap');
 

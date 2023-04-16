@@ -9,16 +9,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   naverLogin.init(); // 이 부분을 수정해주세요.
 
-
   const btn = document.querySelector("#LogoutBtn");
-
   const naverAccessToken = sessionStorage.getItem("naver_access_token");
+  const naverEmail = sessionStorage.getItem("naver_email");
+
   console.log(naverAccessToken);
+  console.log(naverEmail);
 
   if (naverAccessToken) {
     btn.innerText = "로그아웃";
     btn.addEventListener("click", () => {
       sessionStorage.removeItem("naver_access_token");
+      sessionStorage.removeItem("naver_email"); // 이메일 정보도 삭제
       location.replace("/");
     });
   } else {
