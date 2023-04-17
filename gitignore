@@ -1,4 +1,0 @@
-# Ignore database configuration files
-database.json
-awsAuth.json
-naverlogin.json
