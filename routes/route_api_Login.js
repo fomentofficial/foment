@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const naverLoginController = require('../controllers/Ctrl_Login');
+const Ctrl_Login = require('../controllers/Ctrl_Login');
 
-// GET /naver_login
-router.get('/', naverLoginController.getLogin);
+// 로그인 API 라우팅
+router.post('/', Ctrl_Login.getLogin);
 
 module.exports = router;
