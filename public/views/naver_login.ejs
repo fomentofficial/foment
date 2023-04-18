@@ -29,12 +29,28 @@
     </div>
         <!-- 네이버 로그인 -->
         <script type="text/javascript">
-            var naver_id_login = new naver_id_login("ZwV8tMKR9goChugNiuqV", "http://localhost:3000/api_NaverLoginCallback");
-            var state = naver_id_login.getUniqState();
-            naver_id_login.setButton("green", 20,45);
-            naver_id_login.setDomain("YOUR_SERVICE_URL");
-            naver_id_login.setState(state);
-            naver_id_login.init_naver_id_login();
+
+            $(document).ready(function() {
+                $.ajax({
+                  url: '/api_naver_client_id',
+                  method: 'GET',
+                  success: function(response) {
+                    const clientId = response.clientId;
+                    const callbackUrl = "/api_NaverLoginCallback"; // 콜백 URL을 입력하세요
+                    var isPopup = false;
+                    // 네이버 로그인 객체 생성
+                    var naver_login = new naver_id_login(clientId, "http://localhost:3000/api_NaverLoginCallback");
+                    var state = naver_login.getUniqState();
+                    naver_login.setButton("green", 20,45);
+                    naver_login.setDomain("YOUR_SERVICE_URL");
+                    naver_login.setState(state);
+                    naver_login.init_naver_id_login();
+                  },
+                  error: function(xhr, status, error) {
+                    console.log(error);
+                  }
+                });
+              });
         </script>
 </body>
 </html>

@@ -2,19 +2,19 @@
 window.onload = function () {
 
     // 메인에서 카드 선택시
-    const btns = document.querySelectorAll('.MakeBtn');
+    const btns = document.querySelectorAll('.MakeInvitation');
     console.log(btns);
 
     btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const naverAccessToken = sessionStorage.getItem("naver_access_token");
-        console.log(naverAccessToken);
-        if (naverAccessToken === null) {
-          location.href = '/naver_login';
-        } else {
-        location.href = '/detail';
-        }
-      });
+        btn.addEventListener('click', () => {
+            const naverAccessToken = sessionStorage.getItem("naver_access_token");
+            console.log(naverAccessToken);
+            if (naverAccessToken === null) {
+              window.open('/api_NaverLogin', '_blank');
+            } else {
+              window.open('/detail', '_blank');
+            }
+          });
     });
 
     function observeElements(observermain, elements) {
