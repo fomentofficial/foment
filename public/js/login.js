@@ -1,7 +1,7 @@
 // 네이버 로그인 관련 정리
 document.addEventListener('DOMContentLoaded', () => {
   const naverLogin = new naver.LoginWithNaverId({
-    clientId: "ZwV8tMKR9goChugNiuqV",
+    clientId: '<%= clientId %>',
     callbackUrl: "/",
     isPopup: false, // 팝업을 통한 연동처리 여부
     callbackHandle: true
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     btn.innerText = "로그인";
     btn.addEventListener("click", () => {
-      location.replace("/naver_login");
+      location.replace("/api_NaverLogin");
     });
   }
 });

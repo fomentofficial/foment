@@ -15,13 +15,12 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.set('views', path.join(__dirname, 'public', 'views'));
 
 // EJS 파일을 렌더링하는 라우터
+// 서버 측 코드
 app.get('/', (req, res) => {
-  const data = {
-    pageTitle: 'Main Page',
-    message: 'This is the detail page'
-  };
-  res.render('index', data || {});
+  const clientId = process.env.NAVER_LOGIN_CLIENT_ID;
+  res.render('index', {clientId});
 });
+
 
 app.get('/detail', (req, res) => {
   const data = {
@@ -42,8 +41,8 @@ const saveHistoryRouter = require('./routes/route_SaveMyPage');
 const EditInvitationRouter = require('./routes/route_EditInvitation');
 const DBtest = require('./routes/route_api_DBtest');
 const MultiImgUpload = require('./routes/route_api_MultiImgUpload');
-const Login = require('./routes/route_api_Login');
-const AuthNaver = require('./routes/route_api_Auth'); // 수정된 부분
+const NaverLogin = require('./routes/route_api_login');
+const NaverLoginCallback = require('./routes/route_api_login_Callback');
 
 app.use(express.json());
 
@@ -52,13 +51,18 @@ app.use('/api_SaveInvitation', saveProgressRouter);
 app.use('/api_SaveMyPage', saveHistoryRouter);
 app.use('/api_EditInvitation', EditInvitationRouter);
 app.use('/api_MultiImgUpload', MultiImgUpload);
-app.use('/api_NaverLogin', Login);
-
-// AuthNaver 라우터를 사용합니다.
-app.use(AuthNaver); // 수정된 부분
+app.use('/api_NaverLogin', NaverLogin);
+app.use('/api_NaverLoginCallback', NaverLoginCallback);
 
 // DB소스 관련
 app.use('/api_DBtest', DBtest);
+
+// 클라이언트 ID값
+app.get('/api_naver_client_id', function(req, res) {
+  const clientId = process.env.NAVER_LOGIN_CLIENT_ID;
+  res.json({ clientId: clientId });
+});
+
 
 app.listen(3000, () => {
   console.log('서버가 시작되었습니다.');
