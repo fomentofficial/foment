@@ -36,10 +36,10 @@
                   method: 'GET',
                   success: function(response) {
                     const clientId = response.clientId;
-                    const callbackUrl = "/api_NaverLoginCallback"; // 콜백 URL을 입력하세요
+                    const callbackUrl = "/api_AuthCallback"; // 콜백 URL을 입력하세요
                     var isPopup = false;
                     // 네이버 로그인 객체 생성
-                    var naver_login = new naver_id_login(clientId, "http://localhost:3000/api_NaverLoginCallback");
+                    var naver_login = new naver_id_login(clientId, "http://localhost:3000/api_AuthCallback");
                     var state = naver_login.getUniqState();
                     naver_login.setButton("green", 20,45);
                     naver_login.setDomain("YOUR_SERVICE_URL");

@@ -41,8 +41,8 @@ const saveHistoryRouter = require('./routes/route_SaveMyPage');
 const EditInvitationRouter = require('./routes/route_EditInvitation');
 const DBtest = require('./routes/route_api_DBtest');
 const MultiImgUpload = require('./routes/route_api_MultiImgUpload');
-const NaverLogin = require('./routes/route_api_login');
-const NaverLoginCallback = require('./routes/route_api_login_Callback');
+const Auth = require('./routes/route_api_Auth');
+const AuthCallback = require('./routes/route_api_AuthCallback');
 
 app.use(express.json());
 
@@ -51,8 +51,10 @@ app.use('/api_SaveInvitation', saveProgressRouter);
 app.use('/api_SaveMyPage', saveHistoryRouter);
 app.use('/api_EditInvitation', EditInvitationRouter);
 app.use('/api_MultiImgUpload', MultiImgUpload);
-app.use('/api_NaverLogin', NaverLogin);
-app.use('/api_NaverLoginCallback', NaverLoginCallback);
+
+// 네이버 로그인 API
+app.use('/api_Auth', Auth);
+app.use('/api_AuthCallback', AuthCallback);
 
 // DB소스 관련
 app.use('/api_DBtest', DBtest);

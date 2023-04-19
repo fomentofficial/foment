@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let naverId = "";
   
+  // 네이버 이메일 주소 아이디로 변환
   if (naverEmail) {
     const naverEmailInfo = naverEmail.split("@naver.com");
     naverId = naverEmailInfo.slice(0, -1).join("");
@@ -17,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log(naverAccessToken);
   console.log(naverId);
   
+
+  // 로그인 / 로그아웃시 함수
   if (naverAccessToken) {
     emailinfo.innerText = naverId;
     btn.innerText = "로그아웃";
@@ -31,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.innerText = "로그인";
     LoginBound.style.display = "none";
     btn.addEventListener("click", () => {
-      location.replace("/api_NaverLogin");
+      location.replace("/api_Auth");
     });
   }
   
