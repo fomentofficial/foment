@@ -30,6 +30,7 @@ const naverLoginController = {
     const clientSecret = process.env.NAVER_LOGIN_CLIENT_SECRET;
 
     const accessToken = req.session.accessToken; // 세션에서 액세스 토큰 가져오기
+    console.log(accessToken);
 
     const logoutUrl = `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=${clientId}&client_secret=${clientSecret}&access_token=${accessToken}&service_provider=NAVER`;
 
