@@ -1,6 +1,8 @@
 const fetch = import('node-fetch');
 
 const naverLoginController = {
+
+// 네이버 로그인 페이지로 이동하는 GET 요청에 대한 응답으로 렌더링된 HTML 페이지를 반환합니다.
   getNaverLogin: function(req, res) {
     const data = {
       pageTitle: 'Naver Login',
@@ -8,6 +10,8 @@ const naverLoginController = {
     };
     res.render('naver_login', data || {}); 
   },
+
+// 클라이언트 ID값과 콜백 URL을 반환합니다.
   getNaverLoginData: function(req, res) {
     const clientId = process.env.NAVER_LOGIN_CLIENT_ID;
     const callbackUrl = process.env.NAVER_LOGIN_CALLBACK_URL;
@@ -16,6 +20,8 @@ const naverLoginController = {
         callbackUrl: callbackUrl
     });
   },
+
+// 액세스 토큰을 얻는 코드를 추가해야 하지만, 현재는 고정된 액세스 토큰 값을 사용하여 세션에 액세스 토큰을 저장하고 JSON 형식으로 응답합니다.
   login: async (req, res) => {
     // 네이버 로그인 API 호출 후 액세스 토큰을 얻는 코드를 추가해야 함
     const accessToken = 'c8ceMEJisO4Se7uGCEYKK1p52L93bHXLnaoETis9YzjfnorlQwEisqemfpKHUq2gY';
@@ -25,6 +31,8 @@ const naverLoginController = {
 
     res.json({ success: true });
   },
+
+  // 세션에서 액세스 토큰을 가져와 로그아웃 URL을 생성한 후, 해당 URL을 사용하여 네이버 로그아웃 API를 호출합니다. 로그아웃이 성공하면 세션에서 액세스 토큰을 삭제하고 JSON 형식으로 응답합니다.
   logout : async (req, res) => {
     const clientId = process.env.NAVER_LOGIN_CLIENT_ID;
     const clientSecret = process.env.NAVER_LOGIN_CLIENT_SECRET;
