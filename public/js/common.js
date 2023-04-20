@@ -10,7 +10,7 @@ window.onload = function () {
             const naverAccessToken = sessionStorage.getItem("naver_access_token");
             console.log(naverAccessToken);
             if (naverAccessToken === null) {
-              window.open('/api_NaverLogin');
+              window.open('/api_Auth/login');
             } else {
               window.open('/detail');
             }

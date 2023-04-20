@@ -14,6 +14,22 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 // EJS 파일이 저장된 디렉토리 설정
 app.set('views', path.join(__dirname, 'public', 'views'));
 
+
+const session = require('express-session');
+
+app.use(session({
+  secret: 'mySuperSecretKey123', // 실제로는 .env 파일 등에 저장하고 사용하세요
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: false, // 개발 환경에서는 false로 설정하고, 실제 배포 환경에서는 true로 설정하세요
+    maxAge: 1000 * 60 * 60 * 24 // 쿠키 만료 시간 (예: 24시간)
+  }
+}));
+
+
+
+
 // EJS 파일을 렌더링하는 라우터
 // 서버 측 코드
 app.get('/', (req, res) => {
