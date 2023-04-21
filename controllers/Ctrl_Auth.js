@@ -24,11 +24,13 @@ const naverLoginController = {
 // 액세스 토큰을 얻는 코드를 추가해야 하지만, 현재는 고정된 액세스 토큰 값을 사용하여 세션에 액세스 토큰을 저장하고 JSON 형식으로 응답합니다.
   login: async (req, res) => {
     // 네이버 로그인 API 호출 후 액세스 토큰을 얻는 코드를 추가해야 함
-    const { naverAccessToken, naverEmail } = req.body;
 
     // 세션에 액세스 토큰 저장
     req.session.accessToken = naverAccessToken;
-    console.log(naverAccessToken);
+    req.session.naverEmail = naverEmail;
+
+    const accessToken = req.session.accessToken;
+    console.log(accessToken);
 
     res.json({ success: true });
   },
@@ -43,26 +45,23 @@ const naverLoginController = {
       return res.redirect('/api_Auth/login');
     }
   
-    const accessToken = req.session.accessToken; // 세션에서 액세스 토큰 가져오기
-    console.log(accessToken);
+    const { naverAccessToken, naverEmail } = req.body;
+    console.log(naverEmail);  // 네이버 이메일과 토큰은 추후 mySQL DB에 삽입하기
   
-    const logoutUrl = `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=${clientId}&client_secret=${clientSecret}&access_token=${accessToken}&service_provider=NAVER`;
+    const logoutUrl = `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=${clientId}&client_secret=${clientSecret}&access_token=${naverAccessToken}&service_provider=NAVER`;
   
-    try {
-      const response = await fetch(logoutUrl, { method: 'POST' });
-      const result = await response.json();
-  
-      if (result.result === 'success') {
-        // 로그아웃 성공 시, 세션에서 액세스 토큰 삭제
-        delete req.session.accessToken;
-        res.json({ success: true });
-      } else {
-        res.json({ success: false });
+    const request = require('request');
+    
+    request.delete(logoutUrl, (error, response, body) => {
+      if (error) {
+        console.error(error);
+        delete req.session.access_token;
+        return;
       }
-    } catch (error) {
-      res.json({ success: false });
-    }
+      console.log(body);
+    });
   }
+  
   
 };
 
