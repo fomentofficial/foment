@@ -21,19 +21,6 @@ const naverLoginController = {
     });
   },
 
-// 액세스 토큰을 얻는 코드를 추가해야 하지만, 현재는 고정된 액세스 토큰 값을 사용하여 세션에 액세스 토큰을 저장하고 JSON 형식으로 응답합니다.
-  login: async (req, res) => {
-    // 네이버 로그인 API 호출 후 액세스 토큰을 얻는 코드를 추가해야 함
-
-    // 세션에 액세스 토큰 저장
-    req.session.accessToken = naverAccessToken;
-    req.session.naverEmail = naverEmail;
-
-    const accessToken = req.session.accessToken;
-    console.log(accessToken);
-
-    res.json({ success: true });
-  },
 
   // 세션에서 액세스 토큰을 가져와 로그아웃 URL을 생성한 후, 해당 URL을 사용하여 네이버 로그아웃 API를 호출합니다. 로그아웃이 성공하면 세션에서 액세스 토큰을 삭제하고 JSON 형식으로 응답합니다.
   logout: async (req, res) => {

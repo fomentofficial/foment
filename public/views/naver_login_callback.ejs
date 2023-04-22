@@ -13,10 +13,13 @@
 
         // 네이버 사용자 프로필 조회
         naver_id_login.get_naver_userprofile("naverSignInCallback()");
+        
+        console.log(email);
 
         // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
         function naverSignInCallback() {
           const email = naver_id_login.getProfileData('email');
+          const id = email.split('@')[0];
           const access_token = naver_id_login.oauthParams.access_token;
 
           // 이메일과 액세스 토큰을 세션 스토리지에 저장
@@ -25,8 +28,41 @@
 
           console.log(email);
 
+          // 네이버 이메일과 엑세스 토큰 정보를 POST 요청으로 서버에 보냅니다.
+          const data = {
+            naver_ID:id,
+            naverEmail: email,
+            naverAccessToken: access_token
+          };
+          fetch('/api_AuthCallback', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+          .then(response => response.json())
+
+                    // 청첩장 DB 저장 Data
+
+          const Auth_DBData = {
+            naver_ID: id,
+            naverEmail: email,
+            naverAccessToken: access_token
+        }
+
+          // DB Post API
+          fetch('/api_DBtest/auth', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json;charset=UTF-8'
+              },
+              body: JSON.stringify(Auth_DBData)
+          });
+
           // 리다이렉트
           window.location.href = "/";
+          
         }
     </script>
   </body>

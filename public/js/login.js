@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log(naverId);
   
 
-  // 로그인 / 로그아웃시 함수
+  //로그아웃시 함수
   if (naverAccessToken) {
     console.log(naverAccessToken);
     emailinfo.innerText = naverId;
@@ -49,10 +49,37 @@ document.addEventListener('DOMContentLoaded', () => {
       location.replace("/");
     });
   } else {
+
+    // 로그인시 들어가는 함수들
     emailinfo.innerText = "";
     btn.innerText = "로그인";
     LoginBound.style.display = "none";
     btn.addEventListener("click", () => {
+      fetch('/api_Auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          // 로그인에 필요한 정보 (ex. 아이디, 비밀번호 등)를 전달할 수 있습니다.
+        })
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          // 로그인 성공 시에 sessionStorage에 토큰과 이메일 정보를 저장합니다.
+          sessionStorage.setItem("naver_access_token", data.naverAccessToken);
+          sessionStorage.setItem("naver_email", data.naverAccessToken);
+          // 로그인된 상태로 UI 업데이트를 수행합니다.
+          emailinfo.innerText = data.email;
+          btn.addEventListener("click", () => {
+            // 로그아웃 처리를 수행하는 코드
+          });
+        } else {
+          alert('로그인 실패');
+        }
+      });
+
       location.replace("/api_Auth/login");
     });
   }

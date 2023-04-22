@@ -9,5 +9,8 @@ router.route('/')
 
     // SQL에 데이터 추가 함수
     .post(dbCtrl.insertDBs)
+    
+
+router.post('/auth', dbCtrl.insert_Auth_DBs);
 
 module.exports = router;
