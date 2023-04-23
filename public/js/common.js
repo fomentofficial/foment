@@ -10,11 +10,11 @@ window.onload = function () {
             const naverAccessToken = sessionStorage.getItem("naver_access_token");
             console.log(naverAccessToken);
             if (naverAccessToken === null) {
-              window.open('/api_Auth/login');
+                window.open('/api_Auth/login');
             } else {
-              window.open('/detail');
+                window.open('/detail');
             }
-          });
+        });
     });
 
     function observeElements(observermain, elements) {
@@ -493,10 +493,10 @@ window.onload = function () {
 
     }
     // 대표 이미지 업로드 크롭
-    $(function() {
+    $(function () {
         var cropper;
-    
-        $('#photoBtn').on('change', function() {
+
+        $('#photoBtn').on('change', function () {
             $('.photo_them').css("display", "block");
             $('#complete').css("display", "block");
             $('.them_img').empty().append('<img id="image" src="">');
@@ -504,10 +504,10 @@ window.onload = function () {
             var imgFile = $('#photoBtn').val();
             var fileForm = /(.*?)\.(jpg|jpeg|png)$/;
             let BG = document.getElementById('CropDimmed');
-    
+
             if (imgFile.match(fileForm)) {
                 var reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     image.attr("src", event.target.result);
                     cropper = image.cropper({
                         dragMode: 'move',
@@ -535,24 +535,24 @@ window.onload = function () {
                 return;
             }
         });
-    
-        $('#complete').on('click', function() {
+
+        $('#complete').on('click', function () {
             var files = $('#photoBtn')[0].files;
             var fileArray = [];
-    
+
             for (let i = 0; i < files.length; i++) {
                 var file = files[i];
                 fileArray.push(file);
-    
+
                 if (file.type.match('image.*')) {
-                    compressImage(file, function(compressedFile) {
+                    compressImage(file, function (compressedFile) {
                         var formData = new FormData();
                         formData.append("images", compressedFile);
-    
+
                         var xhr = new XMLHttpRequest();
                         xhr.open("POST", "api_TitleImgUpload");
                         xhr.send(formData);
-    
+
                         xhr.onreadystatechange = function () {
                             if (xhr.readyState === XMLHttpRequest.DONE) {
                                 if (xhr.status === 200) {
@@ -564,7 +564,7 @@ window.onload = function () {
                                     // 기존 이미지 URL 덮어쓰기
                                     $('#preview-image').attr('src', imageUrl);
                                     alert('대표 이미지가 변경되었습니다.');
-                                    
+
                                     // 수정 시작
                                     var cropper = $('#image').data('cropper');
                                     var canvas;
@@ -574,7 +574,7 @@ window.onload = function () {
                                         height: 1000
                                     });
                                     // 수정 끝
-                                    
+
                                     BG.classList.toggle('is-active');
                                     $('.photo_them').css("display", "none");
                                     $('#complete').css("display", "none");
@@ -583,32 +583,32 @@ window.onload = function () {
                                 }
                             }
                         };
-                        
+
                     });
                 } else {
                     alert('the file ' + file.name + ' is not an image<br/>');
                 }
             }
         });
-    
+
         function compressImage(file, callback) {
             var reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = function(event) {
+            reader.onload = function (event) {
                 var img = new Image();
                 img.src = event.target.result;
-                img.onload = function            () {
+                img.onload = function () {
                     var canvas = document.createElement('canvas');
                     var ctx = canvas.getContext('2d');
                     canvas.width = img.width;
                     canvas.height = img.height;
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    
+
                     var MAX_WIDTH = 800;
                     var MAX_HEIGHT = 600;
                     var width = img.width;
                     var height = img.height;
-    
+
                     if (width > height) {
                         if (width > MAX_WIDTH) {
                             height *= MAX_WIDTH / width;
@@ -624,8 +624,8 @@ window.onload = function () {
                     canvas.height = height;
                     var ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-    
-                    canvas.toBlob(function(blob) {
+
+                    canvas.toBlob(function (blob) {
                         var compressedFile = new File([blob], file.name, {
                             type: file.type,
                             lastModified: Date.now()
@@ -635,7 +635,7 @@ window.onload = function () {
                 };
             };
         }
-        
+
         function getCroppedCanvas(image, cropper, options) {
             options = options || {};
             var canvas = document.createElement('canvas');
@@ -646,10 +646,10 @@ window.onload = function () {
             cropper.getCroppedCanvas({
                 width: width,
                 height: height,
-            }).toBlob(function(blob) {
+            }).toBlob(function (blob) {
                 var newImg = document.createElement('img');
                 var url = URL.createObjectURL(blob);
-                newImg.onload = function() {
+                newImg.onload = function () {
                     canvas.getContext('2d').drawImage(newImg, 0, 0, width, height);
                     URL.revokeObjectURL(url);
                 };
@@ -658,9 +658,9 @@ window.onload = function () {
             return canvas;
         }
     });
-    
 
-                
+
+
 
 
 
@@ -827,8 +827,13 @@ window.onload = function () {
         }
     }
 
-    // 끌어서 업로드
-    const dropzone = document.querySelector(".ImgGroupUpload_Btn");
+
+    // 드래그하여 다중 이미지 업로드
+    let dropzone = document.querySelector(".ImgGroupUpload_Btn");
+    let MAX_IMAGES = 30;
+    let IMAGES_PER_LOAD = 9;
+    let LoadMore = document.getElementById('LoadMoreBtn');
+    let displayedImages = 0;
 
     if (dropzone) {
         dropzone.addEventListener("dragover", function (event) {
@@ -848,27 +853,26 @@ window.onload = function () {
             event.stopPropagation();
             dropzone.style.backgroundColor = "";
             files = Array.from(event.dataTransfer.files);
-            var i = 0;
 
-            for (i = 0; i < files.length; i++) {
-                var readImg = new FileReader();
-                var file = files[i];
+            // 이미지 갯수 확인 후 최대갯수 안내팝업 노출
+            let imgCount = displayedImages + files.length;
+            console.log(imgCount)
+            if (imgCount > MAX_IMAGES) {
+                alert("이미지는 30개까지 첨부하실 수 있습니다.");
+                return;
+            }
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
                 console.log(file);
 
                 // 이미지 삭제
                 $('body').on('click', 'a.cvf_delete_image', deleteImage);
 
-                // 이미지 갯수 확인 후 최대갯수 안내팝업 노출
-                img_count = files.length;
-                if (img_count > 20) {
-                    alert("이미지는 20개까지 첨부하실 수 있습니다.");
-                    img_count = img_count - files.length;
-                    return;
-                }
-
                 // 이미지 타입 매칭 후 노출
                 if (file.type.match('image.*')) {
-                    storedFiles.push(file);
+                    displayedImages++;
+                    const readImg = new FileReader();
                     readImg.onload = (function (file) {
                         return function (e) {
                             $('.GalleryTitleArea').show();
@@ -886,13 +890,24 @@ window.onload = function () {
                                 "<img class = 'grid-thumb' id = 'appendimg' src = '" + e.target.result + "' />" +
                                 "</li>"
                             );
-
                             // 업로드한 이미지 상세보기
                             let thumbnails = document.querySelectorAll(".grid-thumb");
                             showImagePreview(thumbnails);
 
                             // 호버시 삭제
                             addHoverDeleteButton(file);
+
+                            if (displayedImages > 9) {
+                                LoadMore.style.display = 'block';
+                            }
+                            if (displayedImages >= MAX_IMAGES) {
+                                LoadMore.style.display = 'block';
+                                $('.grid-item').slice(9).css('display', 'none');
+                                
+                            } else if (displayedImages >= IMAGES_PER_LOAD) {
+                                // 10번째 이미지부터 숨김 처리
+                                $('.grid-item').slice(9).css('display', 'none');
+                            }
                         };
                     })(file);
                     readImg.readAsDataURL(file);
@@ -903,9 +918,28 @@ window.onload = function () {
         });
     }
 
+    LoadMore.addEventListener("click", function () {
+        const start = 9;
+        const end = start + IMAGES_PER_LOAD;
+        console.log(start);
+        console.log(end);
+        $('.grid-item').slice(start, end).show();
+        console.log(displayedImages);
+        if (end >= displayedImages) {
+            LoadMore.style.display = 'none';
+        }
+        IMAGES_PER_LOAD += 9; // 9씩 증가
+    });
+    
+
+
+
+
+
 
 
     // 버튼 눌러 다중이미지 업로드
+    
     $('body').on('change', '.user_picked_files', function (event) {
 
         files = Array.from(event.target.files);
@@ -920,10 +954,10 @@ window.onload = function () {
             $('body').on('click', 'a.cvf_delete_image', deleteImage);
 
             // 이미지 갯수 확인 후 최대갯수 안내팝업 노출
-            var img_count = files.length;
-            if (img_count > 20) {
-                alert("이미지는 20개까지 첨부하실 수 있습니다.");
-                img_count = img_count - files.length;
+            let imgCount = displayedImages + 1;
+            console.log(imgCount)
+            if (imgCount > MAX_IMAGES) {
+                alert("이미지는 30개까지 첨부하실 수 있습니다.");
                 return;
             }
 
@@ -931,6 +965,7 @@ window.onload = function () {
             if (file.type.match('image.*')) {
                 storedFiles.push(file);
                 readImg.onload = (function (file) {
+                    displayedImages++;
                     return function (e) {
                         $('.GalleryTitleArea').show();
                         $('.cvf_uploaded_files').append(
@@ -954,6 +989,18 @@ window.onload = function () {
 
                         // 호버시 삭제
                         addHoverDeleteButton(file);
+
+                        if (displayedImages > 9) {
+                            LoadMore.style.display = 'block';
+                        }
+                        if (displayedImages >= MAX_IMAGES) {
+                            LoadMore.style.display = 'block';
+                            $('.grid-item').slice(9).css('display', 'none');
+                            
+                        } else if (displayedImages >= IMAGES_PER_LOAD) {
+                            // 10번째 이미지부터 숨김 처리
+                            $('.grid-item').slice(9).css('display', 'none');
+                        }
                     };
                 })(file);
                 readImg.readAsDataURL(file);

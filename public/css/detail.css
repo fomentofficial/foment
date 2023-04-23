@@ -241,7 +241,7 @@
   grid-gap: 2px;
   padding: 0;
   list-style: none;
-  margin: 16px 0px 64px 0px;
+  margin: 16px 0px 0px 0px;
 }
 
 .grid-item {
@@ -886,6 +886,11 @@ li.TabItemGallery:hover {
   background-color: var(--ColorBorderSolid);
   border: 3px solid var(--ColorBorder10);
   border-style: dashed;;
+}
+
+#LoadMoreBtn{
+  display: none;
+  margin-top: 24px;
 }
 
 .galleryupload{
@@ -1545,6 +1550,10 @@ ul.cvf_uploaded_files .delete-btn {
 .TitleSection.is-visible, .InviteArea.is-visible, .sec_cal.is-visible, .GalleryArea.is-visible, .LocationSection.is-visible, .AccountSection.is-visible, .BoardSection.is-visible{
   opacity: 1;
   transform: translateY(0);
+}
+
+.GalleryArea{
+  margin: 0px 0px 64px 0px;
 }
 
 .AppView{
