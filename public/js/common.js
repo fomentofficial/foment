@@ -918,18 +918,20 @@ window.onload = function () {
         });
     }
 
-    LoadMore.addEventListener("click", function () {
-        const start = 9;
-        const end = start + IMAGES_PER_LOAD;
-        console.log(start);
-        console.log(end);
-        $('.grid-item').slice(start, end).show();
-        console.log(displayedImages);
-        if (end >= displayedImages) {
-            LoadMore.style.display = 'none';
-        }
-        IMAGES_PER_LOAD += 9; // 9씩 증가
-    });
+    if(LoadMore){
+        LoadMore.addEventListener("click", function () {
+            const start = 9;
+            const end = start + IMAGES_PER_LOAD;
+            console.log(start);
+            console.log(end);
+            $('.grid-item').slice(start, end).show();
+            console.log(displayedImages);
+            if (end >= displayedImages) {
+                LoadMore.style.display = 'none';
+            }
+            IMAGES_PER_LOAD += 9; // 9씩 증가
+        });
+    }
     
 
 
@@ -1911,6 +1913,9 @@ function printHolderGroom() {
 async function saveInvitation() {
 
     // // 데이터를 가져올 요소 정리
+        // 네이버 ID
+    const naverEmail = sessionStorage.getItem('naver_email');
+    console.log(naverEmail);
 
     // |- 디자인 영역 탭
 

@@ -12,7 +12,7 @@ const dbCtrl = {
   },
 
   insertDBs: async (req, res) => {
-    const { theme_type, BGM_type, effect_type, font_type, font_size, URL_data, invitation_title, title_upload_img,
+    const {user_naver_ID, theme_type, BGM_type, effect_type, font_type, font_size, URL_data, invitation_title, title_upload_img,
       kakao_share_img,
       groom_first_name,
       groom_last_name,
@@ -62,7 +62,7 @@ const dbCtrl = {
     
     
 
-    const sql = `INSERT INTO foment.template (theme_type, BGM_type, effect_type, font_type, font_size, URL_data, invitation_title, title_upload_img,
+    const sql = `INSERT INTO foment.template (user_naver_ID, theme_type, BGM_type, effect_type, font_type, font_size, URL_data, invitation_title, title_upload_img,
       kakao_share_img,
       groom_first_name,
       groom_last_name,
@@ -104,7 +104,7 @@ const dbCtrl = {
       order_tab
       
       ) VALUES
-    ('${theme_type}', '${BGM_type}', '${effect_type}', '${font_type}', ${font_size}, '${URL_data}', '${invitation_title}', '${title_upload_img}',
+    ('${user_naver_ID}','${theme_type}', '${BGM_type}', '${effect_type}', '${font_type}', ${font_size}, '${URL_data}', '${invitation_title}', '${title_upload_img}',
     '${kakao_share_img}',
     '${groom_first_name}',
     '${groom_last_name}',
