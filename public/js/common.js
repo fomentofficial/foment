@@ -1915,7 +1915,7 @@ async function saveInvitation() {
     // // 데이터를 가져올 요소 정리
         // 네이버 ID
     const naverEmail = sessionStorage.getItem('naver_email');
-    console.log(naverEmail);
+    console.log('Naver Email Data:' + JSON.stringify(naverEmail));
 
     // |- 디자인 영역 탭
 
@@ -2148,6 +2148,7 @@ async function saveInvitation() {
     // 청첩장 DB 저장 Data
 
     const DBData = {
+        user_naver_ID: naverEmail,
         theme_type: ThemeData,
         BGM_type: ActiveBGMElementData,
         effect_type: ActiveEffectElementData,
