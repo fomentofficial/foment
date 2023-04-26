@@ -59,6 +59,7 @@ const DBtest = require('./routes/route_api_DBtest');
 const MultiImgUpload = require('./routes/route_api_MultiImgUpload');
 const Auth = require('./routes/route_api_Auth');
 const AuthCallback = require('./routes/route_api_AuthCallback');
+const URLCheck = require('./routes/route_api_URLCheck');
 
 app.use(express.json());
 
@@ -68,12 +69,15 @@ app.use('/api_SaveMyPage', saveHistoryRouter);
 app.use('/api_EditInvitation', EditInvitationRouter);
 app.use('/api_MultiImgUpload', MultiImgUpload);
 
-// 네이버 로그인 API
+// 네이버 로그인 라우터
 app.use('/api_Auth', Auth);
 app.use('/api_AuthCallback', AuthCallback);
 
-// DB소스 관련
+// DB 라우터
 app.use('/api_DBtest', DBtest);
+
+// URL 유효성 검증 라우터
+app.use('/api_URL', URLCheck);
 
 // 클라이언트 ID값
 app.get('/api_naver_client_id', function(req, res) {

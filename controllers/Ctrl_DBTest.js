@@ -69,7 +69,7 @@ const dbCtrl = {
       const userId = result[0].ID;
 
       // 사용자 ID값이 일치하는 template 테이블의 행을 조회하는 SQL 쿼리
-      const getTemplateIdSql = `SELECT user_ID FROM template WHERE user_ID=${userId}`;
+      const getTemplateIdSql = `SELECT user_ID FROM template WHERE user_ID=${userId} AND URL_data='${URL_data}'`;
   
       connection.query(getTemplateIdSql, (error, result) => {
         if (error) throw error;
@@ -87,7 +87,6 @@ const dbCtrl = {
           effect_type = '${effect_type}',
           font_type = '${font_type}',
           font_size = '${font_size}',
-          URL_data = '${URL_data}',
           invitation_title = '${invitation_title}',
           title_upload_img = '${title_upload_img}',
           kakao_share_img = '${kakao_share_img}',

@@ -1,6 +1,47 @@
 
 window.onload = function () {
 
+    let URLBtn = document.getElementById('URL_Btn');
+
+    if(URLBtn){
+        URLBtn.addEventListener('click', () => {
+            let naverEmailSession = sessionStorage.getItem("naver_email");
+            let inputPrintURL = document.getElementById('InputURL').value;
+            console.log(naverEmailSession);
+            console.log(inputPrintURL);
+          
+            let xhr = new XMLHttpRequest();
+            let requestURL = `api_URL/getURL?url=${inputPrintURL}`; // 수정된 부분
+            xhr.open('GET', requestURL);
+            xhr.setRequestHeader('naver_email', naverEmailSession);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                let response = JSON.parse(xhr.responseText);
+                if (response.exists) {
+                  alert('이미 사용 중인 URL입니다.');
+                } else {
+                  alert('사용 가능한 URL입니다.');
+                  let xhr2 = new XMLHttpRequest();
+                  xhr2.open('POST', 'api_URL/postURL');
+                  xhr2.setRequestHeader('Content-Type', 'application/json');
+                  xhr2.setRequestHeader('naver_email', naverEmailSession);
+                  xhr2.send(JSON.stringify({url: inputPrintURL}));
+                  xhr2.onload = function() {
+                    if (xhr2.status === 200) {
+                      console.log('URL이 DB에 추가되었습니다.');
+                    }
+                  }
+                }
+              } else {
+                alert('서버 오류가 발생했습니다.');
+              }
+            };
+            xhr.send();
+          });
+    }
+    
+    
+
     // 메인에서 카드 선택시
     const btns = document.querySelectorAll('.MakeInvitation');
     console.log(btns);
@@ -1857,18 +1898,12 @@ function printBrideMotherLast() {
     document.getElementById("BrideMotherLastName").innerText = BrideMotherLastName;
 };
 
-
 // URL 입력필드
 function printURL() {
     let PrintURL = document.getElementById('InputURL').value;
 
     document.getElementById("CustomUrl").innerText = PrintURL;
 };
-
-
-
-
-
 
 // 초대 제목
 function printInvite() {
