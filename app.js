@@ -81,6 +81,10 @@ app.use('/api_DBtest', DBtest);
 // URL 유효성 검증 라우터
 app.use('/api_URL', URLCheck);
 
+// 템플릿 생성 라우터
+app.use('/api_CreateTemplate');
+
+
 // 클라이언트 ID값
 app.get('/api_naver_client_id', function(req, res) {
   const clientId = process.env.NAVER_LOGIN_CLIENT_ID;
