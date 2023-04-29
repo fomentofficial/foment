@@ -40,6 +40,7 @@
     "passport-naver": "^1.0.6",
     "pica": "^9.0.1",
     "request": "^2.88.2",
+    "short-uuid": "^4.2.2",
     "uuid": "^9.0.0"
   }
 }

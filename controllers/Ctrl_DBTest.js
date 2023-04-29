@@ -192,15 +192,7 @@ const dbCtrl = {
           const insertedId = results.insertId; // AUTO_INCREMENT 열에서 생성된 값 가져오기
           console.log(`Inserted ID: ${insertedId}`);
       
-          // foment.template 테이블의 user_ID 열에 insertedId 값을 추가합니다.
-          const templateInsertSql = `INSERT INTO foment.template (user_ID) VALUES (?)`;
-          const templateInsertValues = [insertedId];
-          connection.query(templateInsertSql, templateInsertValues, (templateInsertError, templateInsertResults) => {
-            if (templateInsertError) {
-              console.error(templateInsertError);
-              return res.status(500).json({ message: '서버 에러가 발생했습니다.' });
-            }
-      
+   
             // foment.publish 테이블의 user_id와 template_ID 열에 insertedId 값을 추가합니다.
             const publishInsertSql = `INSERT INTO foment.publish (user_id, template_ID) VALUES (?, ?)`;
             const publishInsertValues = [insertedId, insertedId];
@@ -223,7 +215,7 @@ const dbCtrl = {
                 return res.json({ message: '새로운 사용자 정보가 등록되었습니다.' });
               });
             });
-          });
+         
         });
       }
       

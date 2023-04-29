@@ -1,6 +1,32 @@
 
 window.onload = function () {
 
+    const CreateBtn = document.getElementById('Create_InvitationBtn');
+
+    if (CreateBtn) {
+    CreateBtn.addEventListener('click', () => {
+        const naverEmailSession = sessionStorage.getItem('naver_email');
+        console.log(naverEmailSession);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api_CreateTemplate');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('naver_email', naverEmailSession);
+        xhr.onload = function () {
+        if (xhr.status === 200) {
+            console.log('POST 요청에 성공했습니다.');
+            window.open('/detail');
+            console.log(xhr.responseText);
+        } else {
+            console.error('POST 요청에 실패했습니다.');
+        }
+        };
+        xhr.send(JSON.stringify({ template_ID: 'template001' }));
+    });
+    }
+
+
+
     let URLBtn = document.getElementById('URL_Btn');
 
     if(URLBtn){

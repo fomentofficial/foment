@@ -4,4 +4,5 @@ const mypageController = require('../controllers/Ctrl_CreateMyPage');
 
 router.post('/', mypageController.createMypageFile);
 
+
 module.exports = router;

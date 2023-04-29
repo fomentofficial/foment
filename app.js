@@ -61,6 +61,7 @@ const Auth = require('./routes/route_api_Auth');
 const AuthCallback = require('./routes/route_api_AuthCallback');
 const URLCheck = require('./routes/route_api_URLCheck');
 const Mypage = require('./routes/route_api_Mypage');
+const CreateTemplate = require('./routes/route_api_CreateTemplate');
 
 app.use(express.json());
 
@@ -82,7 +83,7 @@ app.use('/api_DBtest', DBtest);
 app.use('/api_URL', URLCheck);
 
 // 템플릿 생성 라우터
-app.use('/api_CreateTemplate');
+app.use('/api_CreateTemplate', CreateTemplate);
 
 
 // 클라이언트 ID값
