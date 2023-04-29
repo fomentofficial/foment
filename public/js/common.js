@@ -1942,7 +1942,6 @@ function printHolderGroom() {
 
 
 
-
 // 저장 버튼 클릭시 정적 파일 형성 Post 
 
 async function saveInvitation() {
@@ -2230,6 +2229,8 @@ async function saveInvitation() {
         board_password: BoardPasswordData,
         order_tab: OrderTabData
     }
+
+
 
     // DB Post API
     await fetch('/api_DBtest', {

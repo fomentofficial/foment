@@ -255,7 +255,8 @@ body {
     gap: 16px;
 }
 
-.LoginInfo{
+.LoginInfo, .Create_InvitationBtn{
+    cursor: pointer;
     color: var(--ColorTextPrimary);
     font-size: var(--Text-Button); 
 }
