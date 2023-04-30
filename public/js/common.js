@@ -15,7 +15,9 @@ window.onload = function () {
         xhr.onload = function () {
         if (xhr.status === 200) {
             console.log('POST 요청에 성공했습니다.');
-            window.open('/detail');
+            let template_ID = xhr.responseText
+            let templateURL = `http://localhost:3000/data/template_${template_ID}.html`
+            window.open(templateURL, '_blank');
             console.log(xhr.responseText);
         } else {
             console.error('POST 요청에 실패했습니다.');

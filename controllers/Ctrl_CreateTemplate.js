@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs').promises;
 const ejs = require('ejs');
 
+
 let dbConfig = require('../dbConfig');
 let connection = dbConfig.connection;
 
@@ -40,13 +41,39 @@ let CreateTemplate = {
           res.status(500).send('Server Error');
           return;
         }
-        res.status(200).send(template_ID.toString());
-        console.log('템플릿 ID가 생성되었습니다: ' + template_ID);
+
+        // Define the file names and paths using the template ID
+        const templateFileName = 'detail.ejs';
+        const newTemplateFileName = `template_${template_ID}.html`;
+        const templateFilePath = path.join(__dirname, '..', 'public', 'views', templateFileName);
+        const newTemplateFilePath = path.join(__dirname, '..', 'public', 'data', newTemplateFileName);
+
+        // Render the template file with data
+        ejs.renderFile(templateFilePath, { /* data */ }, (err, html) => {
+          if (err) {
+            console.error(err);
+            res.status(500).send('Server Error');
+            return;
+          }
+          res.status(200).send(template_ID.toString());
+          console.log('새로운 템플릿 파일이 생성되었습니다: ' + newTemplateFileName);
+          
+          // Write the rendered HTML to a new file with the template ID in the file name
+          fs.writeFile(newTemplateFilePath, html, (err) => {
+            if (err) {
+              console.error(err);
+              res.status(500).send('Server Error');
+              return;
+            }
+          });
+        });
+
+
       });
     });
   }
-
 };
+
 
 
 
