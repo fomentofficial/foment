@@ -20,12 +20,14 @@
                     <li class="Infoli">• 고객센터 : 1522 - 0508 또는 톡톡문의, 1:1문의 남겨주시기 바랍니다.</li>
                 </ul>
             </div>
-            <% var count = count || 0; %>
-            <% console.log("Count 값:", count); %>
+            <% var templates = templates || []; %>
+            <% console.log("templates 값:", templates); %>
+            <% if (templates.length > 0) { %>
+              <% for (var i = 0; i < templates.length; i++) { %>
+                <%- include('./partials/mypageData.ejs', { template: templates[i] }) %>
+              <% } %>
+            <% } %>                    
             
-            <% for (var i = 0; i < count; i++) { %>
-                <%- include('./partials/mypageData.ejs') %>
-            <% } %>
             
             <div class="HistoryWrap" id="HistoryWrapNull">
                 <div class="HistoryItem" id="HistoryNull">

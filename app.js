@@ -44,14 +44,6 @@ app.get('/detail', (req, res) => {
   res.render('detail', data || {});
 });
 
-app.get('/mypage', (req, res) => {
-  const data = {
-    pageTitle: 'Detail Page',
-    message: 'This is the detail page'
-  };
-  res.render('mypage', data || {});
-});
-
 // 정적 파일 서비스 미들웨어 등록
 app.use(express.static(path.join(__dirname, 'public')));
 
