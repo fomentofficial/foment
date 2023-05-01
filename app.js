@@ -28,8 +28,6 @@ app.use(session({
 }));
 
 
-
-
 // EJS 파일을 렌더링하는 라우터
 // 서버 측 코드
 app.get('/', (req, res) => {
@@ -44,6 +42,14 @@ app.get('/detail', (req, res) => {
     message: 'This is the detail page'
   };
   res.render('detail', data || {});
+});
+
+app.get('/mypage', (req, res) => {
+  const data = {
+    pageTitle: 'Detail Page',
+    message: 'This is the detail page'
+  };
+  res.render('mypage', data || {});
 });
 
 // 정적 파일 서비스 미들웨어 등록
@@ -70,7 +76,7 @@ app.use('/api_SaveInvitation', saveProgressRouter);
 app.use('/api_SaveMyPage', saveHistoryRouter);
 app.use('/api_EditInvitation', EditInvitationRouter);
 app.use('/api_MultiImgUpload', MultiImgUpload);
-app.use('/api_Mypage', Mypage);
+app.use('/api_MypageData', Mypage);
 
 // 네이버 로그인 라우터
 app.use('/api_Auth', Auth);
@@ -85,6 +91,8 @@ app.use('/api_URL', URLCheck);
 // 템플릿 생성 라우터
 app.use('/api_CreateTemplate', CreateTemplate);
 
+// myPage Data 생성 라우터
+app.use('/api_mypageData', Mypage);
 
 // 클라이언트 ID값
 app.get('/api_naver_client_id', function(req, res) {

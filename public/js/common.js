@@ -1,32 +1,37 @@
 
 window.onload = function () {
 
+    // 메인에서 카드 선택시
     const CreateBtn = document.getElementById('Create_InvitationBtn');
 
-    if (CreateBtn) {
     CreateBtn.addEventListener('click', () => {
+      const naverAccessToken = sessionStorage.getItem("naver_access_token");
+      console.log(naverAccessToken);
+      if (naverAccessToken === null) {
+        window.open('/api_Auth/login');
+      } else {
         const naverEmailSession = sessionStorage.getItem('naver_email');
         console.log(naverEmailSession);
-
+    
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/api_CreateTemplate');
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.setRequestHeader('naver_email', naverEmailSession);
         xhr.onload = function () {
-        if (xhr.status === 200) {
+          if (xhr.status === 200) {
             console.log('POST 요청에 성공했습니다.');
             let template_ID = xhr.responseText
             let templateURL = `http://localhost:3000/data/template_${template_ID}.html`
             window.open(templateURL, '_blank');
             console.log(xhr.responseText);
-        } else {
+          } else {
             console.error('POST 요청에 실패했습니다.');
-        }
+          }
         };
         xhr.send(JSON.stringify({ template_ID: 'template001' }));
+      }
     });
-    }
-
+    
 
 
     let URLBtn = document.getElementById('URL_Btn');
@@ -81,8 +86,26 @@ window.onload = function () {
             if (naverAccessToken === null) {
                 window.open('/api_Auth/login');
             } else {
-                window.open('/detail');
-            }
+                const naverEmailSession = sessionStorage.getItem('naver_email');
+                console.log(naverEmailSession);
+            
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/api_CreateTemplate');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('naver_email', naverEmailSession);
+                xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log('POST 요청에 성공했습니다.');
+                    let template_ID = xhr.responseText
+                    let templateURL = `http://localhost:3000/data/template_${template_ID}.html`
+                    window.open(templateURL, '_blank');
+                    console.log(xhr.responseText);
+                } else {
+                    console.error('POST 요청에 실패했습니다.');
+                }
+                };
+                xhr.send(JSON.stringify({ template_ID: 'template001' }));
+                    }
         });
     });
 
@@ -2300,6 +2323,8 @@ async function saveInvitation() {
 
 document.addEventListener('DOMContentLoaded', () => {
     let saveButton = document.getElementById('SavedBtn');
+    console.log(saveButton);
+    
     let saveAlert = document.querySelector('.ModalSaveComplete');
     const scrollPreventEvent = document.body;
     let dimmed = document.getElementById('SaveCompleteDimmed');
@@ -2317,8 +2342,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (saveButton) {
         saveButton.addEventListener('click', () => {
-            let inputURL = document.getElementById('InputURL');
-            let urlconfirm = inputURL.value;
 
             let fileArray = [];
             let imageUrls = []; // array to hold the image urls returned by the server
@@ -2427,10 +2450,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 변경된 HTML 코드를 sideContents 변수에 다시 할당
                 const updatedSideContents = sideContentsEl.outerHTML;
 
-                const invURL = document.getElementById('InputURL').value;
-
                 const requestData = {
-                    url: invURL,
                     sideContents: updatedSideContents, // 변경된 HTML 코드를 전송
                     imageUrls: imageUrls // pass the image urls to the server
                 };
@@ -2446,7 +2466,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     saveInvitation();
                     toggleElements();
-                    let templateURL = `http://localhost:3000/data/${invURL}_mypage.html`
+                    let templateURL = `/mypage`
 
                     let savedViewButton = document.getElementById('SavedView');
                     savedViewButton.addEventListener('click', () => {
@@ -2468,7 +2488,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log(error);
                 });
             }
-
 
         });
     }
