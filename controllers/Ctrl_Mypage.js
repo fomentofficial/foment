@@ -44,9 +44,9 @@ const GetMyPage = {
               count: results[0].count
             };
             console.log(data);
-    
-            // res.render('mypage', data || {});
-            res.send(data);
+            res.render('mypage', data);
+            
+
           });
         });
   }
