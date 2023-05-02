@@ -10,6 +10,8 @@ const naverLoginCallbackController = {
     const clientId = process.env.NAVER_LOGIN_CLIENT_ID;
     const callbackUrl = process.env.NAVER_LOGIN_CALLBACK_URL;
 
+    console.log(req.body); // 요청 본문 출력
+
     // 세션에 액세스 토큰 저장
     req.session.accessToken = req.body.naverAccessToken;
     req.session.naverEmail = req.body.naverEmail;
@@ -18,6 +20,7 @@ const naverLoginCallbackController = {
     const naverEmail = req.session.naverEmail;
     console.log(accessToken);
     console.log(naverEmail);
+    console.log(req.session); // 세션 객체 출력
 
     //여기에 토큰과 이메일 세션값을 DB에 포스팅하는 코드 추가
 

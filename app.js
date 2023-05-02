@@ -4,6 +4,10 @@ const app = express();
 const ejs = require('ejs');
 const ejsMate = require('ejs-mate');
 app.engine('ejs', ejsMate);
+const request = require('request');
+require('dotenv').config();
+const session = require('express-session');
+
 
 app.set('view engine', 'ejs');
 const bodyParser = require('body-parser');
@@ -15,10 +19,9 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.set('views', path.join(__dirname, 'public', 'views'));
 
 
-const session = require('express-session');
-
+// dotenv 설정을 추가한 후 session 설정을 수정하세요.
 app.use(session({
-  secret: 'mySuperSecretKey123', // 실제로는 .env 파일 등에 저장하고 사용하세요
+  secret: process.env.SESSION_SECRET_KEY, // 실제로는 .env 파일 등에 저장하고 사용하세요
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -26,7 +29,6 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24 // 쿠키 만료 시간 (예: 24시간)
   }
 }));
-
 
 // EJS 파일을 렌더링하는 라우터
 // 서버 측 코드
@@ -43,6 +45,12 @@ app.get('/detail', (req, res) => {
   };
   res.render('detail', data || {});
 });
+
+
+// EJS 파일을 렌더링하는 라우터
+// 서버 측 코드
+
+
 
 // 정적 파일 서비스 미들웨어 등록
 app.use(express.static(path.join(__dirname, 'public')));
@@ -68,7 +76,6 @@ app.use('/api_SaveInvitation', saveProgressRouter);
 app.use('/api_SaveMyPage', saveHistoryRouter);
 app.use('/api_EditInvitation', EditInvitationRouter);
 app.use('/api_MultiImgUpload', MultiImgUpload);
-app.use('/api_MypageData', Mypage);
 
 // 네이버 로그인 라우터
 app.use('/api_Auth', Auth);
@@ -84,7 +91,8 @@ app.use('/api_URL', URLCheck);
 app.use('/api_CreateTemplate', CreateTemplate);
 
 // myPage Data 생성 라우터
-app.use('/api_mypageData', Mypage);
+app.use('/mypage', Mypage);
+
 
 // 클라이언트 ID값
 app.get('/api_naver_client_id', function(req, res) {

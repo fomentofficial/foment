@@ -9,8 +9,7 @@ let connection = dbConfig.connection;
 
 const GetMyPage = {
   getMypageData: function (req, res) {
-    const naver_email = req.session.naverEmail; // 변수 이름 수정
-    console.log(naver_email);
+    const naver_email = req.headers["naver_email"];
 
     const findUser = "SELECT * FROM users WHERE naver_email=?";
     connection.query(findUser, [naver_email], (error, results, fields) => {
@@ -35,7 +34,14 @@ const GetMyPage = {
         }
 
         const templates = results;
-        res.render('mypage', { templates: templates }); // html 변수를 res.render()의 두 번째 인자로 전달
+        ejs.render(path.join(mypagePath, 'mypage.ejs'), { templates: templates }, (err, html) => {
+          if (err) {
+            console.error(err);
+            res.status(500).send('Server Error');
+            return;
+          }
+          res.render(html);
+        });
       });
     });
   }

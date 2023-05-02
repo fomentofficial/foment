@@ -37,6 +37,9 @@ const naverLoginClientSecret = process.env.NAVER_LOGIN_CLIENT_SECRET;
 const naverLoginCallbackUrl = process.env.NAVER_LOGIN_CALLBACK_URL;
 const naverLoginServiceUrl = process.env.NAVER_LOGIN_SERVICE_URL;
 
+// 세션 키
+const sessionkey = process.env.SESSION_SECRET_KEY;
+
 
 module.exports = {
   connection,
@@ -47,5 +50,6 @@ module.exports = {
   naverLoginClientId,
   naverLoginClientSecret,
   naverLoginCallbackUrl,
-  naverLoginServiceUrl
+  naverLoginServiceUrl,
+  sessionkey
 };
