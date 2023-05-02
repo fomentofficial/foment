@@ -21,24 +21,27 @@ const saveFile = async (req, res) => {
   try {
     const {
       imageUrls: imageUrls, // pass the image urls to the server
-      url: invURL,
-      sideContents: updatedSideContents
+      sideContents: updatedSideContents,
+      URLINFO: URLINFO
     } = req.body;
 
-    if (!invURL || !updatedSideContents) {
+    if (!updatedSideContents) {
       throw new Error('잘못된 요청');
     }
   
 
     const detailHtml = await ejs.renderFile(detailEjsPath, {
       imageUrls,
-      invURL,
       updatedSideContents
     });
 
     const $detail = cheerio.load(detailHtml);
     const headerWithClass = $detail('head *');
     const classHtml = updatedSideContents.toString();
+
+    // 여기를 템플릿 ID를 받아서 변경해줘야함
+    const templateID = URLINFO;
+    console.log(templateID);
 
     const html = `<!DOCTYPE html>
       <html>
@@ -53,11 +56,11 @@ const saveFile = async (req, res) => {
         </body>
       </html>`;
 
-    const fileName = `${path.basename(invURL)}.html`;
+    const fileName = `${path.basename(templateID)}.html`;
     const filePath = path.join(dataDir, fileName);
 
     await fs.writeFile(filePath, html);
-    console.log(`파일 저장: ${filePath}`);
+    console.log(`새로운 초대장 파일이 생성되었습니다: ${filePath}`);
     res.status(200).send('파일 저장 완료');
   } catch (error) {
     console.error(`파일 저장 실패: ${error.message}`);

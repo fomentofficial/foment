@@ -4,33 +4,35 @@ window.onload = function () {
     // 메인에서 카드 선택시
     const CreateBtn = document.getElementById('Create_InvitationBtn');
 
-    CreateBtn.addEventListener('click', () => {
-      const naverAccessToken = sessionStorage.getItem("naver_access_token");
-      console.log(naverAccessToken);
-      if (naverAccessToken === null) {
-        window.open('/api_Auth/login');
-      } else {
-        const naverEmailSession = sessionStorage.getItem('naver_email');
-        console.log(naverEmailSession);
-    
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api_CreateTemplate');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.setRequestHeader('naver_email', naverEmailSession);
-        xhr.onload = function () {
-          if (xhr.status === 200) {
-            console.log('POST 요청에 성공했습니다.');
-            let template_ID = xhr.responseText
-            let templateURL = `http://localhost:3000/data/template_${template_ID}.html`
-            window.open(templateURL, '_blank');
-            console.log(xhr.responseText);
-          } else {
-            console.error('POST 요청에 실패했습니다.');
-          }
-        };
-        xhr.send(JSON.stringify({ template_ID: 'template001' }));
-      }
-    });
+    if(CreateBtn){
+        CreateBtn.addEventListener('click', () => {
+            const naverAccessToken = sessionStorage.getItem("naver_access_token");
+            console.log(naverAccessToken);
+            if (naverAccessToken === null) {
+              window.open('/api_Auth/login');
+            } else {
+              const naverEmailSession = sessionStorage.getItem('naver_email');
+              console.log(naverEmailSession);
+          
+              const xhr = new XMLHttpRequest();
+              xhr.open('POST', '/api_CreateTemplate');
+              xhr.setRequestHeader('Content-Type', 'application/json');
+              xhr.setRequestHeader('naver_email', naverEmailSession);
+              xhr.onload = function () {
+                if (xhr.status === 200) {
+                  console.log('POST 요청에 성공했습니다.');
+                  let template_ID = xhr.responseText
+                  let templateURL = `http://localhost:3000/data/template_${template_ID}.html`
+                  window.open(templateURL, '_blank');
+                  console.log(xhr.responseText);
+                } else {
+                  console.error('POST 요청에 실패했습니다.');
+                }
+              };
+              xhr.send(JSON.stringify({ template_ID: 'template001' }));
+            }
+          });
+    }
     
 
 
@@ -2293,31 +2295,25 @@ async function saveInvitation() {
     });
 
 
-    // mypage.html로부터 가져올 요소 정리
-    const response = await fetch('../views/mypage.ejs');
-    const text = await response.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'text/html');
-    const cautionInfo = doc.querySelector('.InvitationCautionInfo');
-    const myPageURL = doc.querySelector('.InviteURLInfo');
+    // // mypage.html로부터 가져올 요소 정리
+    // const response = await fetch('../views/mypage.ejs');
+    // const text = await response.text();
+    // const parser = new DOMParser();
+    // const doc = parser.parseFromString(text, 'text/html');
+    // const cautionInfo = doc.querySelector('.InvitationCautionInfo');
 
-    // URL 정보 가져오기
-    myPageURL.innerHTML = UrlData;
+    // // Send the 'HistoryWrap' element's outerHTML to the server via a POST request.
+    // const myPageData = {
+    //     cautionInfoOuterHTML: cautionInfo.outerHTML,
+    // };
 
-    // Send the 'HistoryWrap' element's outerHTML to the server via a POST request.
-    const myPageData = {
-        url: UrlData,
-        cautionInfoOuterHTML: cautionInfo.outerHTML,
-        myPageURLHTML: myPageURL.outerHTML
-    };
-
-    await fetch('/api_SaveMyPage', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: JSON.stringify(myPageData)
-    });
+    // await fetch('/api_SaveMyPage', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json;charset=UTF-8'
+    //     },
+    //     body: JSON.stringify(myPageData)
+    // });
 }
 
 
@@ -2338,7 +2334,6 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteBtn.style.display = 'none';
         scrollPreventEvent.style.overflowY = 'scroll';
     };
-
 
     if (saveButton) {
         saveButton.addEventListener('click', () => {
@@ -2362,7 +2357,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         // XMLHttpRequest 객체를 생성하여 FormData를 서버로 전송
                         var xhr = new XMLHttpRequest();
-                        xhr.open("POST", "api_MultiImgUpload");
+                        xhr.open("POST", "/api_MultiImgUpload");
                         xhr.send(formData);
 
                         xhr.onreadystatechange = function () {
@@ -2446,13 +2441,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     imgElement.src = url;
                     console.log(url);
                 }
+                let URLINFO = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
+                console.log(`URLInfo: ${URLINFO}`);
 
                 // 변경된 HTML 코드를 sideContents 변수에 다시 할당
                 const updatedSideContents = sideContentsEl.outerHTML;
 
                 const requestData = {
                     sideContents: updatedSideContents, // 변경된 HTML 코드를 전송
-                    imageUrls: imageUrls // pass the image urls to the server
+                    imageUrls: imageUrls, // pass the image urls to the server
+                    URLINFO: URLINFO
                 };
 
                 fetch('/api_SaveInvitation', {
@@ -2468,14 +2466,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     toggleElements();
                     let templateURL = `/mypage`
 
+                    let previewButton = document.getElementById('previewInvitation');
                     let savedViewButton = document.getElementById('SavedView');
                     savedViewButton.addEventListener('click', () => {
                         if (templateURL) {
-                            window.open(templateURL, '_blank');
+                            window.open('/mypage', '_blank');
                         } else {
                             console.log('실패');
                         }
                     });
+
+                    previewButton.addEventListener('click', () => {
+                        if (previewButton) {
+                            window.open(`http://localhost:3000/data/${URLINFO}.html`, '_blank');
+                        } else {
+                            console.log('실패');
+                        }
+                    });
+
                     if (dimmed) {
                         dimmed.addEventListener('click', toggleElements);
                         scrollPreventEvent.style.overflowY = 'hidden';
@@ -2494,10 +2502,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     let MYPreview = document.getElementById('BtnInviteView');
-    let URLINFO = document.getElementById('InviteURLInfo');
+    let URLINFO = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
+
 
     if (URLINFO) {
-        let URLPATH = URLINFO.innerHTML.replace('https://foment.co.kr', '').trim();
+        let URLPATH = URLINFO
 
         if (MYPreview) {
             MYPreview.addEventListener('click', () => {

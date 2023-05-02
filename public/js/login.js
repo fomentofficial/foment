@@ -22,32 +22,40 @@ document.addEventListener('DOMContentLoaded', () => {
   //로그아웃시 함수
   if (naverAccessToken) {
     console.log(naverAccessToken);
-    emailinfo.innerText = naverId;
-    btn.innerText = "로그아웃";
-    LoginBound.style.display = "block";
-    btn.addEventListener("click", () => {
-      fetch('/api_Auth/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          naverAccessToken,
-          naverEmail
+    if(emailinfo){
+      emailinfo.innerText = naverId;
+    }
+    if(btn){
+      btn.innerText = "로그아웃";
+    }
+    if(LoginBound){
+      LoginBound.style.display = "block";
+    }
+    if(btn){
+      btn.addEventListener("click", () => {
+        fetch('/api_Auth/logout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            naverAccessToken,
+            naverEmail
+          })
         })
-      })
-      .then((response) => response.json())
-      .then((data) => {
-          if (data.success) {
-              alert('로그아웃 성공');
-          } else {
-              alert('로그아웃 실패');
-          }
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                alert('로그아웃 성공');
+            } else {
+                alert('로그아웃 실패');
+            }
+        });
+        sessionStorage.removeItem("naver_access_token");
+        sessionStorage.removeItem("naver_email"); // 이메일 정보도 삭제
+        location.replace("/");
       });
-      sessionStorage.removeItem("naver_access_token");
-      sessionStorage.removeItem("naver_email"); // 이메일 정보도 삭제
-      location.replace("/");
-    });
+    }
   } else {
 
     // 로그인시 들어가는 함수들

@@ -47,11 +47,6 @@ app.get('/detail', (req, res) => {
 });
 
 
-// EJS 파일을 렌더링하는 라우터
-// 서버 측 코드
-
-
-
 // 정적 파일 서비스 미들웨어 등록
 app.use(express.static(path.join(__dirname, 'public')));
 
