@@ -2334,12 +2334,19 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteBtn.style.display = 'none';
         scrollPreventEvent.style.overflowY = 'scroll';
     };
+    
+    // let files;
 
     if (saveButton) {
         saveButton.addEventListener('click', () => {
-
+            console.log('오류체크');
             let fileArray = [];
             let imageUrls = []; // array to hold the image urls returned by the server
+
+            // files 변수가 존재하지 않을 경우 빈 배열로 처리
+            if (!files) {
+                files = [];
+            }
 
             for (let i = 0; i < files.length; i++) {
                 var file = files[i];

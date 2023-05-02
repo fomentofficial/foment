@@ -1,5 +1,4 @@
 .mypage_contents{
-    height: calc(100% - 296px);
     max-width: 1200px;
     display: flex;
     flex-direction: column;

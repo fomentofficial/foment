@@ -1,6 +1,4 @@
-// 아이디를 찾아 템플릿 번호대로 DB에 박히게끔
-// 템플릿 번호대로 청첩장 화면 렌더링
-// 템플릿 번호대로 청첩장이 형성되는 함수
+
 const path = require('path');
 const fs = require('fs').promises;
 const ejs = require('ejs');
@@ -18,7 +16,7 @@ let CreateTemplate = {
     console.log(naver_email);
 
     const findUser = 'SELECT * FROM users WHERE naver_email=?';
-    const insertTemplate = 'INSERT INTO template (user_ID, template_ID) VALUES (?, ?)';
+    const insertTemplate = 'INSERT INTO template (user_ID, template_ID, create_date, update_date) VALUES (?, ?, NOW(), NOW() )';
 
     connection.query(findUser, [naver_email], (error, results, fields) => {
       if (error) {
