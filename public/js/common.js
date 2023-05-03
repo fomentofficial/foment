@@ -1,38 +1,72 @@
 
 window.onload = function () {
 
-    // 메인에서 카드 선택시
-    const CreateBtn = document.getElementById('Create_InvitationBtn');
+// Create_InvitationBtn 요소를 가져옵니다.
+const CreateBtn = document.getElementById('Create_InvitationBtn');
 
-    if(CreateBtn){
-        CreateBtn.addEventListener('click', () => {
-            const naverAccessToken = sessionStorage.getItem("naver_access_token");
-            console.log(naverAccessToken);
-            if (naverAccessToken === null) {
-              window.open('/api_Auth/login');
+// CreateBtn 이 존재한다면 이벤트리스너를 추가합니다.
+if (CreateBtn) {
+  CreateBtn.addEventListener('click', () => {
+    // 현재 로그인한 네이버 사용자의 access token을 가져옵니다.
+    const naverAccessToken = sessionStorage.getItem("naver_access_token");
+    console.log(naverAccessToken);
+    
+    // 만약 access token이 null이라면 로그인 페이지로 이동합니다.
+    if (naverAccessToken === null) {
+      window.open('/api_Auth/login');
+    } else {
+      // 현재 로그인한 네이버 사용자의 이메일 주소를 가져옵니다.
+      const naverEmailSession = sessionStorage.getItem('naver_email');
+      console.log(naverEmailSession);
+
+      // /api_CreateTemplate 경로로 POST 요청을 보냅니다.
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/api_CreateTemplate');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader('naver_email', naverEmailSession);
+
+      // POST 요청이 완료되면 실행할 콜백 함수입니다.
+      xhr.onload = function () {
+        // 만약 요청이 성공했다면
+        if (xhr.status === 200) {
+          console.log('POST 요청에 성공했습니다.');
+
+          // 응답으로 받은 template_ID를 가져옵니다.
+          let template_ID = xhr.responseText;
+
+          // /api_GetTemplate/:id 경로로 GET 요청을 보냅니다.
+          const xhr2 = new XMLHttpRequest();
+          xhr2.open('GET', `/api_CreateTemplate/${template_ID}`);
+
+          // GET 요청이 완료되면 실행할 콜백 함수입니다.
+          xhr2.onload = function () {
+            // 만약 요청이 성공했다면
+            if (xhr2.status === 200) {
+              console.log('GET 요청에 성공했습니다.');
+
+              // 응답으로 받은 렌더링된 템플릿 코드를 가져와서 새로운 창을 엽니다.
+              const renderedtemplateejs = xhr2.responseText;
+              console.log(renderedtemplateejs);
+              const newWindow = window.location.href = `/api_CreateTemplate/${template_ID}`;
+              newWindow.document.write(renderedtemplateejs);
             } else {
-              const naverEmailSession = sessionStorage.getItem('naver_email');
-              console.log(naverEmailSession);
-          
-              const xhr = new XMLHttpRequest();
-              xhr.open('POST', '/api_CreateTemplate');
-              xhr.setRequestHeader('Content-Type', 'application/json');
-              xhr.setRequestHeader('naver_email', naverEmailSession);
-              xhr.onload = function () {
-                if (xhr.status === 200) {
-                  console.log('POST 요청에 성공했습니다.');
-                  let template_ID = xhr.responseText
-                  let templateURL = `http://localhost:3000/data/template_${template_ID}.html`
-                  window.open(templateURL, '_blank');
-                  console.log(xhr.responseText);
-                } else {
-                  console.error('Create Template POST 요청에 실패했습니다.');
-                }
-              };
-              xhr.send(JSON.stringify({ template_ID: 'template001' }));
+              console.error('Get Template GET 요청에 실패했습니다.');
             }
-          });
+          };
+          xhr2.send();
+          console.log(xhr.responseText);
+        } else {
+          console.error('Create Template POST 요청에 실패했습니다.');
+        }
+      };
+      
+      // POST 요청의 body에 담을 데이터를 JSON 형식으로 만들어서 보냅니다.
+      xhr.send(JSON.stringify({ template_ID: 'template001' }));
     }
+  });
+}
+
+
     
 
 
@@ -2532,24 +2566,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Get 요청을 통한 수정 페이지 불러오기
-    const btnEdit = document.getElementById('BtnEdit');
-    if (btnEdit) {
-        const btnEdit = document.getElementById('BtnEdit');
-        btnEdit.addEventListener('click', () => {
-            window.location.href = "/api_EditInvitation";
-            fetch('/api_EditInvitation', {
-                method: 'GET'
-            })
-                .then(response => response.text())
-                .then(html => {
-                    // document.body.innerHTML = html.substring(html.indexOf("<body>")+6, html.indexOf("</body>"));
-                    document.body.innerHTML = html;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+    const btnEditList = document.querySelectorAll('.BtnEdit');
+
+    btnEditList.forEach((btnEdit) => {
+    btnEdit.addEventListener('click', () => {
+        const inviteURLInfoList = btnEdit.parentNode.parentNode.parentNode.querySelectorAll('.InviteURLInfo');
+        inviteURLInfoList.forEach((inviteURLInfo) => {
+        let EditURLInfo = inviteURLInfo.textContent.trim();
+        console.log(EditURLInfo);
+
+        fetch(`/api_EditInvitation?inviteURL=${EditURLInfo}`, {
+            method: 'GET'
+        })
+        .then(response => response.text())
+        .then(html => {
+            // document.body.innerHTML = html;
+            const editpage = window.location.href = `/api_EditInvitation/${EditURLInfo}`;
+            editpage.document.write(renderedtemplateejs);
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
-    }
+        });
+    });
+    });
+
+    
+    
+    
+
 
 
 });

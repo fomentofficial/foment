@@ -22,7 +22,6 @@
             </div>
             <div class="HistorySection">
             <% var templates = templates || []; %>
-            <% console.log("templates 값:", templates); %>
             <% if (templates.length > 0) { %>
               <% for (var i = 0; i < templates.length; i++) { %>
                 <%- include('./partials/mypageData.ejs', { template: templates[i] }) %>
