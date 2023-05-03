@@ -26,7 +26,7 @@ window.onload = function () {
                   window.open(templateURL, '_blank');
                   console.log(xhr.responseText);
                 } else {
-                  console.error('POST 요청에 실패했습니다.');
+                  console.error('Create Template POST 요청에 실패했습니다.');
                 }
               };
               xhr.send(JSON.stringify({ template_ID: 'template001' }));
@@ -2230,12 +2230,16 @@ async function saveInvitation() {
     const OrderTabJSON = JSON.stringify(OrderTabData);
     console.log('OrderTab Data:' + OrderTabJSON);
 
+    // 템플릿 ID 조회용
+    let templateID = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
+    console.log(`URLInfo: ${templateID}`);
 
 
     // 청첩장 DB 저장 Data
 
     const DBData = {
         user_naver_ID: naverEmail,
+        templateID: templateID,
         theme_type: ThemeData,
         BGM_type: ActiveBGMElementData,
         effect_type: ActiveEffectElementData,
