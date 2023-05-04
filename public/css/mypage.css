@@ -1,5 +1,6 @@
 .mypage_contents{
     max-width: 1200px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -10,7 +11,7 @@
 
 .mypage_inner{
     width: 100%;
-    height: 100%;
+    min-height: calc(100vh - 300px);
     display: flex;
     flex-direction: column;
     gap: 20px;

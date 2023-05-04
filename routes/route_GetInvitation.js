@@ -1,8 +1,8 @@
 // routes/EditInvitationRouter.js 파일
 const express = require('express');
 const router = express.Router();
-const detailController = require('../controllers/Ctrl_EditInvitation');
+const GetPageController = require('../controllers/Ctrl_GetInvitation');
 
-router.get('/:EditURLInfo', detailController.renderEditPage);
+router.get('/:GetURLInfo', GetPageController.renderGetPage);
 
 module.exports = router;

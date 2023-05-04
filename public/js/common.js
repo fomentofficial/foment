@@ -2545,43 +2545,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 마이페이지에서 Get 요청을 통한 청첩장 미리보기 페이지 불러오기 api
+    let MYpage_InvitePreview = document.querySelectorAll('.BtnPreview');
 
-    let MYPreview = document.getElementById('BtnInviteView');
-    let URLINFO = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
-
-
-    if (URLINFO) {
-        let URLPATH = URLINFO
-
-        if (MYPreview) {
-            MYPreview.addEventListener('click', () => {
-                if (URLPATH) {
-                    console.log(URLPATH);
-                    window.open(`http://localhost:3000/data${URLPATH}.html`, '_blank');
-                } else {
-                    console.log('URL 정보를 찾을 수 없습니다.');
-                }
+        MYpage_InvitePreview.forEach((preview) => {
+            preview.addEventListener('click', () => {
+                let inviteURLInfoList = preview.parentNode.parentNode.parentNode.querySelectorAll('.InviteURLInfo');
+                inviteURLInfoList.forEach((inviteURLInfo) => {
+                let GetURLInfo = inviteURLInfo.textContent.trim();
+                console.log(GetURLInfo);
+        
+                fetch(`/api_GetInvitation/${GetURLInfo}`, {
+                    method: 'GET'
+                  })
+                  
+                .then(response => response.text())
+                .then(html => {
+                    // document.body.innerHTML = html;
+                    let editpage = window.location.href = `/api_GetInvitation/${GetURLInfo}`;
+                    editpage.document.write(renderedtemplateejs);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+                });
             });
-        }
-    }
+            });
 
-    // Get 요청을 통한 수정 페이지 불러오기
-    const btnEditList = document.querySelectorAll('.BtnEdit');
+    // 마이페이지에서 Get 요청을 통한 수정 페이지 불러오기 api
+    let btnEditList = document.querySelectorAll('.BtnEdit');
 
     btnEditList.forEach((btnEdit) => {
     btnEdit.addEventListener('click', () => {
-        const inviteURLInfoList = btnEdit.parentNode.parentNode.parentNode.querySelectorAll('.InviteURLInfo');
+        let inviteURLInfoList = btnEdit.parentNode.parentNode.parentNode.querySelectorAll('.InviteURLInfo');
         inviteURLInfoList.forEach((inviteURLInfo) => {
         let EditURLInfo = inviteURLInfo.textContent.trim();
         console.log(EditURLInfo);
 
-        fetch(`/api_EditInvitation?inviteURL=${EditURLInfo}`, {
+        fetch(`/api_EditInvitation/${EditURLInfo}`, {
             method: 'GET'
-        })
+          })
+          
         .then(response => response.text())
         .then(html => {
             // document.body.innerHTML = html;
-            const editpage = window.location.href = `/api_EditInvitation/${EditURLInfo}`;
+            let editpage = window.location.href = `/api_EditInvitation/${EditURLInfo}`;
             editpage.document.write(renderedtemplateejs);
         })
         .catch(error => {

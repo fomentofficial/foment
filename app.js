@@ -63,6 +63,7 @@ const AuthCallback = require('./routes/route_api_AuthCallback');
 const URLCheck = require('./routes/route_api_URLCheck');
 const Mypage = require('./routes/route_api_Mypage');
 const CreateTemplate = require('./routes/route_api_CreateTemplate');
+const GetInvitationPageRouter = require('./routes/route_GetInvitation');
 
 app.use(express.json());
 
@@ -70,6 +71,7 @@ app.use('/api_TitleImgUpload', TitleImgUpload);
 app.use('/api_SaveInvitation', saveProgressRouter);
 app.use('/api_SaveMyPage', saveHistoryRouter);
 app.use('/api_EditInvitation', EditInvitationRouter);
+app.use('/api_GetInvitation', GetInvitationPageRouter);
 app.use('/api_MultiImgUpload', MultiImgUpload);
 
 // 네이버 로그인 라우터
