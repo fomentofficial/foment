@@ -2500,13 +2500,31 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     });
 
+
                     previewButton.addEventListener('click', () => {
-                        if (previewButton) {
-                            window.open(`http://localhost:3000/data/${URLINFO}.html`, '_blank');
-                        } else {
-                            console.log('실패');
-                        }
+        
+                        const currentUrl = window.location.href;
+                        const templateId = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+                        console.log(templateId); // 출력 예시: 6wVX1F8vEYmxb2HA3L6quc
+                        
+                
+                        fetch(`/api_GetInvitation/${templateId}`, {
+                            method: 'GET'
+                          })
+                          
+                        .then(response => response.text())
+                        .then(html => {
+                            // document.body.innerHTML = html;
+                            let editpage = window.location.href = `/api_GetInvitation/${templateId}`;
+                            editpage.document.write(renderedtemplateejs);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+              
                     });
+
+
 
                     if (dimmed) {
                         dimmed.addEventListener('click', toggleElements);

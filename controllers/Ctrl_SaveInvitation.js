@@ -29,7 +29,7 @@ const saveFile = async (req, res) => {
       throw new Error('잘못된 요청');
     }
   
-
+    // 여기 페이지를 detail.ejs 형식의 데이터에 맞게 변경
     const detailHtml = await ejs.renderFile(detailEjsPath, {
       imageUrls,
       updatedSideContents
@@ -56,7 +56,7 @@ const saveFile = async (req, res) => {
         </body>
       </html>`;
 
-    const fileName = `${path.basename(templateID)}.html`;
+    const fileName = `${path.basename(templateID)}.ejs`;
     const filePath = path.join(dataDir, fileName);
 
     await fs.writeFile(filePath, html);
