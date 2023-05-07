@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>포먼트 청첩장</title><link rel="stylesheet" href="../css/common.css"><link rel="stylesheet" href="../css/detail.css"><link rel="stylesheet" href="../css/main.css"><link rel="stylesheet" href="../css/login.css"><link rel="stylesheet" href="../css/font.css"><link rel="stylesheet" href="../css/mypage.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500&amp;display=swap" rel="stylesheet"><script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aead73005a77433d268644553628caba&amp;libraries=services"></script><script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js" integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script><script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><script script="" src="https://apis.openapi.sk.com/tmap/vectorjs?version=1&amp;appKey=x1DDg2svJkaH73F7kDOD11W4C0siglCT1iCJ4tNu"></script><script src="https://code.jquery.com/jquery-3.6.2.js" integrity="sha256-pkn2CUZmheSeyssYw3vMp1+xyub4m+e+QK4sQskvuo4=" crossorigin="anonymous"></script><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script><script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script><script src="https://fengyuanchen.github.io/cropper/js/cropper.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script><script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"></script><script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script><script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script><script src="../js/login.js"></script><script src="../js/common.js"></script>
+        </head>
+        <body>
+          <div class="AppView" id="Appview">
+            <div class="side_contents is-visible">
+            <div class="TitleSection is-visible">
+                <!-- 오디오 조정 -->
+                <div class="AudioPlayPause">
+                    <div class="AudioControl">
+                        <img src="../Resource/assets/Icon/BtnPlay.svg" class="audiobutton" id="button">
+                        <img src="../Resource/assets/Icon/BtnPause.svg" class="audiobutton" id="buttonpause">
+                    </div>
+                </div>
+                <!-- 타이틀 -->
+                <div class="TitleSectionWrap">
+                    <div class="TitleDeco">
+                        <img class="DecorationImg" src="../Resource/assets/Icon/deco.svg" alt="">
+                    </div>
+                    <div class="BrideGroom">
+                        <div class="GroomName">
+                            <span class="WeddingTitleText" id="GroomFirstName">
+                                신랑
+                            </span>
+                            <span class="WeddingTitleText" id="GroomLastName">
+                                이름
+                            </span>
+                        </div>
+                        <div class="BridgeText">
+                            <span class="WeddingBodyText" id="">
+                                그리고
+                            </span>
+                        </div>
+                        <div class="BrideName">
+                            <span class="WeddingTitleText" id="BrideFirstName">
+                                신부
+                            </span>
+                            <span class="WeddingTitleText" id="BrideLastName">
+                                이름
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 대표이미지 -->
+                <div class="image-container">
+                    <div class="preview">
+                        <div class="previewframe">
+                            <div class="VideoEffect">
+                                <img class="effects" src="../Resource/assets/Effect/effect_cherryblossom.png">
+                                <video class="audio" src="" autoplay="autoplay" loop="loop"></video>
+                            </div>
+                            <div class="innerframe"></div>
+                            <img id="preview-image" src="../Resource/mainasset/WeddingTitleImg.jpg">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 웨딩날짜&장소 -->
+                <div class="WeddingDateLocation">
+                    <div class="DateLocation">
+                        <div class="WeddingBodyText">
+                            <span class="WeddingDate" id="WeddingDateTitle">5월 8일</span>
+                            <span class="WeddingDay" id="WeddingDayTitle">토요일</span>
+                            <span class="AMPM" id="AMPM">오후</span>
+                            <span class="WeddingTime" id="WeddingTime">1시</span>
+                            <span class="WeddingMinute" id="WeddingMinute">30분</span>
+                        </div>
+                        <div class="WeddingLocate">
+                            <div class="WeddingBodyText" id="WeddingLocateTitle">
+                                서울숲 보테가마지오
+                            </div>
+                            <div class="WeddingBodyText" id="WeddingHallInfo">
+                                로스타뇨 홀 2F
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="OrderSection is-visible">
+                <div class="InviteArea is-visible" data-id="Toggle_Invite">
+                    <!-- 초대문구 -->
+                    <div class="InviteContentsArea">
+                        <div class="TabContent Active" id="Tab-1">
+                            <div class="InvitationTextArea">
+                                <div class="WeddingTitleText" id="InviteTitle">
+                                    초대합니다
+                                </div>
+                                <div class="WeddingBodyText" id="InviteBodyText">
+                                    평생을 함께하고 싶은 사람이 생겼습니다.<br>처음처럼 변치않는 마음으로 서로 아끼며<br>예쁘게 살겠습니다.
+                                    <br>부디 함께하시어<br>저희의 하나됨을 따듯한 미소로<br>축복해주시기를 바랍니다.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="TabContent" id="Tab-2">
+                            <div class="InvitationTextArea">
+                                <div class="WeddingBodyTitle">
+                                    이제 함께 하려합니다.
+                                </div>
+                                <div class="WeddingBodyText">
+                                    평생을 같이 하고 싶은 사람을 만났습니다.<br>서로 아껴주고 이해하며 사랑하는 부부로 살고자 합니다.<br>저희 약속 위에 따뜻한 축복해주시어 힘찬 출발의 디딤이 되어 주십시오. <br>참석해 주셔서 함께 축복해주시면 감사하겠습니다.<br> 신랑 신부 올림
+                                </div>
+                            </div>
+                        </div>
+                        <div class="TabContent" id="Tab-3">
+                            <div class="InvitationTextArea">
+                                <div class="WeddingBodyTitle">
+                                    초대합니다333333
+                                </div>
+                                <div class="WeddingBodyText">
+                                    더 이상 헤어지는 길을 아쉬워하고 싶지 않습니다<br>오랜 만남 끝에 저희 둘이 하나 되는 날<br>귀한 분들을 모시고 평생의 서약을 올리고자 합니다. 저희의 첫 시작을
+                                    내딛는 날<br>참석해 주셔서 함께 축복해주시면 감사하겠습니다.<br> 신랑 신부 올림
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 구분선 -->
+                    <div class="DivDivider">
+                        <div class="divider"></div>
+                    </div>
+
+                    <!-- 가족정보 -->
+                    <div class="FamilyInfo" id="scrollFamilyinfo">
+                        <div class="WeddingBodyText">
+                            <div class="GroomFamilyStatusInfo" id="GroomFamilyStatusInfo">
+                                <span class="statustype" id="GroomFatherStatusInfo"></span>
+                                <img class="ImgMum" id="GroomFatherMum" src="../Resource/assets/Icon/mum.png" alt="">
+                                <span id="GroomFatherFirstName">김</span><span id="GroomFatherLastName">덕환</span>
+                                <span class="dot">∙</span>
+                                <img class="ImgMum" id="GroomMotherMum" src="../Resource/assets/Icon/mum.png" alt="">
+                                <span class="statustype" id="GroomMotherStatusInfo"></span>
+                                <span id="GroomMotherFirstName">조</span><span id="GroomMotherLastName">희연</span>
+                                <span class="relationship" id="GroomRelationship">의 아들</span>
+                                <span id="GroomFirstName2">신랑</span><span id="GroomLastName2">이름</span>
+                            </div>
+                        </div>
+                        <div class="WeddingBodyText">
+                            <div class="BrideFamilyStatusInfo" id="BrideFamilyStatusInfo">
+                                <span class="statustype" id="BrideFatherStatusInfo"></span>
+                                <img class="ImgMum" id="BrideFatherMum" src="../Resource/assets/Icon/mum.png" alt="">
+                                <span id="BrideFatherFirstName">곽</span>
+                                <span id="BrideFatherLastName">상돈</span>
+                                <span class="dot">∙</span>
+                                <span class="statustype" id="BrideMotherStatusInfo"></span>
+                                <img class="ImgMum" id="BrideMotherMum" src="../Resource/assets/Icon/mum.png" alt="">
+                                <span id="BrideMotherFirstName">최</span>
+                                <span id="BrideMotherLastName">순자</span>
+                                <span class="relationship" id="BrideRelationship">의 딸</span>
+                                <span id="BrideFirstName2">신부</span><span id="BrideLastName2">이름</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 캘린더 -->
+                <div class="sec_cal" data-id="Toggle_Calendar">
+                    <div class="cal_nav">
+                        <div class="year-month" id="TextDateCalendar">5월 8일</div>
+                    </div>
+                    <div class="WeddingBodyText" id="CalDayTime">
+                        <span class="WeddingDay" id="CalWeddingDayTitle">월요일</span>
+                        <span class="AMPM" id="CalAMPM">오후</span>
+                        <span class="WeddingTime" id="CalWeddingTime">1시</span>
+                        <span class="WeddingMinute" id="CalWeddingMinute">30분</span>
+                    </div>
+                    <div class="cal_wrap">
+                        <div class="days">
+                            <div class="day">일</div>
+                            <div class="day">월</div>
+                            <div class="day">화</div>
+                            <div class="day">수</div>
+                            <div class="day">목</div>
+                            <div class="day">금</div>
+                            <div class="day">토</div>
+                        </div>
+                        <div class="dates"><div class="day prev disable">30</div><div class="day current">1</div><div class="day current">2</div><div class="day current">3</div><div class="day current">4</div><div class="day current">5</div><div class="day current saturday">6</div><div class="day current sunday">7</div><div class="day current today">8</div><div class="day current">9</div><div class="day current">10</div><div class="day current">11</div><div class="day current">12</div><div class="day current saturday">13</div><div class="day current sunday">14</div><div class="day current">15</div><div class="day current">16</div><div class="day current">17</div><div class="day current">18</div><div class="day current">19</div><div class="day current saturday">20</div><div class="day current sunday">21</div><div class="day current">22</div><div class="day current">23</div><div class="day current">24</div><div class="day current">25</div><div class="day current">26</div><div class="day current saturday">27</div><div class="day current sunday">28</div><div class="day current">29</div><div class="day current">30</div><div class="day current">31</div><div class="day next disable">1</div><div class="day next disable">2</div><div class="day next disable">3</div></div>
+                        <div class="WeddingBodyText">
+                            <div class="ddaysection">
+                                <div class="ddaytext1">결혼식이 </div>
+                                <div class="dday" id="dday">3일</div>
+                                <div class="ddaytext1">남았습니다.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 웨딩 갤러리 -->
+                <div class="GalleryArea" data-id="Toggle_Gallery">
+                    <div class="GalleryTitleArea" style="display: block;">
+                        <div class="WeddingBodyTitle">
+                            갤러리
+                        </div>
+                        <div class="WeddingBodyText">
+                            GALLERY
+                        </div>
+                    </div>
+                    <ul class="grid-container" style="display: grid;">
+                    <li class="grid-item" file="소셜공유.png"><img class="grid-thumb" id="appendimg" src="https://foment.s3.ap-northeast-2.amazonaws.com/foment_img_storage/1683473534014-5dd0a5f7-8ca5-4fb8-a365-34c36755af7c-áá©áá§á¯áá©á¼áá².png"></li></ul>
+                    <button class="BtnBasic" id="LoadMoreBtn">더 보기</button>
+                </div>
+
+                <!-- 식장 위치 -->
+                <div class="LocationSection" data-id="Toggle_WeddingLocation">
+                    <div class="WeddingTitleText" id="AddressTitle">
+                        식장 위치
+                    </div>
+                    <div class="WeddingLocate">
+                        <div class="WeddingBodyText" id="WeddingLocateTitleMap">
+                            서울숲 보테가마지오
+                        </div>
+                        <div class="WeddingBodyText" id="WeddingHallInfoMap">
+                            로스타뇨 홀 2F
+                        </div>
+                    </div>
+                    <div class="WeddingBodyText" id="WeddingAddress">성동구 2가 1길 27</div>
+                    <div class="map_area">
+                        <div class="mapinfo" id="map" style="position: relative; overflow: hidden; background: url(&quot;http://t1.daumcdn.net/mapjsapi/images/2x/bg_tile.png&quot;);"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; touch-action: none; cursor: url(&quot;http://t1.daumcdn.net/mapjsapi/images/2x/cursor/openhand.cur.ico&quot;) 7 5, url(&quot;http://t1.daumcdn.net/mapjsapi/images/2x/cursor/openhand.cur.ico&quot;), default;"><div style="position: absolute;"><div style="position: absolute; z-index: 0;"></div><div style="position: absolute; z-index: 1; left: 0px; top: 0px;"><img src="http://map2.daumcdn.net/map_2d_hd/2303ksn/L3/1995/866.png" alt="" role="presentation" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -211px; top: 235px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d_hd/2303ksn/L3/1995/867.png" alt="" role="presentation" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 45px; top: 235px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d_hd/2303ksn/L3/1995/868.png" alt="" role="presentation" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 301px; top: 235px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d_hd/2303ksn/L3/1996/866.png" alt="" role="presentation" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -211px; top: -21px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d_hd/2303ksn/L3/1996/867.png" alt="" role="presentation" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 45px; top: -21px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d_hd/2303ksn/L3/1996/868.png" alt="" role="presentation" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 301px; top: -21px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d_hd/2303ksn/L3/1997/866.png" alt="" role="presentation" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -211px; top: -277px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d_hd/2303ksn/L3/1997/867.png" alt="" role="presentation" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 45px; top: -277px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d_hd/2303ksn/L3/1997/868.png" alt="" role="presentation" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 301px; top: -277px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"></div><div style="position: absolute; z-index: 1;"></div><div style="width: 334px; height: 294px; position: absolute; z-index: 1;"></div><div style="position: absolute; z-index: 1;"><svg version="1.1" style="stroke: none; stroke-dashoffset: 0.5; stroke-linejoin: round; fill: none; transform: translateZ(0px); position: absolute; width: 1670px; height: 1470px; left: -668px; top: -588px;" viewBox="0 0 1670 1470"><defs></defs></svg></div><div style="position: absolute; z-index: 1; width: 100%; height: 0px; transform: translateZ(0px);"><div style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 167px; top: 148px;"><img draggable="false" src="http://t1.daumcdn.net/mapjsapi/images/2x/marker.png" alt="" role="presentation" title="" style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img src="http://t1.daumcdn.net/mapjsapi/images/2x/transparent.gif" alt="" role="presentation" draggable="false" usemap="#daum.maps.Marker.Area:1" style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map id="daum.maps.Marker.Area:1" name="daum.maps.Marker.Area:1"><area href="javascript:void(0)" alt="" role="presentation" shape="poly" coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27" title="" style="-webkit-tap-highlight-color: transparent;"></map></div></div></div></div><div style="position: absolute; cursor: default; z-index: 1; margin: 0px 6px; height: 19px; line-height: 14px; left: 0px; bottom: 0px; color: rgb(0, 0, 0);"><div style="color: rgb(0, 0, 0); text-align: center; font-size: 10px; float: left;"><div style="float: left; margin: 2px 3px 0px 4px; height: 6px; transition: width 0.1s ease 0s; border-top: none rgb(0, 0, 0); border-right: 2px solid rgb(0, 0, 0); border-bottom: 2px solid rgb(0, 0, 0); border-left: 2px solid rgb(0, 0, 0); border-image: initial; width: 46px;"></div><div style="float: left; margin: 0px 4px 0px 0px; font-family: AppleSDGothicNeo-Regular, 돋움, dotum, sans-serif; font-weight: bold; color: rgb(0, 0, 0);">50m</div></div><div style="margin: 0px 4px; float: left;"><a target="_blank" href="http://map.kakao.com/" title="Kakao 지도로 보시려면 클릭하세요." style="float: left; width: 32px; height: 10px;"><img src="http://t1.daumcdn.net/mapjsapi/images/2x/m_bi_b.png" alt="Kakao 지도로 이동" style="float: left; width: 32px; height: 10px; border: none;"></a><div style="font: 11px / 11px Arial, Tahoma, Dotum, sans-serif; float: left;"></div></div></div><div style="cursor: auto; position: absolute; z-index: 2; left: 0px; top: 0px;"></div></div>
+                        <div class="NavigationSection">
+                            <div class="NavigationItem" id="NaverNav">
+                                <span class="NaverNavIcon"><img class="NavIcon" src="../Resource/assets/Icon/icon_navermap.png" alt=""></span>
+                                <span>네이버 지도</span>
+                            </div>
+                            <div class="NavigationItem" id="KakaoNav">
+                                <span class="KakaoNavIcon"><img class="NavIcon" src="../Resource/assets/Icon/icon_kakaonavi.png" alt=""></span>
+                                <span>카카오 네비</span>
+                            </div>
+                            <div class="NavigationItem" id="TmapNav">
+                                <span class="TmapNavIcon"><img class="NavIcon" src="../Resource/assets/Icon/icon_tmap.png" alt=""></span>
+                                <span>티맵</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--계좌번호 영역-->
+                <div class="AccountSection" data-id="Toggle_Account">
+                    <div class="WeddingTitleText">
+                        마음 전하실 곳
+                    </div>
+                    <ul class="accordion">
+                        <li class="accordionitem" id="accordionitem1">
+                            <div class="licontents">
+                                <a href="#" class="accordion-title">신랑측 계좌번호</a>
+                                <div class="accordion-content" id="accodion-content">
+                                    <div class="accodian-inner">
+                                        <div class="accodian-info">
+                                            <div class="WeddingBodyText" id="accountinformation">
+                                                계좌정보
+                                            </div>
+                                            <div class="accounttarget">
+                                                <div class="WeddingBodyText" id="bankinfo">은행명</div>
+                                                <div class="WeddingBodyText" id="holderinfo">예금주</div>
+                                            </div>
+                                        </div>
+                                        <div class="accodian-btninfo">
+                                            <button class="Btnsmall" id="copybtn">복사하기</button>
+                                            <button class="Btnsmall" id="qrupload">QR코드</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordionitem" id="accordionitem2">
+                            <div class="licontents">
+                                <a href="#" class="accordion-title">신부측 계좌번호</a>
+                                <div class="accordion-content" id="accodion-content">
+                                    <div class="accodian-inner">
+                                        <div class="accodian-info">
+                                            <div class="WeddingBodyText" id="accountinformation">
+                                                계좌정보
+                                            </div>
+                                            <div class="accounttarget">
+                                                <div class="WeddingBodyText" id="bankinfo">은행명</div>
+                                                <div class="WeddingBodyText" id="holderinfo">예금주</div>
+                                            </div>
+                                        </div>
+                                        <div class="accodian-btninfo">
+                                            <button class="Btnsmall" id="copybtn">복사하기</button>
+                                            <button class="Btnsmall" id="qrupload">QR코드</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 방명록 -->
+                <div class="BoardSection" data-id="Toggle_Board">
+                    <div class="WeddingTitleText">
+                        방명록
+                    </div>
+                    <div class="BoardArea">
+                        <div class="BoardItem">
+                            <div class="BoardText">
+                                <div class="BoardFrom">
+                                    <div class="From">From</div>
+                                    <div class="FromTarget">강스캉</div>
+                                </div>
+                                <div class="BoardBody">
+                                    너무 축하해~^^ 행복하게 살아
+                                </div>
+                            </div>
+                            <div class="BoardDelete">
+                                <img class="BoardIconDel" src="../Resource/assets/Icon/Del.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="BoardItem">
+                            <div class="BoardText">
+                                <div class="BoardFrom">
+                                    <div class="From">From</div>
+                                    <div class="FromTarget">강스캉</div>
+                                </div>
+                                <div class="BoardBody">
+                                    너무 축하해~^^ 행복하게 살아
+                                </div>
+                            </div>
+                            <div class="BoardDelete">
+                                <img class="BoardIconDel" src="../Resource/assets/Icon/Del.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="BoardItem">
+                            <div class="BoardText">
+                                <div class="BoardFrom">
+                                    <div class="From">From</div>
+                                    <div class="FromTarget">강스캉</div>
+                                </div>
+                                <div class="BoardBody">
+                                    너무 축하해~^^ 행복하게 살아
+                                </div>
+                            </div>
+                            <div class="BoardDelete">
+                                <img class="BoardIconDel" src="../Resource/assets/Icon/Del.svg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="BoardControl">
+                        <button class="BtnIcon">
+                            <span>전체 보기</span>
+                            <img class="BtnInnerIc" src="../Resource/assets/Icon/menu.svg" alt="">
+                        </button>
+                        <button class="BtnIcon">
+                            <span>작성하기</span>
+                            <img class="BtnInnerIc" src="../Resource/assets/Icon/Edit.svg" alt="">
+                        </button>
+                    </div>
+                    <div class="SectionLine">
+                        <div class="borderline"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 공유 섹션 -->
+            <div class="ShareSection">
+                <button class="BtnIcon" id="KakaoShareBtn">
+                    <span>카카오톡으로 공유하기</span>
+                    <img class="BtnInnerIc" src="../Resource/assets/Icon/Kakao.svg" alt="">
+                </button>
+                <button class="BtnIcon" id="InviteAddressCopyBtn">
+                    <span>청첩장 주소 복사하기</span>
+                    <img class="BtnInnerIc" src="../Resource/assets/Icon/link.svg" alt="">
+                </button>
+            </div>
+
+            <!-- 푸터 -->
+            <div class="footer">
+                <div class="logo">
+                    <img class="footerlogo" src="../Resource/Logo_Symbol.svg" alt="">
+                </div>
+                <div class="copyright">
+                    Copyright © Foment All rights reserved.
+                </div>
+            </div>
+        </div>
+          </div>
+          <div class="BgView"></div>
+        </body>
+      </html>

@@ -27,8 +27,6 @@ const renderEditPage = (req, res) => {
       // MySQL에서 조회한 데이터를 전달
       data: results[0]
     };
-    console.log();
-    
     res.render(TemplateFilePath, detaildata || {});
   });
 };

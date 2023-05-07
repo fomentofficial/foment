@@ -56,7 +56,7 @@ const saveFile = async (req, res) => {
         </body>
       </html>`;
 
-    const fileName = `${path.basename(templateID)}.ejs`;
+    const fileName = `${path.basename(templateID)}.html`;
     const filePath = path.join(dataDir, fileName);
 
     await fs.writeFile(filePath, html);

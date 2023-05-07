@@ -2331,27 +2331,6 @@ async function saveInvitation() {
         },
         body: JSON.stringify(DBData)
     });
-
-
-    // // mypage.html로부터 가져올 요소 정리
-    // const response = await fetch('../views/mypage.ejs');
-    // const text = await response.text();
-    // const parser = new DOMParser();
-    // const doc = parser.parseFromString(text, 'text/html');
-    // const cautionInfo = doc.querySelector('.InvitationCautionInfo');
-
-    // // Send the 'HistoryWrap' element's outerHTML to the server via a POST request.
-    // const myPageData = {
-    //     cautionInfoOuterHTML: cautionInfo.outerHTML,
-    // };
-
-    // await fetch('/api_SaveMyPage', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json;charset=UTF-8'
-    //     },
-    //     body: JSON.stringify(myPageData)
-    // });
 }
 
 
