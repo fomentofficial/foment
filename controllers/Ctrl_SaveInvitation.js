@@ -22,7 +22,8 @@ const saveFile = async (req, res) => {
     const {
       imageUrls: imageUrls, // pass the image urls to the server
       sideContents: updatedSideContents,
-      URLINFO: URLINFO
+      URLINFO: URLINFO,
+      DBData: DBData
     } = req.body;
 
     if (!updatedSideContents) {
@@ -30,10 +31,20 @@ const saveFile = async (req, res) => {
     }
   
     // 여기 페이지를 detail.ejs 형식의 데이터에 맞게 변경
-    const detailHtml = await ejs.renderFile(detailEjsPath, {
-      imageUrls,
-      updatedSideContents
-    });
+
+    const data = {
+      // 이미지 정보 및 콘텐츠 내용 정리
+      imageUrls: imageUrls,
+      updatedSideContents: updatedSideContents,
+
+      invitation_title: DBData.invitation_title
+    };
+
+    console.log(data.invitation_title);
+    
+    const detailHtml = await ejs.renderFile(detailEjsPath, data);
+    
+
 
     const $detail = cheerio.load(detailHtml);
     const headerWithClass = $detail('head *');

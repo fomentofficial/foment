@@ -55,8 +55,12 @@ let CreateTemplate = {
         const templateFilePath = path.join(__dirname, '..', 'public', 'views', templateFileName);
         const newTemplateFilePath = path.join(__dirname, '..', 'public', 'data', newTemplateFileName);
 
+        const data = {
+          invitation_title : ''
+        }
+
         // 템플릿 파일 렌더링, 여기 데이터를 ejs와 동일한 형식으로 변경
-        ejs.renderFile(templateFilePath, { /* data */ }, (err, html) => {
+        ejs.renderFile(templateFilePath, data, (err, html) => {
           if (err) {
             console.error(err);
             res.status(500).send('Server Error');

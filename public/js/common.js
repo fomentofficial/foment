@@ -1,115 +1,115 @@
 
 window.onload = function () {
 
-// Create_InvitationBtn 요소를 가져옵니다.
-const CreateBtn = document.getElementById('Create_InvitationBtn');
+    // Create_InvitationBtn 요소를 가져옵니다.
+    const CreateBtn = document.getElementById('Create_InvitationBtn');
 
-// CreateBtn 이 존재한다면 이벤트리스너를 추가합니다.
-if (CreateBtn) {
-  CreateBtn.addEventListener('click', () => {
-    // 현재 로그인한 네이버 사용자의 access token을 가져옵니다.
-    const naverAccessToken = sessionStorage.getItem("naver_access_token");
-    console.log(naverAccessToken);
-    
-    // 만약 access token이 null이라면 로그인 페이지로 이동합니다.
-    if (naverAccessToken === null) {
-      window.open('/api_Auth/login');
-    } else {
-      // 현재 로그인한 네이버 사용자의 이메일 주소를 가져옵니다.
-      const naverEmailSession = sessionStorage.getItem('naver_email');
-      console.log(naverEmailSession);
+    // CreateBtn 이 존재한다면 이벤트리스너를 추가합니다.
+    if (CreateBtn) {
+        CreateBtn.addEventListener('click', () => {
+            // 현재 로그인한 네이버 사용자의 access token을 가져옵니다.
+            const naverAccessToken = sessionStorage.getItem("naver_access_token");
+            console.log(naverAccessToken);
 
-      // /api_CreateTemplate 경로로 POST 요청을 보냅니다.
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', '/api_CreateTemplate');
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.setRequestHeader('naver_email', naverEmailSession);
-
-      // POST 요청이 완료되면 실행할 콜백 함수입니다.
-      xhr.onload = function () {
-        // 만약 요청이 성공했다면
-        if (xhr.status === 200) {
-          console.log('POST 요청에 성공했습니다.');
-
-          // 응답으로 받은 template_ID를 가져옵니다.
-          let template_ID = xhr.responseText;
-
-          // /api_GetTemplate/:id 경로로 GET 요청을 보냅니다.
-          const xhr2 = new XMLHttpRequest();
-          xhr2.open('GET', `/api_CreateTemplate/${template_ID}`);
-
-          // GET 요청이 완료되면 실행할 콜백 함수입니다.
-          xhr2.onload = function () {
-            // 만약 요청이 성공했다면
-            if (xhr2.status === 200) {
-              console.log('GET 요청에 성공했습니다.');
-
-              // 응답으로 받은 렌더링된 템플릿 코드를 가져와서 새로운 창을 엽니다.
-              const renderedtemplateejs = xhr2.responseText;
-              console.log(renderedtemplateejs);
-              const newWindow = window.location.href = `/api_CreateTemplate/${template_ID}`;
-              newWindow.document.write(renderedtemplateejs);
+            // 만약 access token이 null이라면 로그인 페이지로 이동합니다.
+            if (naverAccessToken === null) {
+                window.open('/api_Auth/login');
             } else {
-              console.error('Get Template GET 요청에 실패했습니다.');
+                // 현재 로그인한 네이버 사용자의 이메일 주소를 가져옵니다.
+                const naverEmailSession = sessionStorage.getItem('naver_email');
+                console.log(naverEmailSession);
+
+                // /api_CreateTemplate 경로로 POST 요청을 보냅니다.
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/api_CreateTemplate');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('naver_email', naverEmailSession);
+
+                // POST 요청이 완료되면 실행할 콜백 함수입니다.
+                xhr.onload = function () {
+                    // 만약 요청이 성공했다면
+                    if (xhr.status === 200) {
+                        console.log('POST 요청에 성공했습니다.');
+
+                        // 응답으로 받은 template_ID를 가져옵니다.
+                        let template_ID = xhr.responseText;
+
+                        // /api_GetTemplate/:id 경로로 GET 요청을 보냅니다.
+                        const xhr2 = new XMLHttpRequest();
+                        xhr2.open('GET', `/api_CreateTemplate/${template_ID}`);
+
+                        // GET 요청이 완료되면 실행할 콜백 함수입니다.
+                        xhr2.onload = function () {
+                            // 만약 요청이 성공했다면
+                            if (xhr2.status === 200) {
+                                console.log('GET 요청에 성공했습니다.');
+
+                                // 응답으로 받은 렌더링된 템플릿 코드를 가져와서 새로운 창을 엽니다.
+                                const renderedtemplateejs = xhr2.responseText;
+                                console.log(renderedtemplateejs);
+                                const newWindow = window.location.href = `/api_CreateTemplate/${template_ID}`;
+                                newWindow.document.write(renderedtemplateejs);
+                            } else {
+                                console.error('Get Template GET 요청에 실패했습니다.');
+                            }
+                        };
+                        xhr2.send();
+                        console.log(xhr.responseText);
+                    } else {
+                        console.error('Create Template POST 요청에 실패했습니다.');
+                    }
+                };
+
+                // POST 요청의 body에 담을 데이터를 JSON 형식으로 만들어서 보냅니다.
+                xhr.send(JSON.stringify({ template_ID: 'template001' }));
             }
-          };
-          xhr2.send();
-          console.log(xhr.responseText);
-        } else {
-          console.error('Create Template POST 요청에 실패했습니다.');
-        }
-      };
-      
-      // POST 요청의 body에 담을 데이터를 JSON 형식으로 만들어서 보냅니다.
-      xhr.send(JSON.stringify({ template_ID: 'template001' }));
+        });
     }
-  });
-}
 
 
-    
+
 
 
     let URLBtn = document.getElementById('URL_Btn');
 
-    if(URLBtn){
+    if (URLBtn) {
         URLBtn.addEventListener('click', () => {
             let naverEmailSession = sessionStorage.getItem("naver_email");
             let inputPrintURL = document.getElementById('InputURL').value;
             console.log(naverEmailSession);
             console.log(inputPrintURL);
-          
+
             let xhr = new XMLHttpRequest();
             let requestURL = `api_URL/getURL?url=${inputPrintURL}`; // 수정된 부분
             xhr.open('GET', requestURL);
             xhr.setRequestHeader('naver_email', naverEmailSession);
-            xhr.onload = function() {
-              if (xhr.status === 200) {
-                let response = JSON.parse(xhr.responseText);
-                if (response.exists) {
-                  alert('이미 사용 중인 URL입니다.');
-                } else {
-                  alert('사용 가능한 URL입니다.');
-                  let xhr2 = new XMLHttpRequest();
-                  xhr2.open('POST', 'api_URL/postURL');
-                  xhr2.setRequestHeader('Content-Type', 'application/json');
-                  xhr2.setRequestHeader('naver_email', naverEmailSession);
-                  xhr2.send(JSON.stringify({url: inputPrintURL}));
-                  xhr2.onload = function() {
-                    if (xhr2.status === 200) {
-                      console.log('URL이 DB에 추가되었습니다.');
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    let response = JSON.parse(xhr.responseText);
+                    if (response.exists) {
+                        alert('이미 사용 중인 URL입니다.');
+                    } else {
+                        alert('사용 가능한 URL입니다.');
+                        let xhr2 = new XMLHttpRequest();
+                        xhr2.open('POST', 'api_URL/postURL');
+                        xhr2.setRequestHeader('Content-Type', 'application/json');
+                        xhr2.setRequestHeader('naver_email', naverEmailSession);
+                        xhr2.send(JSON.stringify({ url: inputPrintURL }));
+                        xhr2.onload = function () {
+                            if (xhr2.status === 200) {
+                                console.log('URL이 DB에 추가되었습니다.');
+                            }
+                        }
                     }
-                  }
+                } else {
+                    alert('서버 오류가 발생했습니다.');
                 }
-              } else {
-                alert('서버 오류가 발생했습니다.');
-              }
             };
             xhr.send();
-          });
+        });
     }
-    
-    
+
+
 
     // 메인에서 카드 선택시
     const btns = document.querySelectorAll('.MakeInvitation');
@@ -124,24 +124,24 @@ if (CreateBtn) {
             } else {
                 const naverEmailSession = sessionStorage.getItem('naver_email');
                 console.log(naverEmailSession);
-            
+
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', '/api_CreateTemplate');
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.setRequestHeader('naver_email', naverEmailSession);
                 xhr.onload = function () {
-                if (xhr.status === 200) {
-                    console.log('POST 요청에 성공했습니다.');
-                    let template_ID = xhr.responseText
-                    let templateURL = `http://localhost:3000/data/template_${template_ID}.html`
-                    window.open(templateURL, '_blank');
-                    console.log(xhr.responseText);
-                } else {
-                    console.error('POST 요청에 실패했습니다.');
-                }
+                    if (xhr.status === 200) {
+                        console.log('POST 요청에 성공했습니다.');
+                        let template_ID = xhr.responseText
+                        let templateURL = `http://localhost:3000/data/template_${template_ID}.html`
+                        window.open(templateURL, '_blank');
+                        console.log(xhr.responseText);
+                    } else {
+                        console.error('POST 요청에 실패했습니다.');
+                    }
                 };
                 xhr.send(JSON.stringify({ template_ID: 'template001' }));
-                    }
+            }
         });
     });
 
@@ -1031,7 +1031,7 @@ if (CreateBtn) {
                             if (displayedImages >= MAX_IMAGES) {
                                 LoadMore.style.display = 'block';
                                 $('.grid-item').slice(9).css('display', 'none');
-                                
+
                             } else if (displayedImages >= IMAGES_PER_LOAD) {
                                 // 10번째 이미지부터 숨김 처리
                                 $('.grid-item').slice(9).css('display', 'none');
@@ -1046,7 +1046,7 @@ if (CreateBtn) {
         });
     }
 
-    if(LoadMore){
+    if (LoadMore) {
         LoadMore.addEventListener("click", function () {
             const start = 9;
             const end = start + IMAGES_PER_LOAD;
@@ -1060,7 +1060,7 @@ if (CreateBtn) {
             IMAGES_PER_LOAD += 9; // 9씩 증가
         });
     }
-    
+
 
 
 
@@ -1069,7 +1069,7 @@ if (CreateBtn) {
 
 
     // 버튼 눌러 다중이미지 업로드
-    
+
     $('body').on('change', '.user_picked_files', function (event) {
 
         files = Array.from(event.target.files);
@@ -1126,7 +1126,7 @@ if (CreateBtn) {
                         if (displayedImages >= MAX_IMAGES) {
                             LoadMore.style.display = 'block';
                             $('.grid-item').slice(9).css('display', 'none');
-                            
+
                         } else if (displayedImages >= IMAGES_PER_LOAD) {
                             // 10번째 이미지부터 숨김 처리
                             $('.grid-item').slice(9).css('display', 'none');
@@ -2029,315 +2029,11 @@ function printHolderGroom() {
 
 
 
-// 저장 버튼 클릭시 정적 파일 형성 Post 
-
-async function saveInvitation() {
-
-    // // 데이터를 가져올 요소 정리
-        // 네이버 ID
-    const naverEmail = sessionStorage.getItem('naver_email');
-    console.log('Naver Email Data:' + JSON.stringify(naverEmail));
-
-    // |- 디자인 영역 탭
-
-    // └─ 디자인 테마 JSON
-    const ThemeElement = document.querySelector('.TabItemDesign.Active');
-    const ThemeData = ThemeElement.id;
-    console.log('Theme Data:' + JSON.stringify(ThemeData));
-
-    // └─ BGM JSON
-    const BGMElement = document.querySelector('.TabItemBGM.Active');
-    const ActiveBGMElementData = BGMElement.id;
-    console.log('ActiveBGMElement Data:' + JSON.stringify(ActiveBGMElementData));
-
-    // └─ 효과 JSON
-    const EffectElement = document.querySelector('.TabItemEffect.Active');
-    const ActiveEffectElementData = EffectElement.id;
-    console.log('ActiveEffectElement Data:' + JSON.stringify(ActiveEffectElementData));
-
-    // └─ 서체 타입 JSON
-    const Fontselect = document.getElementById('custom-select');
-    const FontselectData = Fontselect.value;
-    console.log('Fontselect Data:' + JSON.stringify(FontselectData));
-
-    // └─ 폰트 크기 JSON
-    const FontSize = document.querySelector('.TabItemFont.Active');
-    const FontSizeData = FontSize.value;
-    console.log('FontSize Data:' + JSON.stringify(FontSizeData));
-
-    // |- 메인 꾸미기 탭
-
-    // └─ 청첩장 URL JSON
-    const inputURL = document.getElementById('InputURL');
-    const UrlData = inputURL.value;
-    console.log('url Data:' + JSON.stringify(UrlData));
-
-    // └─ 청첩장 타이틀 JSON
-    const InvitationTitle = document.getElementById('InvitationTitleInput');
-    const InvitationTitleData = InvitationTitle.value;
-    console.log('InvitationTitle Data:' + JSON.stringify(InvitationTitleData));
-
-    // └─ 타이틀 이미지 SRC JSON
-    const TitleUploadImg = document.getElementById('TitleImgUpload');
-    const TitleUploadImgData = TitleUploadImg.src;
-    console.log('TitleUploadImg Data:' + JSON.stringify(TitleUploadImgData));
-
-    // └─ 카카오 공유하기 이미지 SRC JSON
-    const KaKaoShareImg = document.getElementById('KaKaosrc');
-    const KaKaoShareImgData = KaKaoShareImg.src;
-    console.log('KaKaoShareImg Data:' + JSON.stringify(KaKaoShareImgData));
-
-    // |- 신랑 정보 탭
-
-    // └─ 신랑 성함 JSON
-    const GroomFirstName = document.getElementById('GroomFirstNameInput');
-    const GroomLastName = document.getElementById('GroomLastNameInput');
-    const SelectGroomRelationship = document.getElementById('SelectGroomRelationship');
-    const GroomFirstNameData = GroomFirstName.value;
-    const GroomLastNameData = GroomLastName.value;
-    const SelectGroomRelationshipData = SelectGroomRelationship.value;
-    console.log('GroomFirstName Data:' + JSON.stringify(GroomFirstNameData));
-    console.log('GroomLastName Data:' + JSON.stringify(GroomLastNameData));
-    console.log('SelectGroomRelationship Data:' + JSON.stringify(SelectGroomRelationshipData));
-
-    // └─ 신랑 아버지 JSON
-    const GroomFatherFirstName = document.getElementById('GroomFatherFirstNameInput');
-    const GroomFatherLastName = document.getElementById('GroomFatherLastNameInput');
-    const GroomFatherFirstNameData = GroomFatherFirstName.value;
-    const GroomFatherLastNameData = GroomFatherLastName.value;
-    const Groomfatherstatus = document.getElementById('Groomfatherstatus');
-    const GroomfatherstatusData = Groomfatherstatus.checked;
-    const Groomfatherstatustype = document.getElementById('Groomfatherstatustype');
-    const GroomfatherstatustypeData = Groomfatherstatustype.value;
-
-    console.log('GroomFatherFirstName Data:' + JSON.stringify(GroomFatherFirstNameData));
-    console.log('GroomFatherLastName Data:' + JSON.stringify(GroomFatherLastNameData));
-    console.log('Groomfatherstatus Data:' + JSON.stringify(GroomfatherstatusData));
-    console.log('Groomfatherstatustype Data:' + JSON.stringify(GroomfatherstatustypeData));
-
-    // └─ 신랑 어머니 JSON
-    const GroomMotherFirstName = document.getElementById('GroomMotherFirstNameInput');
-    const GroomMotherLastName = document.getElementById('GroomMotherLastNameInput');
-    const GroomMotherFirstNameData = GroomMotherFirstName.value;
-    const GroomMotherLastNameData = GroomMotherLastName.value;
-    const Groommotherstatus = document.getElementById('Groommotherstatus');
-    const GroommotherstatusData = Groommotherstatus.checked;
-    const Groommotherstatustype = document.getElementById('Groommotherstatustype');
-    const GroommotherstatustypeData = Groommotherstatustype.value;
-
-    console.log('GroomMotherFirstName Data:' + JSON.stringify(GroomMotherFirstNameData));
-    console.log('GroomMottherLastName Data:' + JSON.stringify(GroomMotherLastNameData));
-    console.log('GroomMotherstatus Data:' + JSON.stringify(GroommotherstatusData));
-    console.log('GroomMotherstatustype Data:' + JSON.stringify(GroommotherstatustypeData));
-
-
-    // |- 신부 정보 탭
-
-    // └─ 신랑 성함 JSON
-    const BrideFirstName = document.getElementById('BrideFirstNameInput');
-    const BrideLastName = document.getElementById('BrideLastNameInput');
-    const SelectBrideRelationship = document.getElementById('SelectBrideRelationship');
-    const BrideFirstNameData = BrideFirstName.value;
-    const BrideLastNameData = BrideLastName.value;
-    const SelectBrideRelationshipData = SelectBrideRelationship.value;
-    console.log('BrideFirstName Data:' + JSON.stringify(BrideFirstNameData));
-    console.log('BrideLastName Data:' + JSON.stringify(BrideLastNameData));
-    console.log('SelectBrideRelationship Data:' + JSON.stringify(SelectBrideRelationshipData));
-
-    // └─ 신랑 아버지 JSON
-    const BrideFatherFirstName = document.getElementById('BrideFatherFirstNameInput');
-    const BrideFatherLastName = document.getElementById('BrideFatherLastNameInput');
-    const BrideFatherFirstNameData = BrideFatherFirstName.value;
-    const BrideFatherLastNameData = BrideFatherLastName.value;
-    const Bridefatherstatus = document.getElementById('Bridefatherstatus');
-    const BridefatherstatusData = Bridefatherstatus.checked;
-    const Bridefatherstatustype = document.getElementById('Bridefatherstatustype');
-    const BridefatherstatustypeData = Bridefatherstatustype.value;
-
-    console.log('BrideFatherFirstName Data:' + JSON.stringify(BrideFatherFirstNameData));
-    console.log('BrideFatherLastName Data:' + JSON.stringify(BrideFatherLastNameData));
-    console.log('Bridefatherstatus Data:' + JSON.stringify(BridefatherstatusData));
-    console.log('Bridefatherstatustype Data:' + JSON.stringify(BridefatherstatustypeData));
-
-    // └─ 신랑 어머니 JSON
-    const BrideMotherFirstName = document.getElementById('BrideMotherFirstNameInput');
-    const BrideMotherLastName = document.getElementById('BrideMotherLastNameInput');
-    const BrideMotherFirstNameData = BrideMotherFirstName.value;
-    const BrideMotherLastNameData = BrideMotherLastName.value;
-    const Bridemotherstatus = document.getElementById('Bridemotherstatus');
-    const BridemotherstatusData = Bridemotherstatus.checked;
-    const Bridemotherstatustype = document.getElementById('Bridemotherstatustype');
-    const BridemotherstatustypeData = Bridemotherstatustype.value;
-
-    console.log('BrideMotherFirstName Data:' + JSON.stringify(BrideMotherFirstNameData));
-    console.log('BrideMotherLastName Data:' + JSON.stringify(BrideMotherLastNameData));
-    console.log('Bridemotherstatus Data:' + JSON.stringify(BridemotherstatusData));
-    console.log('Bridemotherstatustype Data:' + JSON.stringify(BridemotherstatustypeData));
-
-    // |- 예식 정보 탭
-
-    // └─ 예식 일자 JSON
-    const WeddingDate = document.getElementById('date');
-    const DdayToggle = document.getElementById('DDay');
-    const WeddingDateData = WeddingDate.value;
-    const DdayToggleData = DdayToggle.classList.contains('active');
-    console.log('WeddingDate Data:' + JSON.stringify(WeddingDateData));
-    console.log('DdayToggle Data:' + JSON.stringify(DdayToggleData));
-
-    // └─ 예식 시간 JSON
-    const WeddingAMPM = document.getElementById('SelectAMPM');
-    const WeddingTime = document.getElementById('SelectTime');
-    const WeddingMinute = document.getElementById('SelectMinute');
-    const WeddingAMPMData = WeddingAMPM.value;
-    const WeddingTimeData = WeddingTime.value;
-    const WeddingMinuteData = WeddingMinute.value;
-    console.log('WeddingAMPM Data:' + JSON.stringify(WeddingAMPMData));
-    console.log('WeddingTime Data:' + JSON.stringify(WeddingTimeData));
-    console.log('WeddingMinute Data:' + JSON.stringify(WeddingMinuteData));
-
-    // └─ 예식장 명
-    const WeddingLocation = document.getElementById('WeddingLocateTitleInput');
-    const WeddingLocationData = WeddingLocation.value;
-    console.log('WeddingLocation Data:' + JSON.stringify(WeddingLocationData));
-
-    // └─ 예식장 층과 홀
-    const WeddingLocationHall = document.getElementById('WeddingHallInfoInput');
-    const WeddingLocationHallData = WeddingLocationHall.value;
-    console.log('WeddingLocationHall Data:' + JSON.stringify(WeddingLocationHallData));
-
-    // └─ 예식장 주소
-    const WeddingAddress = document.getElementById('SearchAddressInput');
-    const WeddingAddressData = WeddingAddress.value;
-    console.log('WeddingAddress Data:' + JSON.stringify(WeddingAddressData));
-
-
-    // |- 초대 글 탭
-
-    // └─ 초대문구 타이틀 JSON
-    const InviteTitle = document.getElementById('InviteTitleInput');
-    const InviteTitleData = InviteTitle.value;
-    console.log('InviteTitle Data:' + JSON.stringify(InviteTitleData));
-
-    // └─ 초대문구 본문 JSON
-    const InvitationBody = document.getElementById('TextBoxInput');
-    const InvitationBodyData = InvitationBody.value;
-    console.log('InvitationBody Data:' + JSON.stringify(InvitationBodyData));
-
-
-    // |- 계좌 정보 탭
-
-    // └─ 그룹명 타이틀 JSON
-
-
-    // |- 이미지 갤러리 탭
-
-    // └─ 갤러리 타입 JSON
-    const GalleryType = document.querySelector('.TabItemGallery.Active');
-    const GalleryTypeData = GalleryType.id;
-    console.log('GalleryType Data:' + JSON.stringify(GalleryTypeData));
-
-    // └─ 이미지그룹 JSON
-
-    const ImgGroupElements = document.querySelectorAll('.grid-thumb');
-    const ImgGroupElementData = Array.from(ImgGroupElements).map(element => element.src);
-    console.log('ImgGroup Data:' + JSON.stringify(ImgGroupElementData));
-
-    // |- 방명록 탭
-
-    // └─ 방명록 비밀번호 JSON
-    const BoardPassword = document.getElementById('boardpassword');
-    const BoardPasswordData = BoardPassword.value;
-    console.log('BoardPassword Data:' + JSON.stringify(BoardPasswordData));
-
-
-    // |- 순서변경 탭
-
-    // └─ 순서 변경 데이터 JSON
-    const OrderTab = document.querySelector('.OrderSection');
-    const OrderTabData = Array.from(OrderTab.querySelectorAll('.OrderSection > *')).map(el => {
-        const obj = {};
-        for (const attr of el.attributes) {
-            obj[attr.name] = attr.value;
-        }
-        return obj;
-    });
-    const OrderTabJSON = JSON.stringify(OrderTabData);
-    console.log('OrderTab Data:' + OrderTabJSON);
-
-    // 템플릿 ID 조회용
-    let templateID = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
-    console.log(`URLInfo: ${templateID}`);
-
-
-    // 청첩장 DB 저장 Data
-
-    const DBData = {
-        user_naver_ID: naverEmail,
-        templateID: templateID,
-        theme_type: ThemeData,
-        BGM_type: ActiveBGMElementData,
-        effect_type: ActiveEffectElementData,
-        font_type: FontselectData,
-        font_size: FontSizeData,
-        URL_data: UrlData,
-        invitation_title: InvitationTitleData,
-        title_upload_img: TitleUploadImgData,
-        kakao_share_img: KaKaoShareImgData,
-        groom_first_name: GroomFirstNameData,
-        groom_last_name: GroomLastNameData,
-        select_groom_relationship: SelectGroomRelationshipData,
-        groom_father_firstname: GroomFatherFirstNameData,
-        groom_father_lastname: GroomFatherLastNameData,
-        groom_father_status: GroomfatherstatusData,
-        groom_father_status_type: GroomfatherstatustypeData,
-        groom_mother_firstname: GroomMotherFirstNameData,
-        groom_mother_lastname: GroomMotherLastNameData,
-        groom_mother_status: GroommotherstatusData,
-        groom_mother_status_type: GroommotherstatustypeData,
-        bride_firstname: BrideFirstNameData,
-        bride_lastname: BrideLastNameData,
-        select_bride_relationship: SelectBrideRelationshipData,
-        bride_father_firstname: BrideFatherFirstNameData,
-        bride_father_lastname: BrideFatherLastNameData,
-        bride_father_status: BridefatherstatusData,
-        bride_father_status_type: BridefatherstatustypeData,
-        bride_mother_firstname: BrideMotherFirstNameData,
-        bride_mother_lastname: BrideMotherLastNameData,
-        bride_mother_status: BridemotherstatusData,
-        bride_mother_status_type: BridemotherstatustypeData,
-        wedding_date: WeddingDateData,
-        dday_toggle: DdayToggleData,
-        wedding_AMPM: WeddingAMPMData,
-        wedding_time: WeddingTimeData,
-        wedding_minute: WeddingMinuteData,
-        wedding_location: WeddingLocationData,
-        wedding_location_hall: WeddingLocationHallData,
-        wedding_address: WeddingAddressData,
-        invite_title: InviteTitleData,
-        invite_body: InvitationBodyData,
-        gallery_type: GalleryTypeData,
-        img_group_element: ImgGroupElementData,
-        board_password: BoardPasswordData,
-        order_tab: OrderTabData
-    }
-
-
-
-    // DB Post API
-    await fetch('/api_DBtest', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8'
-        },
-        body: JSON.stringify(DBData)
-    });
-}
-
 
 document.addEventListener('DOMContentLoaded', () => {
     let saveButton = document.getElementById('SavedBtn');
     console.log(saveButton);
-    
+
     let saveAlert = document.querySelector('.ModalSaveComplete');
     const scrollPreventEvent = document.body;
     let dimmed = document.getElementById('SaveCompleteDimmed');
@@ -2351,9 +2047,8 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteBtn.style.display = 'none';
         scrollPreventEvent.style.overflowY = 'scroll';
     };
-    
-    // let files;
 
+    // 템플릿 저장버튼 클릭시 동작하는 Script 정리
     if (saveButton) {
         saveButton.addEventListener('click', () => {
             console.log('오류체크');
@@ -2471,11 +2166,319 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 변경된 HTML 코드를 sideContents 변수에 다시 할당
                 const updatedSideContents = sideContentsEl.outerHTML;
 
+
+                // DB post 데이터 정리
+                // 저장 버튼 클릭시 정적 파일 형성 Post 
+
+                // // 데이터를 가져올 요소 정리
+                // 네이버 ID
+                const naverEmail = sessionStorage.getItem('naver_email');
+                console.log('Naver Email Data:' + JSON.stringify(naverEmail));
+
+                // |- 디자인 영역 탭
+
+                // └─ 디자인 테마 JSON
+                const ThemeElement = document.querySelector('.TabItemDesign.Active');
+                const ThemeData = ThemeElement.id;
+                console.log('Theme Data:' + JSON.stringify(ThemeData));
+
+                // └─ BGM JSON
+                const BGMElement = document.querySelector('.TabItemBGM.Active');
+                const ActiveBGMElementData = BGMElement.id;
+                console.log('ActiveBGMElement Data:' + JSON.stringify(ActiveBGMElementData));
+
+                // └─ 효과 JSON
+                const EffectElement = document.querySelector('.TabItemEffect.Active');
+                const ActiveEffectElementData = EffectElement.id;
+                console.log('ActiveEffectElement Data:' + JSON.stringify(ActiveEffectElementData));
+
+                // └─ 서체 타입 JSON
+                const Fontselect = document.getElementById('custom-select');
+                const FontselectData = Fontselect.value;
+                console.log('Fontselect Data:' + JSON.stringify(FontselectData));
+
+                // └─ 폰트 크기 JSON
+                const FontSize = document.querySelector('.TabItemFont.Active');
+                const FontSizeData = FontSize.value;
+                console.log('FontSize Data:' + JSON.stringify(FontSizeData));
+
+                // |- 메인 꾸미기 탭
+
+                // └─ 청첩장 URL JSON
+                const inputURL = document.getElementById('InputURL');
+                const UrlData = inputURL.value;
+                console.log('url Data:' + JSON.stringify(UrlData));
+
+                // └─ 청첩장 타이틀 JSON
+                const InvitationTitle = document.getElementById('InvitationTitleInput');
+                const InvitationTitleData = InvitationTitle.value;
+                console.log('InvitationTitle Data:' + JSON.stringify(InvitationTitleData));
+
+                // └─ 타이틀 이미지 SRC JSON
+                const TitleUploadImg = document.getElementById('TitleImgUpload');
+                const TitleUploadImgData = TitleUploadImg.src;
+                console.log('TitleUploadImg Data:' + JSON.stringify(TitleUploadImgData));
+
+                // └─ 카카오 공유하기 이미지 SRC JSON
+                const KaKaoShareImg = document.getElementById('KaKaosrc');
+                const KaKaoShareImgData = KaKaoShareImg.src;
+                console.log('KaKaoShareImg Data:' + JSON.stringify(KaKaoShareImgData));
+
+                // |- 신랑 정보 탭
+
+                // └─ 신랑 성함 JSON
+                const GroomFirstName = document.getElementById('GroomFirstNameInput');
+                const GroomLastName = document.getElementById('GroomLastNameInput');
+                const SelectGroomRelationship = document.getElementById('SelectGroomRelationship');
+                const GroomFirstNameData = GroomFirstName.value;
+                const GroomLastNameData = GroomLastName.value;
+                const SelectGroomRelationshipData = SelectGroomRelationship.value;
+                console.log('GroomFirstName Data:' + JSON.stringify(GroomFirstNameData));
+                console.log('GroomLastName Data:' + JSON.stringify(GroomLastNameData));
+                console.log('SelectGroomRelationship Data:' + JSON.stringify(SelectGroomRelationshipData));
+
+                // └─ 신랑 아버지 JSON
+                const GroomFatherFirstName = document.getElementById('GroomFatherFirstNameInput');
+                const GroomFatherLastName = document.getElementById('GroomFatherLastNameInput');
+                const GroomFatherFirstNameData = GroomFatherFirstName.value;
+                const GroomFatherLastNameData = GroomFatherLastName.value;
+                const Groomfatherstatus = document.getElementById('Groomfatherstatus');
+                const GroomfatherstatusData = Groomfatherstatus.checked;
+                const Groomfatherstatustype = document.getElementById('Groomfatherstatustype');
+                const GroomfatherstatustypeData = Groomfatherstatustype.value;
+
+                console.log('GroomFatherFirstName Data:' + JSON.stringify(GroomFatherFirstNameData));
+                console.log('GroomFatherLastName Data:' + JSON.stringify(GroomFatherLastNameData));
+                console.log('Groomfatherstatus Data:' + JSON.stringify(GroomfatherstatusData));
+                console.log('Groomfatherstatustype Data:' + JSON.stringify(GroomfatherstatustypeData));
+
+                // └─ 신랑 어머니 JSON
+                const GroomMotherFirstName = document.getElementById('GroomMotherFirstNameInput');
+                const GroomMotherLastName = document.getElementById('GroomMotherLastNameInput');
+                const GroomMotherFirstNameData = GroomMotherFirstName.value;
+                const GroomMotherLastNameData = GroomMotherLastName.value;
+                const Groommotherstatus = document.getElementById('Groommotherstatus');
+                const GroommotherstatusData = Groommotherstatus.checked;
+                const Groommotherstatustype = document.getElementById('Groommotherstatustype');
+                const GroommotherstatustypeData = Groommotherstatustype.value;
+
+                console.log('GroomMotherFirstName Data:' + JSON.stringify(GroomMotherFirstNameData));
+                console.log('GroomMottherLastName Data:' + JSON.stringify(GroomMotherLastNameData));
+                console.log('GroomMotherstatus Data:' + JSON.stringify(GroommotherstatusData));
+                console.log('GroomMotherstatustype Data:' + JSON.stringify(GroommotherstatustypeData));
+
+
+                // |- 신부 정보 탭
+
+                // └─ 신랑 성함 JSON
+                const BrideFirstName = document.getElementById('BrideFirstNameInput');
+                const BrideLastName = document.getElementById('BrideLastNameInput');
+                const SelectBrideRelationship = document.getElementById('SelectBrideRelationship');
+                const BrideFirstNameData = BrideFirstName.value;
+                const BrideLastNameData = BrideLastName.value;
+                const SelectBrideRelationshipData = SelectBrideRelationship.value;
+                console.log('BrideFirstName Data:' + JSON.stringify(BrideFirstNameData));
+                console.log('BrideLastName Data:' + JSON.stringify(BrideLastNameData));
+                console.log('SelectBrideRelationship Data:' + JSON.stringify(SelectBrideRelationshipData));
+
+                // └─ 신랑 아버지 JSON
+                const BrideFatherFirstName = document.getElementById('BrideFatherFirstNameInput');
+                const BrideFatherLastName = document.getElementById('BrideFatherLastNameInput');
+                const BrideFatherFirstNameData = BrideFatherFirstName.value;
+                const BrideFatherLastNameData = BrideFatherLastName.value;
+                const Bridefatherstatus = document.getElementById('Bridefatherstatus');
+                const BridefatherstatusData = Bridefatherstatus.checked;
+                const Bridefatherstatustype = document.getElementById('Bridefatherstatustype');
+                const BridefatherstatustypeData = Bridefatherstatustype.value;
+
+                console.log('BrideFatherFirstName Data:' + JSON.stringify(BrideFatherFirstNameData));
+                console.log('BrideFatherLastName Data:' + JSON.stringify(BrideFatherLastNameData));
+                console.log('Bridefatherstatus Data:' + JSON.stringify(BridefatherstatusData));
+                console.log('Bridefatherstatustype Data:' + JSON.stringify(BridefatherstatustypeData));
+
+                // └─ 신랑 어머니 JSON
+                const BrideMotherFirstName = document.getElementById('BrideMotherFirstNameInput');
+                const BrideMotherLastName = document.getElementById('BrideMotherLastNameInput');
+                const BrideMotherFirstNameData = BrideMotherFirstName.value;
+                const BrideMotherLastNameData = BrideMotherLastName.value;
+                const Bridemotherstatus = document.getElementById('Bridemotherstatus');
+                const BridemotherstatusData = Bridemotherstatus.checked;
+                const Bridemotherstatustype = document.getElementById('Bridemotherstatustype');
+                const BridemotherstatustypeData = Bridemotherstatustype.value;
+
+                console.log('BrideMotherFirstName Data:' + JSON.stringify(BrideMotherFirstNameData));
+                console.log('BrideMotherLastName Data:' + JSON.stringify(BrideMotherLastNameData));
+                console.log('Bridemotherstatus Data:' + JSON.stringify(BridemotherstatusData));
+                console.log('Bridemotherstatustype Data:' + JSON.stringify(BridemotherstatustypeData));
+
+                // |- 예식 정보 탭
+
+                // └─ 예식 일자 JSON
+                const WeddingDate = document.getElementById('date');
+                const DdayToggle = document.getElementById('DDay');
+                const WeddingDateData = WeddingDate.value;
+                const DdayToggleData = DdayToggle.classList.contains('active');
+                console.log('WeddingDate Data:' + JSON.stringify(WeddingDateData));
+                console.log('DdayToggle Data:' + JSON.stringify(DdayToggleData));
+
+                // └─ 예식 시간 JSON
+                const WeddingAMPM = document.getElementById('SelectAMPM');
+                const WeddingTime = document.getElementById('SelectTime');
+                const WeddingMinute = document.getElementById('SelectMinute');
+                const WeddingAMPMData = WeddingAMPM.value;
+                const WeddingTimeData = WeddingTime.value;
+                const WeddingMinuteData = WeddingMinute.value;
+                console.log('WeddingAMPM Data:' + JSON.stringify(WeddingAMPMData));
+                console.log('WeddingTime Data:' + JSON.stringify(WeddingTimeData));
+                console.log('WeddingMinute Data:' + JSON.stringify(WeddingMinuteData));
+
+                // └─ 예식장 명
+                const WeddingLocation = document.getElementById('WeddingLocateTitleInput');
+                const WeddingLocationData = WeddingLocation.value;
+                console.log('WeddingLocation Data:' + JSON.stringify(WeddingLocationData));
+
+                // └─ 예식장 층과 홀
+                const WeddingLocationHall = document.getElementById('WeddingHallInfoInput');
+                const WeddingLocationHallData = WeddingLocationHall.value;
+                console.log('WeddingLocationHall Data:' + JSON.stringify(WeddingLocationHallData));
+
+                // └─ 예식장 주소
+                const WeddingAddress = document.getElementById('SearchAddressInput');
+                const WeddingAddressData = WeddingAddress.value;
+                console.log('WeddingAddress Data:' + JSON.stringify(WeddingAddressData));
+
+
+                // |- 초대 글 탭
+
+                // └─ 초대문구 타이틀 JSON
+                const InviteTitle = document.getElementById('InviteTitleInput');
+                const InviteTitleData = InviteTitle.value;
+                console.log('InviteTitle Data:' + JSON.stringify(InviteTitleData));
+
+                // └─ 초대문구 본문 JSON
+                const InvitationBody = document.getElementById('TextBoxInput');
+                const InvitationBodyData = InvitationBody.value;
+                console.log('InvitationBody Data:' + JSON.stringify(InvitationBodyData));
+
+
+                // |- 계좌 정보 탭
+
+                // └─ 그룹명 타이틀 JSON
+
+
+                // |- 이미지 갤러리 탭
+
+                // └─ 갤러리 타입 JSON
+                const GalleryType = document.querySelector('.TabItemGallery.Active');
+                const GalleryTypeData = GalleryType.id;
+                console.log('GalleryType Data:' + JSON.stringify(GalleryTypeData));
+
+                // └─ 이미지그룹 JSON
+
+                const ImgGroupElements = document.querySelectorAll('.grid-thumb');
+                const ImgGroupElementData = Array.from(ImgGroupElements).map(element => element.src);
+                console.log('ImgGroup Data:' + JSON.stringify(ImgGroupElementData));
+
+                // |- 방명록 탭
+
+                // └─ 방명록 비밀번호 JSON
+                const BoardPassword = document.getElementById('boardpassword');
+                const BoardPasswordData = BoardPassword.value;
+                console.log('BoardPassword Data:' + JSON.stringify(BoardPasswordData));
+
+
+                // |- 순서변경 탭
+
+                // └─ 순서 변경 데이터 JSON
+                const OrderTab = document.querySelector('.OrderSection');
+                const OrderTabData = Array.from(OrderTab.querySelectorAll('.OrderSection > *')).map(el => {
+                    const obj = {};
+                    for (const attr of el.attributes) {
+                        obj[attr.name] = attr.value;
+                    }
+                    return obj;
+                });
+                const OrderTabJSON = JSON.stringify(OrderTabData);
+                console.log('OrderTab Data:' + OrderTabJSON);
+
+                // 템플릿 ID 조회용
+                let templateID = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
+                console.log(`URLInfo: ${templateID}`);
+
+
+                // 청첩장 DB 저장 Data
+
+                let DBData = {
+                    user_naver_ID: naverEmail,
+                    templateID: templateID,
+                    theme_type: ThemeData,
+                    BGM_type: ActiveBGMElementData,
+                    effect_type: ActiveEffectElementData,
+                    font_type: FontselectData,
+                    font_size: FontSizeData,
+                    URL_data: UrlData,
+                    invitation_title: InvitationTitleData,
+                    title_upload_img: TitleUploadImgData,
+                    kakao_share_img: KaKaoShareImgData,
+                    groom_first_name: GroomFirstNameData,
+                    groom_last_name: GroomLastNameData,
+                    select_groom_relationship: SelectGroomRelationshipData,
+                    groom_father_firstname: GroomFatherFirstNameData,
+                    groom_father_lastname: GroomFatherLastNameData,
+                    groom_father_status: GroomfatherstatusData,
+                    groom_father_status_type: GroomfatherstatustypeData,
+                    groom_mother_firstname: GroomMotherFirstNameData,
+                    groom_mother_lastname: GroomMotherLastNameData,
+                    groom_mother_status: GroommotherstatusData,
+                    groom_mother_status_type: GroommotherstatustypeData,
+                    bride_firstname: BrideFirstNameData,
+                    bride_lastname: BrideLastNameData,
+                    select_bride_relationship: SelectBrideRelationshipData,
+                    bride_father_firstname: BrideFatherFirstNameData,
+                    bride_father_lastname: BrideFatherLastNameData,
+                    bride_father_status: BridefatherstatusData,
+                    bride_father_status_type: BridefatherstatustypeData,
+                    bride_mother_firstname: BrideMotherFirstNameData,
+                    bride_mother_lastname: BrideMotherLastNameData,
+                    bride_mother_status: BridemotherstatusData,
+                    bride_mother_status_type: BridemotherstatustypeData,
+                    wedding_date: WeddingDateData,
+                    dday_toggle: DdayToggleData,
+                    wedding_AMPM: WeddingAMPMData,
+                    wedding_time: WeddingTimeData,
+                    wedding_minute: WeddingMinuteData,
+                    wedding_location: WeddingLocationData,
+                    wedding_location_hall: WeddingLocationHallData,
+                    wedding_address: WeddingAddressData,
+                    invite_title: InviteTitleData,
+                    invite_body: InvitationBodyData,
+                    gallery_type: GalleryTypeData,
+                    img_group_element: ImgGroupElementData,
+                    board_password: BoardPasswordData,
+                    order_tab: OrderTabData
+                }
+
+
+
+                // DB Post API
+                fetch('/api_DBtest', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    },
+                    body: JSON.stringify(DBData)
+                });
+
+
+
                 const requestData = {
                     sideContents: updatedSideContents, // 변경된 HTML 코드를 전송
                     imageUrls: imageUrls, // pass the image urls to the server
-                    URLINFO: URLINFO
+                    URLINFO: URLINFO,
+                    DBData: DBData
                 };
+
+                console.log(DBData);
 
                 fetch('/api_SaveInvitation', {
                     method: 'POST',
@@ -2486,7 +2489,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).then(response => {
                     console.log(response);
 
-                    saveInvitation();
                     toggleElements();
                     let templateURL = `/mypage`
 
@@ -2502,26 +2504,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
                     previewButton.addEventListener('click', () => {
-        
+
                         const currentUrl = window.location.href;
                         const templateId = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
                         console.log(templateId); // 출력 예시: 6wVX1F8vEYmxb2HA3L6quc
-                        
-                
+
+
                         fetch(`/api_GetInvitation/${templateId}`, {
                             method: 'GET'
-                          })
-                          
-                        .then(response => response.text())
-                        .then(html => {
-                            // document.body.innerHTML = html;
-                            let editpage = window.location.href = `/api_GetInvitation/${templateId}`;
-                            editpage.document.write(renderedtemplateejs);
                         })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
-              
+
+                            .then(response => response.text())
+                            .then(html => {
+                                // document.body.innerHTML = html;
+                                let editpage = window.location.href = `/api_GetInvitation/${templateId}`;
+                                editpage.document.write(renderedtemplateejs);
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+
                     });
 
 
@@ -2545,60 +2547,60 @@ document.addEventListener('DOMContentLoaded', () => {
     // 마이페이지에서 Get 요청을 통한 청첩장 미리보기 페이지 불러오기 api
     let MYpage_InvitePreview = document.querySelectorAll('.BtnPreview');
 
-        MYpage_InvitePreview.forEach((preview) => {
-            preview.addEventListener('click', () => {
-                let inviteURLInfoList = preview.parentNode.parentNode.parentNode.querySelectorAll('.InviteURLInfo');
-                inviteURLInfoList.forEach((inviteURLInfo) => {
+    MYpage_InvitePreview.forEach((preview) => {
+        preview.addEventListener('click', () => {
+            let inviteURLInfoList = preview.parentNode.parentNode.parentNode.querySelectorAll('.InviteURLInfo');
+            inviteURLInfoList.forEach((inviteURLInfo) => {
                 let GetURLInfo = inviteURLInfo.textContent.trim();
                 console.log(GetURLInfo);
-        
+
                 fetch(`/api_GetInvitation/${GetURLInfo}`, {
                     method: 'GET'
-                  })
-                  
-                .then(response => response.text())
-                .then(html => {
-                    // document.body.innerHTML = html;
-                    let editpage = window.location.href = `/api_GetInvitation/${GetURLInfo}`;
-                    editpage.document.write(renderedtemplateejs);
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-                });
+
+                    .then(response => response.text())
+                    .then(html => {
+                        // document.body.innerHTML = html;
+                        let editpage = window.location.href = `/api_GetInvitation/${GetURLInfo}`;
+                        editpage.document.write(renderedtemplateejs);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             });
-            });
+        });
+    });
 
     // 마이페이지에서 Get 요청을 통한 수정 페이지 불러오기 api
     let btnEditList = document.querySelectorAll('.BtnEdit');
 
     btnEditList.forEach((btnEdit) => {
-    btnEdit.addEventListener('click', () => {
-        let inviteURLInfoList = btnEdit.parentNode.parentNode.parentNode.querySelectorAll('.InviteURLInfo');
-        inviteURLInfoList.forEach((inviteURLInfo) => {
-        let EditURLInfo = inviteURLInfo.textContent.trim();
-        console.log(EditURLInfo);
+        btnEdit.addEventListener('click', () => {
+            let inviteURLInfoList = btnEdit.parentNode.parentNode.parentNode.querySelectorAll('.InviteURLInfo');
+            inviteURLInfoList.forEach((inviteURLInfo) => {
+                let EditURLInfo = inviteURLInfo.textContent.trim();
+                console.log(EditURLInfo);
 
-        fetch(`/api_EditInvitation/${EditURLInfo}`, {
-            method: 'GET'
-          })
-          
-        .then(response => response.text())
-        .then(html => {
-            // document.body.innerHTML = html;
-            let editpage = window.location.href = `/api_EditInvitation/${EditURLInfo}`;
-            editpage.document.write(renderedtemplateejs);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+                fetch(`/api_EditInvitation/${EditURLInfo}`, {
+                    method: 'GET'
+                })
+
+                    .then(response => response.text())
+                    .then(html => {
+                        // document.body.innerHTML = html;
+                        let editpage = window.location.href = `/api_EditInvitation/${EditURLInfo}`;
+                        editpage.document.write(renderedtemplateejs);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
         });
     });
-    });
 
-    
-    
-    
+
+
+
 
 
 

@@ -28,6 +28,7 @@ const renderEditPage = (req, res) => {
       data: results[0]
     };
     res.render(TemplateFilePath, detaildata || {});
+    console.log(results[0]);
   });
 };
 
