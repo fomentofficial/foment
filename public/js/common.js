@@ -2571,32 +2571,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 마이페이지에서 Get 요청을 통한 수정 페이지 불러오기 api
-    let btnEditList = document.querySelectorAll('.BtnEdit');
+// 마이페이지에서 Get 요청을 통한 수정 페이지 불러오기 api
+let btnEditList = document.querySelectorAll('.BtnEdit');
 
-    btnEditList.forEach((btnEdit) => {
-        btnEdit.addEventListener('click', () => {
-            let inviteURLInfoList = btnEdit.parentNode.parentNode.parentNode.querySelectorAll('.InviteURLInfo');
-            inviteURLInfoList.forEach((inviteURLInfo) => {
-                let EditURLInfo = inviteURLInfo.textContent.trim();
-                console.log(EditURLInfo);
+btnEditList.forEach((btnEdit) => {
+  btnEdit.addEventListener('click', () => {
+    let inviteURLInfoList = btnEdit.parentNode.parentNode.parentNode.querySelectorAll('.InviteURLInfo');
+    inviteURLInfoList.forEach((inviteURLInfo) => {
+      let EditURLInfo = inviteURLInfo.textContent.trim();
+      console.log(EditURLInfo);
 
-                fetch(`/api_EditInvitation/${EditURLInfo}`, {
-                    method: 'GET'
-                })
-
-                    .then(response => response.text())
-                    .then(html => {
-                        // document.body.innerHTML = html;
-                        let editpage = window.location.href = `/api_EditInvitation/${EditURLInfo}`;
-                        editpage.document.write(renderedtemplateejs);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            });
+      // 새로운 브라우저 창에서 수정 페이지 렌더링
+      let editPage = window.open(`/api_EditInvitation/${EditURLInfo}`);
+      
+      // 새 창 로드가 완료되면 fetch 요청 보내기
+      editPage.addEventListener('load', () => {
+        fetch(`/api_EditInvitation/${EditURLInfo}`, {
+          method: 'GET'
+        })
+        .then(response => {
+          console.log(response);
+          return response.text();
+        })
+        .catch(error => {
+          console.error('Error:', error);
         });
+      });
     });
+  });
+});
+
+
+
 
 
 

@@ -1,5 +1,34 @@
 <html lang="kor">
-    <head><%- include('./partials/head.ejs') %></head>
+    <head><!-- head.ejs -->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>포먼트 청첩장</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/detail.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/login.css">
+<link rel="stylesheet" href="../css/font.css">
+<link rel="stylesheet" href="../css/mypage.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500&display=swap" rel="stylesheet">
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aead73005a77433d268644553628caba&libraries=services"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js" integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script script src="https://apis.openapi.sk.com/tmap/vectorjs?version=1&appKey=x1DDg2svJkaH73F7kDOD11W4C0siglCT1iCJ4tNu"></script>
+<script src="https://code.jquery.com/jquery-3.6.2.js"
+    integrity="sha256-pkn2CUZmheSeyssYw3vMp1+xyub4m+e+QK4sQskvuo4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+<script src="https://fengyuanchen.github.io/cropper/js/cropper.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="../js/login.js"></script>
+<script src="../js/common.js"></script></head>
 <body>
     <div class="PreviewArea">
         <div class="PreviewPage"></div>
@@ -46,7 +75,26 @@
     </div>
 
     <!-- 헤더 -->
-    <%- include('./partials/header.ejs') %>
+    <!-- header.ejs -->
+<div class="header">
+    <div class="header_wrap">
+      <div class="LogoWrap">
+        <a class="SymbolLink" href="/">
+          <img class="LogoSymbol" src="../Resource/Logo_Symbol1.svg" alt="">
+        </a>
+      </div>
+      <div class="LoginWrap">
+        <div class="Create_InvitationBtn" id="Create_InvitationBtn">제작하기</div>
+        <div class="LoginBound"></div>
+        <a class="LoginInfo" href="/mypage" id="myPage">seokhkang</a>
+        <div class="LoginBound"></div>
+        <div class="LogOut" id="LogoutBtn">
+          <button class="LoginBtn">로그아웃</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 
     <div class="main_contents">
         <!-- 좌측 네비게이션 -->
@@ -585,7 +633,7 @@
                             <label class="selectbox_label" for="file">청첩장 제목</label>
                             <div class="NameBox">
                                 <input class="base" id="InvitationTitleInput" name="base" type="base"
-                                    onkeyup="InvitationTitleInput()" placeholder="청첩장 제목을 입력하세요" value="<%= Templatedata.data.invitation_title %>">
+                                    onkeyup="InvitationTitleInput()" placeholder="청첩장 제목을 입력하세요" value="">
                             </div>
                         </div>
                         <!-- 대표이미지, 공유이미지 영역 -->

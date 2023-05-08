@@ -30,19 +30,19 @@ const saveFile = async (req, res) => {
       throw new Error('잘못된 요청');
     }
   
-    // 여기 페이지를 detail.ejs 형식의 데이터에 맞게 변경
 
-    const data = {
+    const Templatedata = {
       // 이미지 정보 및 콘텐츠 내용 정리
       imageUrls: imageUrls,
       updatedSideContents: updatedSideContents,
-
-      invitation_title: DBData.invitation_title
+      Templatedata :{
+        data :{
+          invitation_title: DBData.invitation_title
+        }
+      }
     };
-
-    console.log(data.invitation_title);
     
-    const detailHtml = await ejs.renderFile(detailEjsPath, data);
+    const detailHtml = await ejs.renderFile(detailEjsPath, Templatedata);
     
 
 
