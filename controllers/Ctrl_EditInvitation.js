@@ -37,7 +37,7 @@ const renderEditPage = (req, res) => {
         data: results[0]
       }
     };
-
+    console.log(Templatedata);
     res.render(templateFilePath, Templatedata, (err, html) => {
       if (err) {
         console.error(err);

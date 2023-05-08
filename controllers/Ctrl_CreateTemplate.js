@@ -58,7 +58,15 @@ let CreateTemplate = {
         const Templatedata = {
           Templatedata :{
             data :{
-              invitation_title : ''
+              theme_type : '',
+              BGM_type: 'NoneAudio',
+              effect_type: 'CherryblossomEffect',
+              // font_type: 'GowunDodum-Regular',
+              // font_size: 14,
+              // URL_data: null,
+              // invitation_title: '',
+              // title_upload_img: 'http://localhost:3000/Resource/mainasset/WeddingTitleImg.jpg',
+              // kakao_share_img: 'http://localhost:3000/Resource/mainasset/WeddingTitleImg.jpg'
             }
           }
         }

@@ -37,7 +37,15 @@ const saveFile = async (req, res) => {
       updatedSideContents: updatedSideContents,
       Templatedata :{
         data :{
-          invitation_title: DBData.invitation_title
+          theme_type : DBData.theme_type,
+          BGM_type: DBData.BGM_type,
+          effect_type: DBData.effect_type,
+          // font_type: DBData.font_type,
+          // font_size: DBData.font_size,
+          // URL_data: DBData.URL_data,
+          // invitation_title: DBData.invitation_title,
+          // title_upload_img: DBData.title_upload_img,
+          // kakao_share_img: DBData.kakao_share_img
         }
       }
     };
