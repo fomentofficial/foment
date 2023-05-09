@@ -113,7 +113,6 @@ window.onload = function () {
 
     // 메인에서 카드 선택시
     const btns = document.querySelectorAll('.MakeInvitation');
-    console.log(btns);
 
     btns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -620,6 +619,7 @@ window.onload = function () {
         });
 
     }
+    
     // 대표 이미지 업로드 크롭
     $(function () {
         var cropper;
@@ -678,8 +678,9 @@ window.onload = function () {
                         formData.append("images", compressedFile);
 
                         var xhr = new XMLHttpRequest();
-                        xhr.open("POST", "api_TitleImgUpload");
+                        xhr.open("POST", "../api_TitleImgUpload");
                         xhr.send(formData);
+                        console.log(formData);
 
                         xhr.onreadystatechange = function () {
                             if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -2204,10 +2205,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // |- 메인 꾸미기 탭
 
-                // └─ 청첩장 URL JSON
-                const inputURL = document.getElementById('InputURL');
-                const UrlData = inputURL.value;
-                console.log('url Data:' + JSON.stringify(UrlData));
+                // // └─ 청첩장 URL JSON
+                // const inputURL = document.getElementById('InputURL');
+                // const UrlData = inputURL.value;
+                // console.log('url Data:' + JSON.stringify(UrlData));
 
                 // └─ 청첩장 타이틀 JSON
                 const InvitationTitle = document.getElementById('InvitationTitleInput');
@@ -2416,7 +2417,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     effect_type: ActiveEffectElementData,
                     font_type: FontselectData,
                     font_size: FontSizeData,
-                    URL_data: UrlData,
+                    // URL_data: UrlData,
                     invitation_title: InvitationTitleData,
                     title_upload_img: TitleUploadImgData,
                     kakao_share_img: KaKaoShareImgData,

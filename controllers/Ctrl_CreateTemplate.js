@@ -61,12 +61,11 @@ let CreateTemplate = {
               theme_type : '',
               BGM_type: 'NoneAudio',
               effect_type: 'CherryblossomEffect',
-              // font_type: 'GowunDodum-Regular',
-              // font_size: 14,
-              // URL_data: null,
-              // invitation_title: '',
-              // title_upload_img: 'http://localhost:3000/Resource/mainasset/WeddingTitleImg.jpg',
-              // kakao_share_img: 'http://localhost:3000/Resource/mainasset/WeddingTitleImg.jpg'
+              font_type: 'GowunDodum-Regular',
+              font_size: 14,
+              invitation_title: '',
+              title_upload_img: '/Resource/mainasset/WeddingTitleImg.jpg',
+              // kakao_share_img: '/Resource/mainasset/WeddingTitleImg.jpg'
             }
           }
         }
