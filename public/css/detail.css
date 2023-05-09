@@ -775,6 +775,7 @@ li.TabItemGallery:hover {
 }
 
 .uploadsrc {
+  object-fit: cover;
   border-radius: var(--BorderRadius-Md);
   width: 196px;
   height: 280px;
@@ -1476,6 +1477,7 @@ ul.cvf_uploaded_files .delete-btn {
   padding: 24px;
 }
 .KaKaosrc{
+  max-width: 220px;
   min-width: 220px;
   width: 100%;
   height: 298px;

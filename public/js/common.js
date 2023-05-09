@@ -692,6 +692,8 @@ window.onload = function () {
                                     console.log(imageUrl);
                                     // 기존 이미지 URL 덮어쓰기
                                     $('#preview-image').attr('src', imageUrl);
+                                    $('#TitleImgUpload').attr('src', imageUrl);
+                                    $('#KaKaosrc').attr('src', imageUrl);
                                     alert('대표 이미지가 변경되었습니다.');
 
                                     // 수정 시작
