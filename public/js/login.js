@@ -1,6 +1,7 @@
 // 네이버 로그인 관련 정리
-document.addEventListener('DOMContentLoaded', () => {
 
+document.addEventListener('DOMContentLoaded', () => {
+  const myPage = document.getElementById('myPage');
   const btn = document.querySelector("#LogoutBtn");
   const emailinfo = document.querySelector('.LoginInfo');
   const LoginBound = document.querySelector('.LoginBound');
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(naverAccessToken);
     if(emailinfo){
       emailinfo.innerText = naverId;
+      myPage.style.display = "block";
     }
     if(btn){
       btn.innerText = "로그아웃";
@@ -61,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 로그인시 들어가는 함수들
     emailinfo.innerText = "";
     btn.innerText = "로그인";
+    myPage.style.display = "none";
     LoginBound.style.display = "none";
     btn.addEventListener("click", () => {
       fetch('/api_Auth/login', {
