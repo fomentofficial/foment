@@ -78,7 +78,7 @@ const saveFile = async (req, res) => {
           invite_title:DBData.invite_title,
           invite_body:DBData.invite_body,
           gallery_type:DBData.gallery_type,
-          // img_group_element:DBData.img_group_element,
+          img_group_element:JSON.stringify(DBData.img_group_element),
           board_password:DBData.board_password,
           order_tab:JSON.stringify(DBData.order_tab)
         }

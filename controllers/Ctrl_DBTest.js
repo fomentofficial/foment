@@ -60,7 +60,9 @@ const dbCtrl = {
     const bride_mother_status_bool = bride_mother_status === true ? 1 : 0;
     const dday_toggle_bool = dday_toggle === true ? 1 : 0;
     const order_tab_data = JSON.stringify(order_tab);
-    console.log(order_tab_data);
+    const img_group_element_data = JSON.stringify(img_group_element);
+
+    console.log('이미지 그룹 데이터 조회:' + img_group_element_data);
 
     //const getUserIdSql 변수에는 네이버 이메일 주소를 통해 사용자 ID를 조회하는 SQL 쿼리가 담겨 있습니다.
     const getUserIdSql = `SELECT ID FROM users WHERE naver_email='${user_naver_ID}'`;
@@ -132,7 +134,7 @@ const dbCtrl = {
       invite_title = '${invite_title}',
       invite_body = '${invite_body}',
       gallery_type = '${gallery_type}',
-      img_group_element = '${img_group_element}',
+      img_group_element = '${img_group_element_data}',
       board_password = '${board_password}',
       order_tab = '${order_tab_data}'
     
