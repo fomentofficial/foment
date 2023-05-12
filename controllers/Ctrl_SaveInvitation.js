@@ -30,7 +30,6 @@ const saveFile = async (req, res) => {
       throw new Error('잘못된 요청');
     }
   
-
     const Templatedata = {
       // 이미지 정보 및 콘텐츠 내용 정리
       imageUrls: imageUrls,
@@ -81,7 +80,7 @@ const saveFile = async (req, res) => {
           gallery_type:DBData.gallery_type,
           // img_group_element:DBData.img_group_element,
           board_password:DBData.board_password,
-          // order_tab:DBData.order_tab
+          order_tab:JSON.stringify(DBData.order_tab)
         }
       }
     };
