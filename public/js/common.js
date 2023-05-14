@@ -1740,10 +1740,10 @@ function calendarInit() {
                     weddingDayTitle.innerText = currentday;
                 }
 
-                var weddingDateTitle = document.getElementById("WeddingDateTitle");
-                if (weddingDateTitle) {
-                    weddingDateTitle.innerText = (currentMonth + 1) + '월 ' + currentDate + '일';
-                }
+                // var weddingDateTitle = document.getElementById("WeddingDateTitle");
+                // if (weddingDateTitle) {
+                //     weddingDateTitle.innerText = (currentMonth + 1) + '월 ' + currentDate + '일';
+                // }
             } else {
             }
         }
@@ -2318,9 +2318,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // |- 예식 정보 탭
 
                 // └─ 예식 일자 JSON
-                const WeddingDate = document.getElementById('date');
+
+                const WeddingDate = document.getElementById("TextDateCalendar").innerText;
+                const WeddingDay = document.getElementById("CalWeddingDayTitle").innerText;
+
                 const DdayToggle = document.getElementById('DDay');
-                const WeddingDateData = WeddingDate.value;
+                const WeddingDateData = `${WeddingDate} ${WeddingDay}`
                 const DdayToggleData = DdayToggle.classList.contains('active');
                 console.log('WeddingDate Data:' + JSON.stringify(WeddingDateData));
                 console.log('DdayToggle Data:' + JSON.stringify(DdayToggleData));
