@@ -1674,7 +1674,7 @@ function calendarInit() {
         var nextMonthFirstDay = new Date(currentYear, currentMonth + 1, 1);
 
         // 현재 월 표기
-        $('.year-month').text((currentMonth + 1) + '월 ' + currentDate + '일');
+        // $('.year-month').text((currentMonth + 1) + '월 ' + currentDate + '일');
 
         // 렌더링 html 요소 생성
         var calendar = document.querySelector('.dates');
@@ -1735,10 +1735,10 @@ function calendarInit() {
                 let days = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
                 var currentday = days[today.getDay()];
 
-                var weddingDayTitle = document.getElementById("CalWeddingDayTitle");
-                if (weddingDayTitle) {
-                    weddingDayTitle.innerText = currentday;
-                }
+                // var weddingDayTitle = document.getElementById("CalWeddingDayTitle");
+                // if (weddingDayTitle) {
+                //     weddingDayTitle.innerText = currentday;
+                // }
 
                 // var weddingDateTitle = document.getElementById("WeddingDateTitle");
                 // if (weddingDateTitle) {
@@ -2324,6 +2324,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const DdayToggle = document.getElementById('DDay');
                 const WeddingDateData = `${WeddingDate} ${WeddingDay}`
+                // const WeddingDateData = `${WeddingDate} ${WeddingDay}`
                 const DdayToggleData = DdayToggle.classList.contains('active');
                 console.log('WeddingDate Data:' + JSON.stringify(WeddingDateData));
                 console.log('DdayToggle Data:' + JSON.stringify(DdayToggleData));
