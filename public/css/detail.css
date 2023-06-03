@@ -34,7 +34,7 @@
   opacity: 1;
 }
 
-.contents_detail{
+.contents_detail {
   width: 100%;
 }
 
@@ -44,23 +44,23 @@
   align-items: center;
 }
 
-.TitleSectionWrap{
+.TitleSectionWrap {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#Appview > .side_contents{
+#Appview>.side_contents {
   max-height: 100vh;
-  border-radius : 0px;
+  border-radius: 0px;
 }
 
-.DecorationImg{
+.DecorationImg {
   width: 102px;
   height: 31px;
 }
 
-.BrideGroom{
+.BrideGroom {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -68,7 +68,10 @@
   padding: 18px;
 }
 
-#GroomFirstName, #GroomLastName, #BrideFirstName, #BrideLastName{
+#GroomFirstName,
+#GroomLastName,
+#BrideFirstName,
+#BrideLastName {
   font-size: 20px;
   line-height: 1.2;
 }
@@ -86,20 +89,22 @@
   line-height: 1.8;
 }
 
-.WeddingTitleText, .sec_cal .cal_nav .year-month {
+.WeddingTitleText,
+.sec_cal .cal_nav .year-month {
   font-size: 20px;
   line-height: 1.8;
   text-align: center;
 }
 
-#CalDayTime{
+#CalDayTime {
   color: var(--ColorTextTertiary);
 }
 
-.WeddingDateLocation{
+.WeddingDateLocation {
   width: calc(100% - 25px);
   padding: 0px 12px 12px 12px;
 }
+
 .DateLocation {
   display: flex;
   flex-direction: column;
@@ -114,18 +119,19 @@
   text-align: center;
 }
 
-.WeddingLocate{
+.WeddingLocate {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
-#AddressTitle{
+
+#AddressTitle {
   font-weight: bold;
   margin-bottom: 8px;
 }
 
-#WeddingAddress{
+#WeddingAddress {
   color: var(--ColorTextTertiary);
 }
 
@@ -135,7 +141,8 @@
   padding: 0;
 }
 
-.WeddingBodyTitle, .year-month {
+.WeddingBodyTitle,
+.year-month {
   font-size: 19px;
   padding: 12px;
   text-align: center;
@@ -148,32 +155,33 @@
   gap: 8px;
 }
 
-.NameBox > .BtnBasic{
+.NameBox>.BtnBasic {
   width: 200px;
 }
 
-.ToggleSection{
+.ToggleSection {
   width: 100%;
 }
 
-.InputArea, .ToggleArea {
+.InputArea,
+.ToggleArea {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-#InviteTitle{
+#InviteTitle {
   font-weight: 500;
   margin-bottom: 12px;
 }
 
-.AccountSection{
+.AccountSection {
   width: 100%;
   margin-bottom: 32px;
 }
 
-.relationship{
+.relationship {
   padding: 0px 10px;
   color: var(--ColorTextTertiary);
 }
@@ -184,11 +192,11 @@
   line-height: 20px;
 }
 
-.DefaultUrl{
+.DefaultUrl {
   color: var(--ColorTextTertiary);
 }
 
-.CustomUrl{
+.CustomUrl {
   color: var(--ColorTextSecondary);
 }
 
@@ -197,9 +205,12 @@
   font-weight: 400;
   line-height: 1.8;
   color: var(--ColorTextTertiary);
-  white-space: nowrap; /* 텍스트가 줄 바꿈 되지 않도록 설정 */
-  overflow: hidden; /* 컨테이너 요소를 넘치는 텍스트를 숨김 */
-  text-overflow: ellipsis; /* 말줄임 표시 */
+  white-space: nowrap;
+  /* 텍스트가 줄 바꿈 되지 않도록 설정 */
+  overflow: hidden;
+  /* 컨테이너 요소를 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis;
+  /* 말줄임 표시 */
 }
 
 .sectiondes {
@@ -222,10 +233,14 @@
 }
 
 .unselectable {
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
 }
 
 
@@ -270,19 +285,21 @@
   display: flex;
   flex-direction: row;
 }
-.accodian-inner{
+
+.accodian-inner {
   display: flex;
   justify-content: space-between;
   gap: 8px;
 }
 
-.accodian-info{
+.accodian-info {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-.accounttarget{
+
+.accounttarget {
   gap: 4px;
   display: flex;
   align-items: center;
@@ -295,7 +312,9 @@
   justify-content: space-between;
 }
 
-#accountinformation, #bankinfo, #holderinfo{
+#accountinformation,
+#bankinfo,
+#holderinfo {
   text-align: left;
 }
 
@@ -372,7 +391,8 @@
 
 .sec_cal .cal_wrap .days {
   display: grid;
-  grid-template-columns: repeat(7, 1fr); /* 1fr 1fr 1fr */
+  grid-template-columns: repeat(7, 1fr);
+  /* 1fr 1fr 1fr */
   justify-items: center;
   padding-bottom: 16px;
 }
@@ -400,7 +420,8 @@
 }
 
 .sec_cal .cal_wrap .dates {
-  grid-template-columns: repeat(7, 1fr); /* 1fr 1fr 1fr */
+  grid-template-columns: repeat(7, 1fr);
+  /* 1fr 1fr 1fr */
   justify-items: center;
   display: grid;
   grid-gap: 4px;
@@ -423,13 +444,13 @@
   height: 294px;
 }
 
-.map_area{
+.map_area {
   margin-top: 12px;
   border: 1px solid var(--ColorBorder10);
   z-index: 0;
 }
 
-.mapdes{
+.mapdes {
   height: 40px;
   font-size: var(--Text-Supported);
   color: var(--ColorTextPrimary);
@@ -439,7 +460,7 @@
   border-top: 1px solid var(--ColorBorder10);
 }
 
-#map_contents{
+#map_contents {
   width: 100%;
   height: 294px;
   border-radius: var(--BorderRadius-Md);
@@ -448,7 +469,7 @@
   margin: 16px 0px 64px 0px;
 }
 
-.NavigationSection{
+.NavigationSection {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -459,7 +480,7 @@
   border-top: 1px solid var(--ColorBorder10);
 }
 
-.NavigationItem{
+.NavigationItem {
   font-family: 'pretendard', sans-serif;
   width: 100%;
   display: flex;
@@ -470,36 +491,50 @@
   cursor: pointer;
 }
 
-.NavigationItem:last-child{
+.NavigationItem:last-child {
   width: 80%;
 }
 
-#NaverNav, #KakaoNav{
+#NaverNav,
+#KakaoNav {
   border-right: 1px solid var(--ColorBorder10);
 }
 
 
 
-.NavIcon{
+.NavIcon {
   width: 16px;
   height: 16px;
 }
 
-.BoardArea{
+.BoardIconDel{
+  cursor: pointer;
+}
+
+.BoardArea {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 16px;
 }
 
-.BoardFrom{
+.BoardArea_Alert {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+  max-height: 480px;
+  overflow-y: scroll;
+}
+
+.BoardFrom {
   display: flex;
   align-items: center;
   width: 100%;
   gap: 10px;
 }
 
-.BoardItem{
+.BoardItem {
   padding: 16px 24px;
   background: var(--ColorBase);
   border: 1px solid var(--ColorBorderSolid);
@@ -507,41 +542,43 @@
   display: flex;
   height: auto;
 }
-.BoardText{
+
+.BoardText {
   font-size: var(--Text-Paragraph);
   color: var(--ColorTextPrimary);
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.BoardControl{
+
+.BoardControl {
   display: flex;
   gap: 10px;
   padding: 24px 0px;
 }
 
-.From{
+.From {
   color: var(--ColorTextTertiary);
 }
 
-.BoardText{
+.BoardText {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.BoardBody{
+.BoardBody {
   width: 100%;
 }
 
-.ShareSection{
+.ShareSection {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-bottom: 24px;
 }
 
-.SectionLine{
+.SectionLine {
   width: 100%;
 }
 
@@ -551,6 +588,7 @@
   padding: 0;
   list-style: none;
 }
+
 .accordion-title {
   margin-bottom: 8px;
   padding: 0px 16px;
@@ -558,7 +596,7 @@
   display: block;
   font-size: var(--Text-Button);
   cursor: pointer;
-  background: url('../Resource/assets/Icon/Arrow.svg')no-repeat 95% 50% , var(--ColorBrand);
+  background: url('../Resource/assets/Icon/Arrow.svg')no-repeat 95% 50%, var(--ColorBrand);
   background-size: 16px 16px;
   color: var(--ColorTextPrimary);
   border-radius: var(--BorderRadius-Md);
@@ -575,7 +613,7 @@
   padding: 8px 16px 16px 16px;
 }
 
-.accordion-content p{
+.accordion-content p {
   margin: 0;
 }
 
@@ -634,7 +672,7 @@
   width: 100%;
 }
 
-.LocationSection{
+.LocationSection {
   margin-bottom: 64px;
 }
 
@@ -729,17 +767,18 @@ li.TabItemGallery:hover {
   width: 100%;
 }
 
-.dot{
+.dot {
   margin: 0px 4px;
 }
 
-.BrideFamilyStatusInfo, .GroomFamilyStatusInfo{
+.BrideFamilyStatusInfo,
+.GroomFamilyStatusInfo {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.ImgMum{
+.ImgMum {
   width: 24px;
   height: 24px;
   display: none;
@@ -825,17 +864,18 @@ li.TabItemGallery:hover {
   justify-content: center;
   height: 360px;
 }
-.uploadarea{
+
+.uploadarea {
   display: flex;
   justify-content: center;
 }
 
-.addcount{
+.addcount {
   margin-top: 24px;
   height: 48px;
 }
 
-.ddaysection{
+.ddaysection {
   display: flex;
   justify-content: center;
   gap: 4px;
@@ -846,7 +886,8 @@ li.TabItemGallery:hover {
   text-align: center;
   margin-top: 16px;
 }
-#dday{
+
+#dday {
   color: #ff5000;
 }
 
@@ -873,7 +914,7 @@ li.TabItemGallery:hover {
   transition: var(--transition);
 }
 
-.ImgGroupUpload_Btn{
+.ImgGroupUpload_Btn {
   cursor: pointer;
   color: var(--ColorTextPrimary);
   text-align: center;
@@ -883,23 +924,25 @@ li.TabItemGallery:hover {
   border-radius: var(--BorderRadius-Xs);
   transition: var(--transition);
 }
-.ImgGroupUpload_Btn:hover{
+
+.ImgGroupUpload_Btn:hover {
   background-color: var(--ColorBorderSolid);
   border: 3px solid var(--ColorBorder10);
-  border-style: dashed;;
+  border-style: dashed;
+  ;
 }
 
-#LoadMoreBtn{
+#LoadMoreBtn {
   display: none;
   margin-top: 24px;
 }
 
-.galleryupload{
+.galleryupload {
   display: flex;
   flex-direction: column;
 }
 
-.gallerypreview{
+.gallerypreview {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -995,13 +1038,14 @@ li.TabItemGallery:hover {
   position: absolute;
   /* border: 1px solid rgb(0,0,0,0.1); */
 }
-.previewframe{
+
+.previewframe {
   position: relative;
   height: 100%;
   width: 100%;
 }
 
-.innerframe{
+.innerframe {
   left: 12px;
   bottom: 0px;
   width: calc(100% - 26px);
@@ -1016,7 +1060,7 @@ li.TabItemGallery:hover {
   border-radius: 500px 500px 0px 0px;
 }
 
-#preview-image{
+#preview-image {
   border-radius: 500px 500px 0px 0px;
   object-fit: cover;
 }
@@ -1025,14 +1069,14 @@ li.TabItemGallery:hover {
   width: 100%;
 }
 
-.orderlist{
+.orderlist {
   display: flex;
   flex-direction: row;
   gap: 24px;
   align-items: center;
 }
 
-.MenuIcon{
+.MenuIcon {
   width: 16px;
   height: 16px;
 }
@@ -1365,7 +1409,7 @@ ul.cvf_uploaded_files li img.img-thumb {
   height: 100px;
 }
 
-.img-thumb{
+.img-thumb {
   width: 100%;
   height: 120px;
 }
@@ -1383,7 +1427,8 @@ ul.cvf_uploaded_files .highlight {
   border-radius: var(--BorderRadius-Lg);
 }
 
-.InputArea .highlight, .ToggleArea .highlight {
+.InputArea .highlight,
+.ToggleArea .highlight {
   width: 100%;
   height: 44px;
   background-color: var(--ColorBase);
@@ -1426,7 +1471,8 @@ ul.cvf_uploaded_files .delete-btn {
   display: none;
   z-index: 1001;
 }
-.PreviewPage{
+
+.PreviewPage {
   display: flex;
   justify-content: center;
 }
@@ -1456,16 +1502,17 @@ ul.cvf_uploaded_files .delete-btn {
   transition: var(--transition);
 }
 
-.close-button:hover{
+.close-button:hover {
   background-color: var(--ColorBrand);
 }
 
 /* 카카오 공유하기 */
 
-.kakaoShareArea{
+.kakaoShareArea {
   width: 100%;
 }
-.KakaoSection{
+
+.KakaoSection {
   border: 1px solid var(--ColorBorder5);
   border-radius: var(--BorderRadius-Md);
   height: calc(100% - 160px);
@@ -1476,7 +1523,8 @@ ul.cvf_uploaded_files .delete-btn {
   align-items: center;
   padding: 24px;
 }
-.KaKaosrc{
+
+.KaKaosrc {
   max-width: 220px;
   min-width: 220px;
   width: 100%;
@@ -1484,26 +1532,31 @@ ul.cvf_uploaded_files .delete-btn {
   border-radius: 8px 8px 0px 0px;
   object-fit: cover;
 }
-.ShareText{
+
+.ShareText {
   width: 100%;
   max-width: 220px;
   background: var(--ColorSurface);
   border-radius: 0px 0px 8px 8px;
 }
-.kakaoTitle{
+
+.kakaoTitle {
   font-size: 12px;
   padding: 10px;
 }
-.corparea{
+
+.corparea {
   display: flex;
   align-items: center;
   gap: 4px;
 }
-.KaKaoShare{
+
+.KaKaoShare {
   border-radius: 8px;
   box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05);
 }
-.buttonArea{
+
+.buttonArea {
   font-size: 13px;
   text-align: center;
   background: var(--ColorBase);
@@ -1512,15 +1565,18 @@ ul.cvf_uploaded_files .delete-btn {
   padding: 10px;
   width: 100%;
 }
-.buttonGroups{
+
+.buttonGroups {
   display: flex;
   padding: 0px 10px 10px 10px;
   gap: 4px;
 }
-.corpname{
+
+.corpname {
   font-size: 12px;
 }
-.FomentArea{
+
+.FomentArea {
   border-radius: 0px 0px 8px 8px;
   display: flex;
   align-items: center;
@@ -1529,12 +1585,14 @@ ul.cvf_uploaded_files .delete-btn {
   background: var(--ColorSurface);
   border-top: 1px solid var(--ColorBorder5);
 }
-.Corplogo img, .Corpicon img{
+
+.Corplogo img,
+.Corpicon img {
   width: 16px;
   height: 16px;
 }
 
-.Corpicon img{
+.Corpicon img {
   -webkit-transform: rotate(270deg);
   -moz-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
@@ -1543,37 +1601,50 @@ ul.cvf_uploaded_files .delete-btn {
 }
 
 /* 스크롤 섹션 정리 */
-.TitleSection, .InviteArea, .sec_cal, .GalleryArea, .LocationSection, .AccountSection, .BoardSection, .sec_cal{
+.TitleSection,
+.InviteArea,
+.sec_cal,
+.GalleryArea,
+.LocationSection,
+.AccountSection,
+.BoardSection,
+.sec_cal {
   opacity: 0;
   transition: 0.8s ease-out;
   transform: translateY(40px);
 }
 
-.TitleSection.is-visible, .InviteArea.is-visible, .sec_cal.is-visible, .GalleryArea.is-visible, .LocationSection.is-visible, .AccountSection.is-visible, .BoardSection.is-visible{
+.TitleSection.is-visible,
+.InviteArea.is-visible,
+.sec_cal.is-visible,
+.GalleryArea.is-visible,
+.LocationSection.is-visible,
+.AccountSection.is-visible,
+.BoardSection.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.GalleryArea{
+.GalleryArea {
   margin: 0px 0px 64px 0px;
 }
 
-.AppView{
-  width:100%;
+.AppView {
+  width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.SavedArea{
+.SavedArea {
   display: flex;
   justify-content: center;
 }
 
-.ModalSaveComplete{
+.ModalSaveComplete {
   display: none;
 }
 
-.ModalSaveComplete.is-active{
+.ModalSaveComplete.is-active {
   top: 40%;
   padding: 48px;
   background: var(--ColorSurface);
@@ -1587,25 +1658,25 @@ ul.cvf_uploaded_files .delete-btn {
   border-radius: var(--BorderRadius-Lg);
 }
 
-.ModalTextWrap{
+.ModalTextWrap {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.ModalTitle{
+.ModalTitle {
   font-size: var(--Text-Title);
   color: var(--ColorTextPrimary);
   text-align: center;
 }
 
-.ModalDes{
+.ModalDes {
   font-size: var(--Text-Paragraph);
   text-align: center;
   color: var(--ColorTextSecondary);
 }
 
-.SavedView{
+.SavedView {
   width: 200px;
   height: 60px;
   background: var(--ColorTintBlack);
@@ -1617,13 +1688,13 @@ ul.cvf_uploaded_files .delete-btn {
   transition: var(--transition);
 }
 
-.InviteBtnGroups{
+.InviteBtnGroups {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-#ClosedView{
+#ClosedView {
   border: 1px solid var(--ColorTextTertiary);
   background: none;
   color: var(--ColorTextPrimary);
@@ -1631,42 +1702,55 @@ ul.cvf_uploaded_files .delete-btn {
 
 /* Tablet 구간 */
 @media screen and (max-width: 1200px) {
-  .side_contents{
+  .side_contents {
     display: none;
   }
-  .RightContentsArea{
+
+  .RightContentsArea {
     width: 100%;
   }
-  .ImgSection{
+
+  .ImgSection {
     flex-direction: column;
   }
-  .selectbox_detail{
+
+  .selectbox_detail {
     flex-direction: column;
   }
-  .BottomNavInnerWrap{
+
+  .BottomNavInnerWrap {
     position: relative;
   }
-  .Progress{
+
+  .Progress {
     position: absolute;
     left: 0;
     top: -6;
   }
-  .ProgressDes{
+
+  .ProgressDes {
     display: none;
   }
-  .ProgressBar, .ProgressPercent{
+
+  .ProgressBar,
+  .ProgressPercent {
     border-radius: 0;
   }
-  .NavButtonGroups,.ProgressTemporarySave,.ProgressSave{
+
+  .NavButtonGroups,
+  .ProgressTemporarySave,
+  .ProgressSave {
     width: 100%;
   }
 }
+
 /* Mobile 구간 */
 @media screen and (max-width: 560px) {
-  .main_contents{
+  .main_contents {
     padding: 56px 0px 40px 0px;
   }
-  .DesignSection{
+
+  .DesignSection {
     border-radius: 0px;
   }
 }

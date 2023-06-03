@@ -44,7 +44,7 @@ body {
     font-family: 'pretendard', sans-serif;
 }
 
-.BgView{
+.BgView {
     background: var(--ColorTintBlack);
     width: 100%;
     height: 100%;
@@ -94,7 +94,8 @@ body {
     color: var(--ColorTextTertiary);
 }
 
-.BtnBasic, .BtnIcon {
+.BtnBasic,
+.BtnIcon {
     font-size: var(--Text-Button);
     cursor: pointer;
     background: var(--ColorBrand);
@@ -108,23 +109,24 @@ body {
     letter-spacing: -0.04em;
 }
 
-.BtnBasic:hover , .BtnIcon:hover {
+.BtnBasic:hover,
+.BtnIcon:hover {
     opacity: 0.7;
 }
 
-.BtnIcon{
+.BtnIcon {
     font-family: 'Jeju Myeongjo', serif;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.BtnInnerIc{
+.BtnInnerIc {
     width: 16px;
     height: 16px;
 }
 
-.Btnsmall{
+.Btnsmall {
     font-size: var(--Text-Supported);
     cursor: pointer;
     background: var(--ColorBrand);
@@ -136,11 +138,13 @@ body {
     height: 22px;
 }
 
-.Btnsmall:hover{
+.Btnsmall:hover {
     opacity: 0.7;
 }
 
-.BtnMd, .BtnEdit, .BtnPreview{
+.BtnMd,
+.BtnEdit,
+.BtnPreview {
     width: 100%;
     font-size: var(--Text-Supported);
     cursor: pointer;
@@ -175,19 +179,20 @@ body {
 .section-subtitle {
     font-size: var(--Text-Subtitle);
 }
-.sectionFront{
+
+.sectionFront {
     display: flex;
     align-items: center;
 }
 
-.sectionBack{
+.sectionBack {
     display: flex;
     align-items: center;
     gap: 4px;
 }
 
 .selectboxname,
-.base{
+.base {
     font-family: 'pretendard', sans-serif;
     width: 100%;
     height: 48px;
@@ -198,12 +203,12 @@ body {
     transition: var(--transition);
     border-radius: var(--BorderRadius-Md);
     background: var(--ColorBase);
-    -webkit-appearance: none; 
+    -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
 }
 
-#date{
+#date {
     font-family: 'pretendard', sans-serif;
     width: 100%;
     height: 48px;
@@ -213,16 +218,16 @@ body {
     cursor: pointer;
     transition: var(--transition);
     border-radius: var(--BorderRadius-Md);
-    -webkit-appearance: none; 
+    -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
 }
 
-#date:hover{
+#date:hover {
     border: 1px solid var(--ColorTextPrimary);
 }
 
-.base:focus{
+.base:focus {
     background: var(--ColorSurface);
 }
 
@@ -232,85 +237,93 @@ body {
     padding: 0px 12px;
     border: 1px solid var(--ColorBorderSolid);
     appearance: none;
-    -webkit-appearance: none; 
+    -webkit-appearance: none;
     -moz-appearance: none;
     cursor: pointer;
     transition: var(--transition);
     border-radius: var(--BorderRadius-Md);
 }
-.custom-select{
+
+.custom-select {
     width: 100%;
     height: 48px;
     padding: 0px 16px;
     border: 1px solid var(--ColorBorderSolid);
     appearance: none;
-    -webkit-appearance: none; 
+    -webkit-appearance: none;
     -moz-appearance: none;
     cursor: pointer;
     transition: var(--transition);
     border-radius: var(--BorderRadius-Md);
 }
-.LoginWrap{
+
+.LoginWrap {
     display: flex;
     align-items: center;
     gap: 16px;
 }
 
-.LoginInfo, .Create_InvitationBtn{
+.LoginInfo,
+.Create_InvitationBtn {
     cursor: pointer;
     color: var(--ColorTextPrimary);
-    font-size: var(--Text-Button); 
+    font-size: var(--Text-Button);
 }
-.LoginBound{
+
+.LoginBound {
     height: 8px;
     width: 1px;
     background-color: var(--ColorBorder10);
 }
 
-.LoginBtn{
+.LoginBtn {
     padding: 8px 0px;
     background: none;
     border: none;
     cursor: pointer;
     color: var(--ColorTextTertiary);
-    font-size: var(--Text-Button); 
+    font-size: var(--Text-Button);
 }
 
 @keyframes slideUp {
     from {
-      transform: translateY(-8px);
+        transform: translateY(-8px);
     }
+
     to {
-      transform: translateY(0px);
+        transform: translateY(0px);
     }
-  }
-  
-  @keyframes slideDown {
+}
+
+@keyframes slideDown {
     from {
-      transform: translateY(0px);
+        transform: translateY(0px);
     }
+
     to {
-      transform: translateY(-8px);
+        transform: translateY(-8px);
     }
-  }
+}
 
-  
 
-.selectboxname, .custom-select{
-    background: url('../Resource/assets/Icon/Arrow.svg') no-repeat 95% 50% , var(--ColorBase);
+
+.selectboxname,
+.custom-select {
+    background: url('../Resource/assets/Icon/Arrow.svg') no-repeat 95% 50%, var(--ColorBase);
     background-size: 16px 16px;
 }
 
-.innerselectbox{
-    background: url('../Resource/assets/Icon/Arrow.svg') no-repeat 80% 50% , var(--ColorSurface);
+.innerselectbox {
+    background: url('../Resource/assets/Icon/Arrow.svg') no-repeat 80% 50%, var(--ColorSurface);
     background-size: 12px 12px;
 }
 
-.selectboxname:hover, .custom-select:hover{
+.selectboxname:hover,
+.custom-select:hover {
     border: 1px solid var(--ColorTextPrimary);
 }
 
-.innerselectbox:hover{
+.innerselectbox:hover {
     cursor: not-allowed;
 }
 
@@ -319,14 +332,14 @@ body {
 .custom-select-container {
     position: relative;
     width: 100%;
-  }
+}
 
 
-  .custom-select option{
+.custom-select option {
     display: none;
-  }
+}
 
-  #custom-options {
+#custom-options {
     z-index: 1001;
     padding: 24px;
     position: absolute;
@@ -341,9 +354,9 @@ body {
     grid-template-columns: 1fr 1fr;
     text-align: center;
     border: 1px solid var(--ColorBorder10);
-  }
-  
-  #custom-options-invite {
+}
+
+#custom-options-invite {
     max-height: 360px;
     overflow-y: scroll;
     z-index: 1001;
@@ -359,8 +372,9 @@ body {
     animation-fill-mode: both;
     text-align: center;
     border: 1px solid var(--ColorBorder10);
-  }
-  .custom-option {
+}
+
+.custom-option {
     line-height: 28px;
     display: flex;
     flex-direction: column;
@@ -370,35 +384,38 @@ body {
     color: #333;
     cursor: pointer;
     transition: var(--transition);
-  }
-  
+}
 
-  .OptionTitle{
+
+.OptionTitle {
     font-weight: bold;
     margin-bottom: 12px;
-  }
-  
-  .custom-option:hover {
+}
+
+.custom-option:hover {
     border-radius: var(--BorderRadius-Xs);
     background-color: var(--ColorBorderSolid);
-  }
+}
 
-  #TypeGowun{
+#TypeGowun {
     font-family: 'GowunDodum-Regular', serif;
-  }
-  #TypeChosunilbo{
+}
+
+#TypeChosunilbo {
     font-family: 'Chosunilbo_myungjo', serif;
-  }
-  #TypeMapo{
+}
+
+#TypeMapo {
     font-family: 'MapoFlowerIsland', serif;
-  }
-  #TypePretendard{
+}
+
+#TypePretendard {
     font-family: 'pretendard', serif;
-  }
+}
 
-  /* 텍스트 박스 */
+/* 텍스트 박스 */
 
-.TextBox{
+.TextBox {
     white-space: nowrap;
     width: 100%;
     height: 100px;
@@ -411,16 +428,28 @@ body {
     resize: none;
 }
 
-input[type="checkbox"]{
+.TextBox_Alert {
+    width: 100%;
+    height: 100px;
+    padding: 16px;
+    box-sizing: border-box;
+    border: solid 1px var(--ColorBorderSolid);
+    background-color: var(--ColorBase);
+    border-radius: var(--BorderRadius-Md);
+    font-size: var(--Text-Supported);
+    resize: none;
+}
+
+input[type="checkbox"] {
     cursor: pointer;
 }
 
-.TextBox:focus{
+.TextBox:focus {
     background-color: var(--ColorSurface);
 }
 
 
-.ToggleUI{
+.ToggleUI {
     cursor: pointer;
     display: flex;
     flex-direction: row;
@@ -444,8 +473,8 @@ input[type="checkbox"]{
     border-radius: 30px;
     background-color: #E9E9EA;
     cursor: pointer;
-  }
-  
+}
+
 .toggleSwitch .toggleButton {
     width: 28px;
     height: 28px;
@@ -457,18 +486,19 @@ input[type="checkbox"]{
     background: #fff;
 }
 
-input[type="date"]{
+input[type="date"] {
     position: relative;
     padding: 12px;
-    background: url('../Resource/assets/Icon/calendar.svg') no-repeat 95% 50% , var(--ColorBase);
+    background: url('../Resource/assets/Icon/calendar.svg') no-repeat 95% 50%, var(--ColorBase);
     background-size: 16px 16px;
 }
+
 input[type="date"]::-webkit-clear-button,
-input[type="date"]::-webkit-inner-spin-button{
+input[type="date"]::-webkit-inner-spin-button {
     display: none;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator{
+input[type="date"]::-webkit-calendar-picker-indicator {
     position: absolute;
     left: 0;
     top: 0;
@@ -482,16 +512,17 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 
 
 .toggleSwitch.active {
-background: #65C466;
+    background: #65C466;
 }
 
 .toggleSwitch.active .toggleButton {
-left: calc(100% - 30px);
-background: #fff;
+    left: calc(100% - 30px);
+    background: #fff;
 }
 
-.toggleSwitch, .toggleButton {
-transition: all 0.2s ease;
+.toggleSwitch,
+.toggleButton {
+    transition: all 0.2s ease;
 }
 
 .checkboxsel {
@@ -530,6 +561,14 @@ transition: all 0.2s ease;
     /* margin-bottom: 16px; */
 }
 
+.selectbox_modal_detail {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 12px;
+    /* margin-bottom: 16px; */
+}
+
 .list-member {
     display: none;
     position: absolute;
@@ -540,6 +579,7 @@ transition: all 0.2s ease;
     box-sizing: border-box;
     box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
+    
 }
 
 .btn-select.on {
@@ -591,12 +631,12 @@ transition: all 0.2s ease;
     color: #5CB7AD;
 }
 
-.WarningDes{
+.WarningDes {
     font-size: var(--Text-Supported);
     color: var(--ColorTintRed);
 }
 
-.WarnImg{
+.WarnImg {
     width: 14px;
     height: 14px;
 }
@@ -607,13 +647,82 @@ transition: all 0.2s ease;
     margin-bottom: 20px;
 }
 
+.borderline_modal {
+    height: 1px;
+    background: var(--ColorBorder5);
+    margin: 0px 24px
+}
+
 .bordercontentsline {
     height: 1px;
     background: var(--ColorBorder5);
     margin: 24px 0px 24px 0px;
 }
 
+#Board_Create_Dimmed,#Board_View_Dimmed, #Board_Del_Dimmed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    z-index: 1001;
+  }
 
+#Board_Create_Dimmed.BgDimmed.is-active, #Board_View_Dimmed.BgDimmed.is-active, #Board_Del_Dimmed.BgDimmed.is-active {
+    display: flex;
+}
+
+
+.AlertWrap {
+    border-radius: var(--BorderRadius-Lg);
+    width: 100%;
+    background: #fff;
+    margin: 0 auto;
+    max-width: 412px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.AlertHeader {
+    padding: 16px 24px;
+}
+
+.AlertBody {
+    padding: 0px 24px;
+}
+
+.AlertControl {
+    display: flex;
+    gap: 12px;
+    padding: 24px;
+}
+
+.CloseAlert {
+    width: 100%;
+    height: 48px;
+    border-radius: var(--BorderRadius-Md);
+    border: 1px solid var(--ColorBorder10);
+    font-size: var(--Text-Button);
+    color: var(--ColorTextPrimary);
+    background: var(--ColorSurface);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.SaveAlert {
+    width: 100%;
+    height: 48px;
+    border-radius: var(--BorderRadius-Md);
+    border: 1px solid var(--ColorBorder10);
+    font-size: var(--Text-Button);
+    color: var(--ColorTextPrimary);
+    background: var(--ColorBrand);
+    cursor: pointer;
+    transition: var(--transition);
+}
 
 .selectbox_label {
     color: var(--ColorTextPrimary);
@@ -621,6 +730,15 @@ transition: all 0.2s ease;
     font-weight: 500;
     line-height: 28px;
     min-width: 120px;
+    margin-right: 40px;
+}
+
+.selectbox_modal_label {
+    color: var(--ColorTextPrimary);
+    font-size: var(--Text-SectionSubTitle);
+    font-weight: 500;
+    line-height: 28px;
+    min-width: 56px;
     margin-right: 40px;
 }
 
@@ -647,7 +765,8 @@ transition: all 0.2s ease;
     background: var(--ColorSurface);
     border-top: 1px solid var(--ColorBorderSolid);
 }
-.FooterWrap{
+
+.FooterWrap {
     width: 100%;
     max-width: 1200px;
     display: flex;
@@ -656,10 +775,11 @@ transition: all 0.2s ease;
     padding: 0px 20px;
 }
 
-.footerlogo{
+.footerlogo {
     width: 69px;
 }
-.FooterLink{
+
+.FooterLink {
     height: 28px;
     display: flex;
     flex-direction: row;
@@ -667,13 +787,13 @@ transition: all 0.2s ease;
     justify-content: space-between;
 }
 
-.CompanyInfo{
+.CompanyInfo {
     display: flex;
     align-items: center;
     font-size: var(--Text-SectionSubTitle)
 }
 
-.CompanyInfoItem{
+.CompanyInfoItem {
     border-right: 1px solid var(--ColorBorderSolid);
     padding: 0px 16px;
     height: 12px;
@@ -681,25 +801,27 @@ transition: all 0.2s ease;
     font-weight: 700;
 }
 
-.CompanyInfoItem:first-child{
+.CompanyInfoItem:first-child {
     padding: 0px 16px 0px 0px;
 }
 
-.CompanyInfoItem:last-child{
+.CompanyInfoItem:last-child {
     border: none;
 }
-.FooterAddress{
+
+.FooterAddress {
     font-weight: 300;
     text-align: start;
     font-size: var(--Text-Supported);
 }
-.BusinessInfo{
+
+.BusinessInfo {
     margin-bottom: 8px;
 }
 
 /* 바텀네비게이션 */
 
-.BottomNavigation{
+.BottomNavigation {
     position: fixed;
     height: 80px;
     background-color: var(--ColorSurface);
@@ -707,7 +829,8 @@ transition: all 0.2s ease;
     bottom: 0;
     border-top: 1px solid var(--ColorBorder5);
 }
-.BottomNavInnerWrap{
+
+.BottomNavInnerWrap {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -719,35 +842,35 @@ transition: all 0.2s ease;
     padding: 0px 20px;
 }
 
-.Progress{
+.Progress {
     display: flex;
     gap: 8px;
     width: 100%;
     align-items: center;
 }
 
-.ProgressBar{
+.ProgressBar {
     width: 100%;
     height: 6px;
     background: var(--ColorBorder10);
-    border-radius:16px;
+    border-radius: 16px;
 }
 
-.ProgressPercent{
+.ProgressPercent {
     height: 6px;
     width: 200px;
     z-index: 1001;
     background: var(--ColorTextPrimary);
-    border-radius:16px;
+    border-radius: 16px;
 }
 
-.ProgressDes{
+.ProgressDes {
     width: 15%;
     font-size: var(--Text-Supported);
     color: var(--ColorTextPrimary);
 }
 
-.ProgressSave{
+.ProgressSave {
     width: 200px;
     height: 60px;
     background: var(--ColorTintBlack);
@@ -759,7 +882,7 @@ transition: all 0.2s ease;
     transition: var(--transition);
 }
 
-.ProgressTemporarySave{
+.ProgressTemporarySave {
     width: 200px;
     height: 60px;
     border-radius: 100px;
@@ -771,22 +894,22 @@ transition: all 0.2s ease;
     transition: var(--transition);
 }
 
-.ProgressTemporarySave:hover{
+.ProgressTemporarySave:hover {
     background: var(--ColorBorder5);
     border: 1px solid var(--ColorBorder10);
 }
 
-.ProgressSave:hover{
+.ProgressSave:hover {
     opacity: 0.9;
 }
 
-.NavButtonGroups{
+.NavButtonGroups {
     display: flex;
     align-items: center;
     gap: 16px;
 }
 
-.naver_Wrap{
+.naver_Wrap {
     width: 100%;
     display: flex;
     justify-content: center;

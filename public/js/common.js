@@ -1,6 +1,68 @@
 
 window.onload = function () {
 
+    const toggleActiveClass = (element) => {
+        element.classList.toggle('is-active');
+      };
+      
+      const BoardCreateBtn = document.getElementById('BoardCreateBtn');
+      const BoardViewBtn = document.getElementById('BoardViewBtn');
+      const BoardDelBtn = document.querySelectorAll('.BoardDelete');
+      console.log(BoardDelBtn);
+      
+      const BoardDimmed = document.getElementById('Board_Create_Dimmed');
+      const BoardViewDimmed = document.getElementById('Board_View_Dimmed');
+      const BoardDelDimmed = document.getElementById('Board_Del_Dimmed');
+      
+      const CancelDimmed_Create = document.getElementById('CloseAlert_Create');
+      const CancelDimmed_View = document.getElementById('CloseAlert_View');
+      const CancelDimmed_Del = document.getElementById('CloseAlert_Del');
+      console.log(CancelDimmed_View);
+      
+      // 방명록 남기기 버튼&취소
+      if (BoardCreateBtn) {
+        BoardCreateBtn.addEventListener('click', () => {
+          toggleActiveClass(BoardDimmed);
+        });
+      }
+      
+      if (CancelDimmed_Create) {
+        CancelDimmed_Create.addEventListener('click', () => {
+          toggleActiveClass(BoardDimmed);
+        });
+      }
+      
+      // 방명록 목록 보기 버튼&취소
+      if (BoardViewBtn) {
+        BoardViewBtn.addEventListener('click', () => {
+          toggleActiveClass(BoardViewDimmed);
+        });
+      }
+      
+      if (CancelDimmed_View) {
+        CancelDimmed_View.addEventListener('click', () => {
+          toggleActiveClass(BoardViewDimmed);
+        });
+      }
+      
+      // 방명록 삭제 버튼&취소
+      if(BoardDelBtn){
+        BoardDelBtn.forEach((btn) => {
+            btn.addEventListener('click', () => {
+              toggleActiveClass(BoardDelDimmed);
+              console.log('ddd');
+            });
+          });
+      }
+      
+      if (CancelDimmed_Del) {
+        CancelDimmed_Del.addEventListener('click', () => {
+          toggleActiveClass(BoardDelDimmed);
+        });
+      }
+      
+
+
     // Create_InvitationBtn 요소를 가져옵니다.
     const CreateBtn = document.getElementById('Create_InvitationBtn');
 

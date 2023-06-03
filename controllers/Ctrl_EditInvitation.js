@@ -33,7 +33,7 @@ const renderEditPage = (req, res) => {
       pageTitle: 'Edit Invitation',
       message: 'Please edit the invitation details',
       // MySQL에서 조회한 데이터를 전달
-      Templatedata :{
+      Templatedata: {
         data: results[0]
       }
     };
