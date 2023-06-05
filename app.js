@@ -64,6 +64,7 @@ const URLCheck = require('./routes/route_api_URLCheck');
 const Mypage = require('./routes/route_api_Mypage');
 const CreateTemplate = require('./routes/route_api_CreateTemplate');
 const GetInvitationPageRouter = require('./routes/route_GetInvitation');
+const Board = require('./routes/route_api_Board');
 
 app.use(express.json());
 
@@ -73,6 +74,7 @@ app.use('/api_SaveMyPage', saveHistoryRouter);
 app.use('/api_EditInvitation', EditInvitationRouter);
 app.use('/api_GetInvitation', GetInvitationPageRouter);
 app.use('/api_MultiImgUpload', MultiImgUpload);
+app.use('/api_Board', Board);
 
 // 네이버 로그인 라우터
 app.use('/api_Auth', Auth);
@@ -89,7 +91,6 @@ app.use('/api_CreateTemplate', CreateTemplate);
 
 // myPage Data 생성 라우터
 app.use('/mypage', Mypage);
-
 
 // 클라이언트 ID값
 app.get('/api_naver_client_id', function(req, res) {

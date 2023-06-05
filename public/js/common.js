@@ -2216,6 +2216,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // function to save invitation with images
             function saveInvitationWithImages(imageUrls) {
+
+                // 
+                const ModalGroups = document.querySelector('.ModalGroups');
+                const ModalGroupsData = ModalGroups.outerHTML;
+                
+                // 좌측 사이드 템플릿과 이미지URL을 DB에 저장하는 함수
                 const sideContentsEl = document.querySelector('.side_contents');
                 const sideContents = sideContentsEl.outerHTML;
                 const imageListItems = sideContentsEl.querySelectorAll('.grid-item');
@@ -2542,6 +2548,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
                 const requestData = {
+                    ModalGroups : ModalGroupsData,
                     sideContents: updatedSideContents, // 변경된 HTML 코드를 전송
                     imageUrls: imageUrls, // pass the image urls to the server
                     URLINFO: URLINFO,

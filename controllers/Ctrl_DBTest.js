@@ -11,6 +11,7 @@ const dbCtrl = {
     });
   },
 
+  // 템플릿 저장시, DB에 데이터를 추가하는 함수
   insertDBs: async (req, res) => {
     const { templateID, user_naver_ID, theme_type, BGM_type, effect_type, font_type, font_size, URL_data, invitation_title, title_upload_img,
       kakao_share_img,
@@ -52,7 +53,7 @@ const dbCtrl = {
       board_password,
       order_tab
     } = req.body;
-  
+
 
     const groom_father_status_bool = groom_father_status === true ? 1 : 0;
     const groom_mother_status_bool = groom_mother_status === true ? 1 : 0;
@@ -75,6 +76,7 @@ const dbCtrl = {
       if (error) throw error;
 
       const userId = result[0].ID;
+      console.log('테스트입니다' + userId);
 
       // 사용자 ID값이 일치하고 template_ID 값이 일치하는 template 테이블의 행을 조회하는 SQL 쿼리
       const getTemplateIdSql = `SELECT user_ID FROM template WHERE user_ID=${userId} AND template_ID='${templateID}'`;
@@ -89,7 +91,6 @@ const dbCtrl = {
           const updateDataSql =
             `UPDATE foment.template SET 
 
-      create_date = NOW(),
       update_date = NOW(),
       theme_type = '${theme_type}',
       BGM_type = '${BGM_type}',
@@ -146,7 +147,19 @@ const dbCtrl = {
             res.send(result);
           });
 
-        } else { // 존재하지 않는 경우
+        } else { // 존재하지 않는 경우, Template ID에 업데이트 날짜 입력
+          const insertSql = `INSERT INTO foment.template (create_date) VALUES (NOW())`;
+
+          connection.query(insertSql, (error, results) => {
+            if (error) {
+              console.error(error);
+              return res.status(500).json({ message: '서버 에러가 발생했습니다.' });
+            }
+
+          });
+
+
+
           return res.json({ message: '템플릿 저장 오류' });
         }
       });
@@ -156,13 +169,7 @@ const dbCtrl = {
 
   },
 
-
-
-
-
-
-
-
+  // 로그인시 인증정보를 DB에 추가하는 함수
   insert_Auth_DBs: async (req, res) => {
     const {
       naver_ID,
@@ -170,7 +177,7 @@ const dbCtrl = {
       naverAccessToken
     } = req.body;
 
-    // foment.users 테이블에서 naver_ID와 일치하는 사용자 정보 조회
+    // users 테이블에서 naver_ID와 일치하는 사용자 정보 조회
     const selectSql = `SELECT * FROM foment.users WHERE naver_ID = ?`;
     const selectValues = [naver_ID];
     connection.query(selectSql, selectValues, (error, results) => {
@@ -180,7 +187,7 @@ const dbCtrl = {
       }
 
       if (results.length > 0) {
-        // 이미 등록된 사용자가 있는 경우, 해당 사용자의 access_token을 업데이트합니다.
+        // 이미 등록된 사용자가 있는 경우, users 테이블에 해당 사용자의 access_token을 업데이트합니다.
         const updateSql = `UPDATE foment.users SET access_token = ?, update_date = NOW() WHERE naver_ID = ?`;
         const updateValues = [naverAccessToken, naver_ID];
         console.log(updateValues);
@@ -192,7 +199,7 @@ const dbCtrl = {
           return res.json({ message: '사용자 정보가 업데이트되었습니다.' });
         });
       } else {
-        // 등록된 사용자가 없는 경우, 새로운 사용자 정보를 추가합니다.
+        // 등록된 사용자가 없는 경우, users 테이블에 새로운 사용자 정보를 추가합니다.
         const insertSql = `INSERT INTO foment.users (naver_ID, naver_Email, access_token, signup_date, update_date) VALUES (?, ?, ?, NOW(), NOW())`;
         const insertValues = [naver_ID, naverEmail, naverAccessToken];
         connection.query(insertSql, insertValues, (error, results) => {
@@ -204,7 +211,7 @@ const dbCtrl = {
           console.log(`Inserted ID: ${insertedId}`);
 
 
-          // foment.publish 테이블의 user_id와 template_ID 열에 insertedId 값을 추가합니다.
+          // publish 테이블의 user_id와 template_ID 열에 insertedId 값을 추가합니다.
           const publishInsertSql = `INSERT INTO foment.publish (user_id, template_ID) VALUES (?, ?)`;
           const publishInsertValues = [insertedId, insertedId];
           connection.query(publishInsertSql, publishInsertValues, (publishInsertError, publishInsertResults) => {
@@ -214,7 +221,7 @@ const dbCtrl = {
               return res.status(500).json({ message: '서버 에러가 발생했습니다.' });
             }
 
-            // foment.board 테이블의 user_id와 template_ID 열에 insertedId 값을 추가합니다.
+            // board 테이블의 user_id와 template_ID 열에 insertedId 값을 추가합니다.
             const boardInsertSql = `INSERT INTO foment.board (user_id, template_ID) VALUES (?, ?)`;
             const boardInsertValues = [insertedId, insertedId];
             connection.query(boardInsertSql, boardInsertValues, (boardInsertError, boardInsertResults) => {
@@ -229,13 +236,8 @@ const dbCtrl = {
 
         });
       }
-
-
-
     });
   }
-
-
 
 };
 

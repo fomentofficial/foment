@@ -20,6 +20,7 @@ const saveFile = async (req, res) => {
   
   try {
     const {
+      ModalGroups: ModalGroups,
       imageUrls: imageUrls, // pass the image urls to the server
       sideContents: updatedSideContents,
       URLINFO: URLINFO,
@@ -103,6 +104,7 @@ const saveFile = async (req, res) => {
           ${headerWithClass}
         </head>
         <body>
+        ${ModalGroups}
           <div class="AppView" id="Appview">
             ${classHtml}
           </div>
