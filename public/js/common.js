@@ -14,7 +14,7 @@ window.onload = function () {
       const BoardViewDimmed = document.getElementById('Board_View_Dimmed');
       const BoardDelDimmed = document.getElementById('Board_Del_Dimmed');
       
-      const CancelDimmed_Create = document.getElementById('CloseAlert_Create');
+      const CancelDimmed_Create = document.getElementById('CloseBoard');
       const CancelDimmed_View = document.getElementById('CloseAlert_View');
       const CancelDimmed_Del = document.getElementById('CloseAlert_Del');
       console.log(CancelDimmed_View);
@@ -2676,6 +2676,57 @@ btnEditList.forEach((btnEdit) => {
       });
     });
   });
+});
+
+
+
+// 방명록 Post 스크립트
+const SaveBoard = document.getElementById('SaveBoard');
+let templateID = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
+
+SaveBoard.addEventListener('click', () => {
+
+    console.log(`URLInfo: ${templateID}`);
+  const Board_Writer = document.getElementById('Board_Writer');
+  const Board_Contents = document.getElementById('Board_Contents');
+  const Board_Password = document.getElementById('Board_Password');
+
+  const Board_Writer_Data = Board_Writer.value;
+  const Board_Contents_Data = Board_Contents.value;
+  const Board_Password_Data = Board_Password.value;
+
+  console.log('Board_Writer_Data: ' + Board_Writer_Data);
+  console.log('Board_Contents_Data: ' + Board_Contents_Data);
+  console.log('Board_Password_Data: ' + Board_Password_Data);
+
+  // POST 요청 보내기
+  const url = '/api_Board/CreateBoard'; // 실제 서버 주소로 대체해야 합니다.
+
+  const data = {
+    template_ID: templateID,
+    Board_Writer_Data: Board_Writer_Data,
+    Board_Contents_Data: Board_Contents_Data,
+    Board_Password_Data: Board_Password_Data,
+  };
+
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => {
+      if (response.ok) {
+        console.log('게시판 데이터 전송 성공');
+        // 추가로 처리할 로직을 여기에 작성할 수 있습니다.
+      } else {
+        console.error('게시판 데이터 전송 실패');
+      }
+    })
+    .catch(error => {
+      console.error('게시판 데이터 전송 실패:', error);
+    });
 });
 
 
