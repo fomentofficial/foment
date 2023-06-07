@@ -44,9 +44,9 @@ const Board = {
           } else {
             const user_ID = selectResults[0].user_ID;
 
-            const insertQuery = `INSERT INTO board (user_ID, template_ID, name, contents, password) VALUES (?, ?, ?, ?, ?)`;
+            const insertQuery = `INSERT INTO board (user_ID, template_ID, name, contents, password, create_date) VALUES (?, ?, ?, ?, ?, NOW())`;
             const insertValues = [user_ID, template_ID, Board_Writer_Data, Board_Contents_Data, Board_Password_Data];
-
+            
             connection.query(insertQuery, insertValues, (insertError, insertResults) => {
               if (insertError) {
                 console.error('MySQL 데이터 삽입 실패:', insertError);

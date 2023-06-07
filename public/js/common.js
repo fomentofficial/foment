@@ -1,66 +1,66 @@
 
 window.onload = function () {
 
-    const toggleActiveClass = (element) => {
+    let toggleActiveClass = (element) => {
         element.classList.toggle('is-active');
-      };
-      
-      const BoardCreateBtn = document.getElementById('BoardCreateBtn');
-      const BoardViewBtn = document.getElementById('BoardViewBtn');
-      const BoardDelBtn = document.querySelectorAll('.BoardDelete');
-      console.log(BoardDelBtn);
-      
-      const BoardDimmed = document.getElementById('Board_Create_Dimmed');
-      const BoardViewDimmed = document.getElementById('Board_View_Dimmed');
-      const BoardDelDimmed = document.getElementById('Board_Del_Dimmed');
-      
-      const CancelDimmed_Create = document.getElementById('CloseBoard');
-      const CancelDimmed_View = document.getElementById('CloseAlert_View');
-      const CancelDimmed_Del = document.getElementById('CloseAlert_Del');
-      console.log(CancelDimmed_View);
-      
-      // 방명록 남기기 버튼&취소
-      if (BoardCreateBtn) {
+    };
+
+    let BoardCreateBtn = document.getElementById('BoardCreateBtn');
+    let BoardViewBtn = document.getElementById('BoardViewBtn');
+    let BoardDelBtn = document.querySelectorAll('.BoardDelete');
+    console.log(BoardDelBtn);
+
+    let BoardDimmed = document.getElementById('Board_Create_Dimmed');
+    let BoardViewDimmed = document.getElementById('Board_View_Dimmed');
+    let BoardDelDimmed = document.getElementById('Board_Del_Dimmed');
+
+    let CancelDimmed_Create = document.getElementById('CloseAlert_Create');
+    let CancelDimmed_View = document.getElementById('CloseAlert_View');
+    let CancelDimmed_Del = document.getElementById('CloseAlert_Del');
+    console.log(CancelDimmed_View);
+
+    // 방명록 남기기 버튼&취소
+    if (BoardCreateBtn) {
         BoardCreateBtn.addEventListener('click', () => {
-          toggleActiveClass(BoardDimmed);
+            toggleActiveClass(BoardDimmed);
         });
-      }
-      
-      if (CancelDimmed_Create) {
+    }
+
+    if (CancelDimmed_Create) {
         CancelDimmed_Create.addEventListener('click', () => {
-          toggleActiveClass(BoardDimmed);
+            toggleActiveClass(BoardDimmed);
         });
-      }
-      
-      // 방명록 목록 보기 버튼&취소
-      if (BoardViewBtn) {
+    }
+
+    // 방명록 목록 보기 버튼&취소
+    if (BoardViewBtn) {
         BoardViewBtn.addEventListener('click', () => {
-          toggleActiveClass(BoardViewDimmed);
+            toggleActiveClass(BoardViewDimmed);
         });
-      }
-      
-      if (CancelDimmed_View) {
+    }
+
+    if (CancelDimmed_View) {
         CancelDimmed_View.addEventListener('click', () => {
-          toggleActiveClass(BoardViewDimmed);
+            toggleActiveClass(BoardViewDimmed);
         });
-      }
-      
-      // 방명록 삭제 버튼&취소
-      if(BoardDelBtn){
+    }
+
+    // 방명록 삭제 버튼&취소
+    if (BoardDelBtn) {
         BoardDelBtn.forEach((btn) => {
             btn.addEventListener('click', () => {
-              toggleActiveClass(BoardDelDimmed);
-              console.log('ddd');
+                toggleActiveClass(BoardDelDimmed);
+                console.log('ddd');
             });
-          });
-      }
-      
-      if (CancelDimmed_Del) {
-        CancelDimmed_Del.addEventListener('click', () => {
-          toggleActiveClass(BoardDelDimmed);
         });
-      }
-      
+    }
+
+    if (CancelDimmed_Del) {
+        CancelDimmed_Del.addEventListener('click', () => {
+            toggleActiveClass(BoardDelDimmed);
+        });
+    }
+
 
 
     // Create_InvitationBtn 요소를 가져옵니다.
@@ -681,7 +681,7 @@ window.onload = function () {
         });
 
     }
-    
+
     // 대표 이미지 업로드 크롭
     $(function () {
         var cropper;
@@ -2220,7 +2220,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 
                 const ModalGroups = document.querySelector('.ModalGroups');
                 const ModalGroupsData = ModalGroups.outerHTML;
-                
+
                 // 좌측 사이드 템플릿과 이미지URL을 DB에 저장하는 함수
                 const sideContentsEl = document.querySelector('.side_contents');
                 const sideContents = sideContentsEl.outerHTML;
@@ -2548,7 +2548,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
                 const requestData = {
-                    ModalGroups : ModalGroupsData,
+                    ModalGroups: ModalGroupsData,
                     sideContents: updatedSideContents, // 변경된 HTML 코드를 전송
                     imageUrls: imageUrls, // pass the image urls to the server
                     URLINFO: URLINFO,
@@ -2648,86 +2648,99 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-// 마이페이지에서 Get 요청을 통한 수정 페이지 불러오기 api
-let btnEditList = document.querySelectorAll('.BtnEdit');
+    // 마이페이지에서 Get 요청을 통한 수정 페이지 불러오기 api
+    let btnEditList = document.querySelectorAll('.BtnEdit');
 
-btnEditList.forEach((btnEdit) => {
-  btnEdit.addEventListener('click', () => {
-    let inviteURLInfoList = btnEdit.parentNode.parentNode.parentNode.querySelectorAll('.InviteURLInfo');
-    inviteURLInfoList.forEach((inviteURLInfo) => {
-      let EditURLInfo = inviteURLInfo.textContent.trim();
-      console.log(EditURLInfo);
+    btnEditList.forEach((btnEdit) => {
+        btnEdit.addEventListener('click', () => {
+            let inviteURLInfoList = btnEdit.parentNode.parentNode.parentNode.querySelectorAll('.InviteURLInfo');
+            inviteURLInfoList.forEach((inviteURLInfo) => {
+                let EditURLInfo = inviteURLInfo.textContent.trim();
+                console.log(EditURLInfo);
 
-      // 새로운 브라우저 창에서 수정 페이지 렌더링
-      let editPage = window.open(`/api_EditInvitation/${EditURLInfo}`);
-      
-      // 새 창 로드가 완료되면 fetch 요청 보내기
-      editPage.addEventListener('load', () => {
-        fetch(`/api_EditInvitation/${EditURLInfo}`, {
-          method: 'GET'
-        })
-        .then(response => {
-          console.log(response);
-          return response.text();
-        })
-        .catch(error => {
-          console.error('Error:', error);
+                // 새로운 브라우저 창에서 수정 페이지 렌더링
+                let editPage = window.open(`/api_EditInvitation/${EditURLInfo}`);
+
+                // 새 창 로드가 완료되면 fetch 요청 보내기
+                editPage.addEventListener('load', () => {
+                    fetch(`/api_EditInvitation/${EditURLInfo}`, {
+                        method: 'GET'
+                    })
+                        .then(response => {
+                            console.log(response);
+                            return response.text();
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
+            });
         });
-      });
     });
-  });
-});
 
 
 
-// 방명록 Post 스크립트
-const SaveBoard = document.getElementById('SaveBoard');
-let templateID = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
+    // 방명록 Post 스크립트
+    const SaveBoard = document.getElementById('SaveBoard');
+    let templateID = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
+    let BoardDimmed = document.getElementById('Board_Create_Dimmed');
 
-SaveBoard.addEventListener('click', () => {
+    SaveBoard.addEventListener('click', () => {
 
-    console.log(`URLInfo: ${templateID}`);
-  const Board_Writer = document.getElementById('Board_Writer');
-  const Board_Contents = document.getElementById('Board_Contents');
-  const Board_Password = document.getElementById('Board_Password');
+        console.log(`URLInfo: ${templateID}`);
+        const Board_Writer = document.getElementById('Board_Writer');
+        const Board_Contents = document.getElementById('Board_Contents');
+        const Board_Password = document.getElementById('Board_Password');
 
-  const Board_Writer_Data = Board_Writer.value;
-  const Board_Contents_Data = Board_Contents.value;
-  const Board_Password_Data = Board_Password.value;
+        const Board_Writer_Data = Board_Writer.value;
+        const Board_Contents_Data = Board_Contents.value;
+        const Board_Password_Data = Board_Password.value;
 
-  console.log('Board_Writer_Data: ' + Board_Writer_Data);
-  console.log('Board_Contents_Data: ' + Board_Contents_Data);
-  console.log('Board_Password_Data: ' + Board_Password_Data);
+        console.log('Board_Writer_Data: ' + Board_Writer_Data);
+        console.log('Board_Contents_Data: ' + Board_Contents_Data);
+        console.log('Board_Password_Data: ' + Board_Password_Data);
 
-  // POST 요청 보내기
-  const url = '/api_Board/CreateBoard'; // 실제 서버 주소로 대체해야 합니다.
+        if (Board_Writer_Data === '') {
+            alert('작성자 명을 입력해주세요');
+        } else if (Board_Contents_Data === '') {
+            alert('방명록 내용을 입력해주세요');
+        } else if (Board_Password_Data === '') {
+            alert('비밀번호를 입력해주세요');
 
-  const data = {
-    template_ID: templateID,
-    Board_Writer_Data: Board_Writer_Data,
-    Board_Contents_Data: Board_Contents_Data,
-    Board_Password_Data: Board_Password_Data,
-  };
+        } else {
+            // POST 요청 보내기
+            const url = '/api_Board/CreateBoard'; // 실제 서버 주소로 대체해야 합니다.
 
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-    .then(response => {
-      if (response.ok) {
-        console.log('게시판 데이터 전송 성공');
-        // 추가로 처리할 로직을 여기에 작성할 수 있습니다.
-      } else {
-        console.error('게시판 데이터 전송 실패');
-      }
-    })
-    .catch(error => {
-      console.error('게시판 데이터 전송 실패:', error);
+            const data = {
+                template_ID: templateID,
+                Board_Writer_Data: Board_Writer_Data,
+                Board_Contents_Data: Board_Contents_Data,
+                Board_Password_Data: Board_Password_Data,
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('게시판 데이터 전송 성공');
+                        alert('작성하신 글이 방명록에 등록되었습니다.');
+                        BoardDimmed.classList.toggle('is-active');
+                        // 추가로 처리할 로직을 여기에 작성할 수 있습니다.
+                    } else {
+                        console.error('게시판 데이터 전송 실패');
+                    }
+                })
+                .catch(error => {
+                    console.error('게시판 데이터 전송 실패:', error);
+                });
+        }
+
     });
-});
 
 
 
