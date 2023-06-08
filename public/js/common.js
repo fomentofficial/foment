@@ -2730,7 +2730,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.log('게시판 데이터 전송 성공');
                         alert('작성하신 글이 방명록에 등록되었습니다.');
                         BoardDimmed.classList.toggle('is-active');
-                        // 추가로 처리할 로직을 여기에 작성할 수 있습니다.
                     } else {
                         console.error('게시판 데이터 전송 실패');
                     }

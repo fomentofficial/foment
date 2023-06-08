@@ -518,6 +518,15 @@
   margin-top: 16px;
 }
 
+.BoardContents{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  font-size: var(--Text-Paragraph);
+  color: var(--ColorTextTertiary);
+}
+
 .BoardArea_Alert {
   display: flex;
   flex-direction: column;

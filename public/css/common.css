@@ -848,25 +848,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
 }
 
-.ProgressBar {
-    width: 100%;
-    height: 6px;
-    background: var(--ColorBorder10);
-    border-radius: 16px;
-}
-
-.ProgressPercent {
-    height: 6px;
-    width: 200px;
-    z-index: 1001;
-    background: var(--ColorTextPrimary);
-    border-radius: 16px;
-}
-
 .ProgressDes {
-    width: 15%;
     font-size: var(--Text-Supported);
-    color: var(--ColorTextPrimary);
+    color: var(--ColorTextSecondary);
 }
 
 .ProgressSave {

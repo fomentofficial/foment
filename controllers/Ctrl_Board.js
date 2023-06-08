@@ -49,19 +49,19 @@ const Board = {
             
             connection.query(insertQuery, insertValues, (insertError, insertResults) => {
               if (insertError) {
-                console.error('MySQL 데이터 삽입 실패:', insertError);
-                res.status(500).send('MySQL 데이터 삽입 실패');
+                console.error('MySQL 방명록 데이터 삽입 실패:', insertError);
+                res.status(500).send('MySQL 방명록 데이터 삽입 실패');
               } else {
-                console.log('MySQL 데이터 삽입 성공');
-                res.status(200).send('게시판 데이터 전송 성공');
+                console.log('MySQL 방명록 삽입 성공');
+                res.status(200).send('MySQL 방명록 데이터 전송 성공');
               }
             });
           }
         }
       });
     } catch (error) {
-      console.error(`게시판 데이터 전송 실패: ${error.message}`);
-      res.status(500).send('게시판 데이터 전송 실패');
+      console.error(`방명록 데이터 전송 실패: ${error.message}`);
+      res.status(500).send('방명록 데이터 전송 실패');
     }
   },
 };
