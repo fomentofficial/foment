@@ -153,6 +153,7 @@
   display: flex;
   flex-direction: row;
   gap: 8px;
+  align-items: center;
 }
 
 .NameBox>.BtnBasic {
@@ -1607,6 +1608,12 @@ ul.cvf_uploaded_files .delete-btn {
   -ms-transform: rotate(270deg);
   -o-transform: rotate(270deg);
   transform: rotate(270deg);
+}
+
+.delIcon{
+  margin-left: 8px;
+  width: 16px;
+  height: 16px;
 }
 
 /* 스크롤 섹션 정리 */

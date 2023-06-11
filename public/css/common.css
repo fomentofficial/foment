@@ -728,7 +728,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: var(--Text-SectionSubTitle);
     font-weight: 500;
     line-height: 28px;
-    min-width: 120px;
+    min-width: 92px;
     margin-right: 40px;
 }
 
