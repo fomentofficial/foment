@@ -2685,69 +2685,113 @@ document.addEventListener('DOMContentLoaded', () => {
     let templateID = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
     let BoardDimmed = document.getElementById('Board_Create_Dimmed');
 
-    SaveBoard.addEventListener('click', () => {
-
-        console.log(`URLInfo: ${templateID}`);
-        const Board_Writer = document.getElementById('Board_Writer');
-        const Board_Contents = document.getElementById('Board_Contents');
-        const Board_Password = document.getElementById('Board_Password');
-
-        const Board_Writer_Data = Board_Writer.value;
-        const Board_Contents_Data = Board_Contents.value;
-        const Board_Password_Data = Board_Password.value;
-
-        console.log('Board_Writer_Data: ' + Board_Writer_Data);
-        console.log('Board_Contents_Data: ' + Board_Contents_Data);
-        console.log('Board_Password_Data: ' + Board_Password_Data);
-
-        if (Board_Writer_Data === '') {
-            alert('작성자 명을 입력해주세요');
-        } else if (Board_Contents_Data === '') {
-            alert('방명록 내용을 입력해주세요');
-        } else if (Board_Password_Data === '') {
-            alert('비밀번호를 입력해주세요');
-
-        } else {
-            // POST 요청 보내기
-            const url = '/api_Board/CreateBoard'; // 실제 서버 주소로 대체해야 합니다.
-
-            const data = {
-                template_ID: templateID,
-                Board_Writer_Data: Board_Writer_Data,
-                Board_Contents_Data: Board_Contents_Data,
-                Board_Password_Data: Board_Password_Data,
-            };
-
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('게시판 데이터 전송 성공');
-                        alert('작성하신 글이 방명록에 등록되었습니다.');
-                        BoardDimmed.classList.toggle('is-active');
-                    } else {
-                        console.error('게시판 데이터 전송 실패');
-                    }
-                })
-                .catch(error => {
-                    console.error('게시판 데이터 전송 실패:', error);
-                });
+    // 방명록 목록 업데이트 함수
+function updateBoardList() {
+    fetch(`/api_GetBoard/${templateID}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
         }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // 서버 응답 처리
+        console.log(data);
 
+        const BoardSection = document.querySelector('.BoardArea'); // BoardArea 요소 선택
+
+        if (data.length === 0) {
+            // 남겨진 방명록이 없을 경우 처리
+            BoardSection.innerHTML = `<div class="BoardContents">남겨진 방명록이 없습니다.</div>`;
+        } else {
+            BoardSection.innerHTML = ''; // 기존의 방명록 목록 초기화
+
+            data.forEach(BoardData => {
+                const boardID = BoardData.board_ID;
+                const name = BoardData.name;
+                const contents = BoardData.contents;
+                console.log(`Board ID: ${boardID}, Name: ${name}, Contents: ${contents}`);
+
+                // 방명록 목록 추가
+                BoardSection.innerHTML += `
+                    <div class="BoardItem">
+                        <div class="BoardText">
+                            <div class="BoardFrom">
+                                <div class="From">From</div>
+                                <div class="FromTarget">${name}</div>
+                            </div>
+                            <div class="BoardBody">
+                                ${contents}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
+}
 
+// SaveBoard.addEventListener('click', () => {
+SaveBoard.addEventListener('click', (event) => {
+    console.log(`URLInfo: ${templateID}`);
+    const Board_Writer = document.getElementById('Board_Writer');
+    const Board_Contents = document.getElementById('Board_Contents');
+    const Board_Password = document.getElementById('Board_Password');
 
+    const Board_Writer_Data = Board_Writer.value;
+    const Board_Contents_Data = Board_Contents.value;
+    const Board_Password_Data = Board_Password.value;
 
+    console.log('Board_Writer_Data: ' + Board_Writer_Data);
+    console.log('Board_Contents_Data: ' + Board_Contents_Data);
+    console.log('Board_Password_Data: ' + Board_Password_Data);
 
+    if (Board_Writer_Data === '') {
+        alert('작성자 명을 입력해주세요');
+    } else if (Board_Contents_Data === '') {
+        alert('방명록 내용을 입력해주세요');
+    } else if (Board_Password_Data === '') {
+        alert('비밀번호를 입력해주세요');
+    } else {
+        // POST 요청 보내기
+        const data = {
+            template_ID: templateID,
+            Board_Writer_Data: Board_Writer_Data,
+            Board_Contents_Data: Board_Contents_Data,
+            Board_Password_Data: Board_Password_Data,
+        };
 
+        fetch('/api_Board/CreateBoard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('게시판 데이터 전송 성공');
+                    alert('작성하신 글이 방명록에 등록되었습니다.');
+                    BoardDimmed.classList.toggle('is-active');
 
+                    // 방명록 목록 업데이트
+                    updateBoardList();
+                } else {
+                    console.error('게시판 데이터 전송 실패');
+                }
+            })
+            .catch(error => {
+                console.error('게시판 데이터 전송 실패:', error);
+            });
+    }
 
+    event.preventDefault(); // 기본 동작 방지 (페이지 새로고침)
+});
 
-
+// 페이지 로드 시 방명록 목록 업데이트
+updateBoardList();
 
 });

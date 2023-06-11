@@ -101,7 +101,7 @@ let CreateTemplate = {
               gallery_type: 'BoardType',
               img_group_element: '[]',
               board_password: '',
-              order_tab : '[{"class":"InviteArea","data-id":"Toggle_Invite"},{"class":"sec_cal is-visible","data-id":"Toggle_Calendar"},{"class":"GalleryArea","data-id":"Toggle_Gallery"},{"class":"LocationSection","data-id":"Toggle_WeddingLocation"},{"class":"AccountSection","data-id":"Toggle_Account"},{"class":"BoardSection","data-id":"Toggle_Board"}]'
+              order_tab : '[{"class":"InviteArea","data-id":"Toggle_Invite"},{"class":"sec_cal is-visible","data-id":"Toggle_Calendar"},{"class":"GalleryArea","data-id":"Toggle_Gallery"},{"class":"LocationSection","data-id":"Toggle_WeddingLocation"},{"class":"AccountSection","data-id":"Toggle_Account"},{"class":"BoardSection","data-id":"Toggle_Board"}]',
             }
           }
         }

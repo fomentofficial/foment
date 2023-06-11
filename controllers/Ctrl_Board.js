@@ -10,7 +10,7 @@ const fs = require('fs').promises;
 
 const Board = {
   // 방명록 작성 함수
-  Creatboard: async (req, res) => {
+  Createboard: async (req, res) => {
     try {
       const {
         template_ID,
@@ -53,7 +53,7 @@ const Board = {
                 res.status(500).send('MySQL 방명록 데이터 삽입 실패');
               } else {
                 console.log('MySQL 방명록 삽입 성공');
-                res.status(200).send('MySQL 방명록 데이터 전송 성공');
+                res.status(200).json({ message: 'MySQL 방명록 데이터 전송 성공' });
               }
             });
           }
@@ -63,7 +63,7 @@ const Board = {
       console.error(`방명록 데이터 전송 실패: ${error.message}`);
       res.status(500).send('방명록 데이터 전송 실패');
     }
-  },
+  }
 };
 
 module.exports = Board;

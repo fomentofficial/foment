@@ -2,11 +2,9 @@ const path = require('path');
 let dbConfig = require('../dbConfig');
 let connection = dbConfig.connection;
 
-function renderGetPage(req, res) {
+function renderGetBoard(req, res) {
   const templateURL = req.params.GetURLInfo; // :EditURLInfo 매개변수 가져오기
-
-  const templateFileName = `${templateURL}.ejs`;
-  const templateFilePath = path.join(__dirname, '..', 'public', 'data', templateFileName);
+  console.log(templateURL);
 
   const detailData = {
     pageTitle: 'Preview Invitation',
@@ -23,15 +21,13 @@ function renderGetPage(req, res) {
       return;
     }
 
-    const responseData = {BoardData};
+    const responseData = BoardData.reverse(); // 배열의 순서를 반대로 뒤집음
 
-    res.render(templateFilePath, responseData);
+    res.send(responseData);
     console.log(responseData);
-
   });
 }
 
-
 module.exports = {
-  renderGetPage,
+  renderGetBoard,
 };

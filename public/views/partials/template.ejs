@@ -411,16 +411,8 @@
                                                     방명록
                                                 </div>
                                                 <!-- 방명록 데이터 -->
-                                                <% var board_data=board_data || []; %>
-                                                    <% if (board_data.length> 0) { %>
-                                                        <% for (var i=0; i < board_data.length; i++) { %>
-                                                            <%- include('./board/board_data.ejs', { board_data:
-                                                                board_data[i] }) %>
-                                                                <% } %>
-                                                                    <% } %>
-                                                                        <% if (board_data.length===0) { %>
-                                                                            <%- include('./board/board_null.ejs') %>
-                                                                                <% } %>
+                                                <div class="BoardArea">
+                                                </div>
                                                                                     <div class="BoardControl">
                                                                                         <button class="BtnIcon"
                                                                                             id="BoardViewBtn">
