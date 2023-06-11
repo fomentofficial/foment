@@ -1,66 +1,6 @@
 
 window.onload = function () {
 
-    let toggleActiveClass = (element) => {
-        element.classList.toggle('is-active');
-    };
-
-    let BoardCreateBtn = document.getElementById('BoardCreateBtn');
-    let BoardViewBtn = document.getElementById('BoardViewBtn');
-    let BoardDelBtn = document.querySelectorAll('.BoardDelete');
-    console.log(BoardDelBtn);
-
-    let BoardDimmed = document.getElementById('Board_Create_Dimmed');
-    let BoardViewDimmed = document.getElementById('Board_View_Dimmed');
-    let BoardDelDimmed = document.getElementById('Board_Del_Dimmed');
-
-    let CancelDimmed_Create = document.getElementById('CloseAlert_Create');
-    let CancelDimmed_View = document.getElementById('CloseAlert_View');
-    let CancelDimmed_Del = document.getElementById('CloseAlert_Del');
-    console.log(CancelDimmed_View);
-
-    // 방명록 남기기 버튼&취소
-    if (BoardCreateBtn) {
-        BoardCreateBtn.addEventListener('click', () => {
-            toggleActiveClass(BoardDimmed);
-        });
-    }
-
-    if (CancelDimmed_Create) {
-        CancelDimmed_Create.addEventListener('click', () => {
-            toggleActiveClass(BoardDimmed);
-        });
-    }
-
-    // 방명록 목록 보기 버튼&취소
-    if (BoardViewBtn) {
-        BoardViewBtn.addEventListener('click', () => {
-            toggleActiveClass(BoardViewDimmed);
-        });
-    }
-
-    if (CancelDimmed_View) {
-        CancelDimmed_View.addEventListener('click', () => {
-            toggleActiveClass(BoardViewDimmed);
-        });
-    }
-
-    // 방명록 삭제 버튼&취소
-    if (BoardDelBtn) {
-        BoardDelBtn.forEach((btn) => {
-            btn.addEventListener('click', () => {
-                toggleActiveClass(BoardDelDimmed);
-                console.log('ddd');
-            });
-        });
-    }
-
-    if (CancelDimmed_Del) {
-        CancelDimmed_Del.addEventListener('click', () => {
-            toggleActiveClass(BoardDelDimmed);
-        });
-    }
-
 
 
     // Create_InvitationBtn 요소를 가져옵니다.
@@ -2686,34 +2626,34 @@ document.addEventListener('DOMContentLoaded', () => {
     let BoardDimmed = document.getElementById('Board_Create_Dimmed');
 
     // 방명록 목록 업데이트 함수
-function updateBoardList() {
-    fetch(`/api_GetBoard/${templateID}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        // 서버 응답 처리
-        console.log(data);
+    function updateBoardList() {
+        fetch(`/api_GetBoard/${templateID}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 서버 응답 처리
+                console.log(data);
 
-        const BoardSection = document.querySelector('.BoardArea'); // BoardArea 요소 선택
+                let BoardSection = document.querySelector('.BoardArea'); // BoardArea 요소 선택
 
-        if (data.length === 0) {
-            // 남겨진 방명록이 없을 경우 처리
-            BoardSection.innerHTML = `<div class="BoardContents">남겨진 방명록이 없습니다.</div>`;
-        } else {
-            BoardSection.innerHTML = ''; // 기존의 방명록 목록 초기화
+                if (data.length === 0) {
+                    // 남겨진 방명록이 없을 경우 처리
+                    BoardSection.innerHTML = `<div class="BoardContents">남겨진 방명록이 없습니다.</div>`;
+                } else {
+                    BoardSection.innerHTML = ''; // 기존의 방명록 목록 초기화
 
-            data.forEach(BoardData => {
-                const boardID = BoardData.board_ID;
-                const name = BoardData.name;
-                const contents = BoardData.contents;
-                console.log(`Board ID: ${boardID}, Name: ${name}, Contents: ${contents}`);
+                    data.forEach(BoardData => {
+                        let boardID = BoardData.board_ID;
+                        let name = BoardData.name;
+                        let contents = BoardData.contents;
+                        console.log(`Board ID: ${boardID}, Name: ${name}, Contents: ${contents}`);
 
-                // 방명록 목록 추가
-                BoardSection.innerHTML += `
+                        // 방명록 목록 추가
+                        BoardSection.innerHTML += `
                     <div class="BoardItem">
                         <div class="BoardText">
                             <div class="BoardFrom">
@@ -2724,74 +2664,246 @@ function updateBoardList() {
                                 ${contents}
                             </div>
                         </div>
+                        <div class="BoardDelete">
+                        <img class="BoardIconDel"
+                            src="../Resource/assets/Icon/Del.svg" alt="">
+                    </div>
                     </div>
                 `;
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
+                    });
 
-// SaveBoard.addEventListener('click', () => {
-SaveBoard.addEventListener('click', (event) => {
-    console.log(`URLInfo: ${templateID}`);
-    const Board_Writer = document.getElementById('Board_Writer');
-    const Board_Contents = document.getElementById('Board_Contents');
-    const Board_Password = document.getElementById('Board_Password');
+                    // 방명록 삭제 버튼&취소
+                    let BoardDelBtn = document.querySelectorAll('.BoardDelete');
+                    if (BoardDelBtn) {
+                        BoardDelBtn.forEach((btn) => {
+                            btn.addEventListener('click', () => {
+                                toggleActiveClass(BoardDelDimmed);
+                                let classArea = btn.closest('.BoardItem');
 
-    const Board_Writer_Data = Board_Writer.value;
-    const Board_Contents_Data = Board_Contents.value;
-    const Board_Password_Data = Board_Password.value;
+                                // 특정 요소의 innerText 가져오기
+                                let targetElement = classArea.querySelector('.FromTarget');
+                                let WriterInfo = targetElement.innerText;
+                                let password = document.getElementById('deletePassword');
+                                let DeleteConfirm = document.getElementById('DeleteConfirm');
+                                console.log('내부요소:'+ WriterInfo);
 
-    console.log('Board_Writer_Data: ' + Board_Writer_Data);
-    console.log('Board_Contents_Data: ' + Board_Contents_Data);
-    console.log('Board_Password_Data: ' + Board_Password_Data);
-
-    if (Board_Writer_Data === '') {
-        alert('작성자 명을 입력해주세요');
-    } else if (Board_Contents_Data === '') {
-        alert('방명록 내용을 입력해주세요');
-    } else if (Board_Password_Data === '') {
-        alert('비밀번호를 입력해주세요');
-    } else {
-        // POST 요청 보내기
-        const data = {
-            template_ID: templateID,
-            Board_Writer_Data: Board_Writer_Data,
-            Board_Contents_Data: Board_Contents_Data,
-            Board_Password_Data: Board_Password_Data,
-        };
-
-        fetch('/api_Board/CreateBoard', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log('게시판 데이터 전송 성공');
-                    alert('작성하신 글이 방명록에 등록되었습니다.');
-                    BoardDimmed.classList.toggle('is-active');
-
-                    // 방명록 목록 업데이트
-                    updateBoardList();
-                } else {
-                    console.error('게시판 데이터 전송 실패');
+                                // 방명록 삭제 관련 코드
+                                DeleteConfirm.addEventListener('click', () => {
+                                    // WriterInfo와 password 값을 가져옵니다.
+                                    let targetElement = classArea.querySelector('.FromTarget');
+                                    let name = targetElement.innerText;
+                                    let password = document.getElementById('deletePassword').value;
+                                    
+                                    const DeletAPI = `/api_DeleteBoard/${templateID}`
+                                    // POST 요청을 보냅니다.
+                                    fetch(DeletAPI, {
+                                      method: 'POST',
+                                      headers: {
+                                        'Content-Type': 'application/json'
+                                      },
+                                      body: JSON.stringify({ name, password })
+                                    })
+                                      .then(response => response.text())
+                                      .then(data => {
+                                        // 응답 결과를 처리합니다.
+                                        alert(data); // "삭제되었습니다 혹은 비밀번호가 틀립니다" 알림 창으로 표시합니다.
+                                        BoardDelDimmed.classList.toggle('is-active');
+                                        updateBoardList();
+                                      })
+                                      .catch(error => {
+                                        console.error('Error:', error);
+                                        // 에러가 발생한 경우 에러 메시지를 표시합니다.
+                                        alert('서버 오류: 삭제에 실패했습니다.');
+                                      });
+                                  });
+                                  
+                            });
+                        });
+                    }
                 }
             })
             .catch(error => {
-                console.error('게시판 데이터 전송 실패:', error);
+                console.error('Error:', error);
             });
     }
 
-    event.preventDefault(); // 기본 동작 방지 (페이지 새로고침)
-});
+    let toggleActiveClass = (element) => {
+        element.classList.toggle('is-active');
+    };
 
-// 페이지 로드 시 방명록 목록 업데이트
-updateBoardList();
+    let BoardCreateBtn = document.getElementById('BoardCreateBtn');
+    let BoardViewBtn = document.getElementById('BoardViewBtn');
+
+    let BoardViewDimmed = document.getElementById('Board_View_Dimmed');
+    let BoardDelDimmed = document.getElementById('Board_Del_Dimmed');
+
+    let CancelDimmed_Create = document.getElementById('CloseAlert_Create');
+    let CancelDimmed_View = document.getElementById('CloseAlert_View');
+    let CancelDimmed_Del = document.getElementById('CloseAlert_Del');
+    console.log(CancelDimmed_View);
+
+    // 방명록 남기기 버튼&취소
+    if (BoardCreateBtn) {
+        BoardCreateBtn.addEventListener('click', () => {
+            toggleActiveClass(BoardDimmed);
+        });
+    }
+
+    if (CancelDimmed_Create) {
+        CancelDimmed_Create.addEventListener('click', () => {
+            toggleActiveClass(BoardDimmed);
+        });
+    }
+
+    // 방명록 목록 보기 버튼&취소
+    if (BoardViewBtn) {
+        BoardViewBtn.addEventListener('click', () => {
+            toggleActiveClass(BoardViewDimmed);
+
+
+            // 방명록 목록 업데이트 함수
+
+            fetch(`/api_GetBoard/${templateID}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // 서버 응답 처리
+                    console.log(data);
+
+                    let BoardSection = document.querySelector('.BoardArea_Alert'); // BoardArea 요소 선택
+
+                    if (data.length === 0) {
+                        // 남겨진 방명록이 없을 경우 처리
+                        BoardSection.innerHTML = `<div class="BoardContents">남겨진 방명록이 없습니다.</div>`;
+                    } else {
+                        BoardSection.innerHTML = ''; // 기존의 방명록 목록 초기화
+
+                        data.forEach(BoardData => {
+                            let boardID = BoardData.board_ID;
+                            let name = BoardData.name;
+                            let contents = BoardData.contents;
+                            console.log(`Board ID: ${boardID}, Name: ${name}, Contents: ${contents}`);
+
+                            // 방명록 목록 추가
+                            BoardSection.innerHTML += `
+                <div class="BoardItem">
+                    <div class="BoardText">
+                        <div class="BoardFrom">
+                            <div class="From">From</div>
+                            <div class="FromTarget">${name}</div>
+                        </div>
+                        <div class="BoardBody">
+                            ${contents}
+                        </div>
+                    </div>
+                    <div class="BoardDelete">
+                    <img class="BoardIconDel"
+                        src="../Resource/assets/Icon/Del.svg" alt="">
+                </div>
+                </div>
+            `;
+                        });
+
+                        // 방명록 삭제 버튼&취소
+                        let BoardDelBtn = document.querySelectorAll('.BoardDelete');
+                        if (BoardDelBtn) {
+                            BoardDelBtn.forEach((btn) => {
+                                btn.addEventListener('click', () => {
+                                    toggleActiveClass(BoardDelDimmed);
+                                    console.log('ddd');
+                                });
+                            });
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+
+
+        });
+    }
+
+    if (CancelDimmed_View) {
+        CancelDimmed_View.addEventListener('click', () => {
+            toggleActiveClass(BoardViewDimmed);
+        });
+    }
+
+
+
+    if (CancelDimmed_Del) {
+        CancelDimmed_Del.addEventListener('click', () => {
+            toggleActiveClass(BoardDelDimmed);
+        });
+    }
+
+
+
+
+    // SaveBoard.addEventListener('click', () => {
+    SaveBoard.addEventListener('click', (event) => {
+        console.log(`URLInfo: ${templateID}`);
+        const Board_Writer = document.getElementById('Board_Writer');
+        const Board_Contents = document.getElementById('Board_Contents');
+        const Board_Password = document.getElementById('Board_Password');
+
+        const Board_Writer_Data = Board_Writer.value;
+        const Board_Contents_Data = Board_Contents.value;
+        const Board_Password_Data = Board_Password.value;
+
+        console.log('Board_Writer_Data: ' + Board_Writer_Data);
+        console.log('Board_Contents_Data: ' + Board_Contents_Data);
+        console.log('Board_Password_Data: ' + Board_Password_Data);
+
+        if (Board_Writer_Data === '') {
+            alert('작성자 명을 입력해주세요');
+        } else if (Board_Contents_Data === '') {
+            alert('방명록 내용을 입력해주세요');
+        } else if (Board_Password_Data === '') {
+            alert('비밀번호를 입력해주세요');
+        } else {
+            // POST 요청 보내기
+            const data = {
+                template_ID: templateID,
+                Board_Writer_Data: Board_Writer_Data,
+                Board_Contents_Data: Board_Contents_Data,
+                Board_Password_Data: Board_Password_Data,
+            };
+
+            fetch('/api_Board/CreateBoard', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('게시판 데이터 전송 성공');
+                        alert('작성하신 글이 방명록에 등록되었습니다.');
+                        BoardDimmed.classList.toggle('is-active');
+
+                        // 방명록 목록 업데이트
+                        updateBoardList();
+                    } else {
+                        console.error('게시판 데이터 전송 실패');
+                    }
+                })
+                .catch(error => {
+                    console.error('게시판 데이터 전송 실패:', error);
+                });
+        }
+
+        event.preventDefault(); // 기본 동작 방지 (페이지 새로고침)
+    });
+
+    // 페이지 로드 시 방명록 목록 업데이트
+    updateBoardList();
 
 });

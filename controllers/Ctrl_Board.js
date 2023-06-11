@@ -24,11 +24,6 @@ const Board = {
         throw new Error('잘못된 데이터입니다.');
       }
 
-      console.log(template_ID);
-      console.log(Board_Writer_Data);
-      console.log(Board_Contents_Data);
-      console.log(Board_Password_Data);
-
       // MySQL에 데이터 삽입
       const selectQuery = `SELECT user_ID FROM template WHERE template_ID = ?`;
       const selectValues = [template_ID];

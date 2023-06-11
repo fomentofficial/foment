@@ -4,7 +4,6 @@ let connection = dbConfig.connection;
 
 function renderGetBoard(req, res) {
   const templateURL = req.params.GetURLInfo; // :EditURLInfo 매개변수 가져오기
-  console.log(templateURL);
 
   const detailData = {
     pageTitle: 'Preview Invitation',
@@ -24,7 +23,6 @@ function renderGetBoard(req, res) {
     const responseData = BoardData.reverse(); // 배열의 순서를 반대로 뒤집음
 
     res.send(responseData);
-    console.log(responseData);
   });
 }
 

@@ -64,8 +64,11 @@ const URLCheck = require('./routes/route_api_URLCheck');
 const Mypage = require('./routes/route_api_Mypage');
 const CreateTemplate = require('./routes/route_api_CreateTemplate');
 const GetInvitationPageRouter = require('./routes/route_GetInvitation');
+
+// 게시판 관련 라우터
 const Board = require('./routes/route_api_Board');
 const GetBoard = require('./routes/route_api_GetBoard');
+const DeleteBoardRouter = require('./routes/route_api_DeleteBoard');
 
 app.use(express.json());
 
@@ -77,6 +80,7 @@ app.use('/api_GetInvitation', GetInvitationPageRouter);
 app.use('/api_MultiImgUpload', MultiImgUpload);
 app.use('/api_Board', Board);
 app.use('/api_GetBoard', GetBoard);
+app.use('/api_DeleteBoard', DeleteBoardRouter);
 
 // 네이버 로그인 라우터
 app.use('/api_Auth', Auth);
