@@ -153,7 +153,6 @@
   display: flex;
   flex-direction: row;
   gap: 8px;
-  align-items: center;
 }
 
 .NameBox>.BtnBasic {
@@ -881,7 +880,7 @@ li.TabItemGallery:hover {
 }
 
 .addcount {
-  margin-top: 24px;
+  margin-top: 8px;
   height: 48px;
 }
 
@@ -1611,9 +1610,8 @@ ul.cvf_uploaded_files .delete-btn {
 }
 
 .delIcon{
-  margin-left: 8px;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 }
 
 /* 스크롤 섹션 정리 */

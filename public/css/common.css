@@ -157,6 +157,13 @@ body {
     height: 48px;
 }
 
+#AddAccountBtn{
+    background: var(--ColorSurface);
+    border-radius: var(--BorderRadius-Md);
+    border: 1px solid var(--ColorBorder10);
+    padding: 8px 32px;
+    height: 44px;
+}
 
 
 /* 공통 css */
@@ -188,7 +195,11 @@ body {
 .sectionBack {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 16px;
+}
+.ToggleTitle{
+    font-size: var(--Text-Supported);
+    color: var(--ColorTextSecondary);
 }
 
 .selectboxname,
@@ -656,6 +667,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 1px;
     background: var(--ColorBorder5);
     margin: 24px 0px 24px 0px;
+}
+
+.bordercontentsline-Sm {
+    width: 100%;
+    height: 1px;
+    background: var(--ColorBorder5);
+    margin: 4px 0px 4px 0px;
 }
 
 #Board_Create_Dimmed,#Board_View_Dimmed, #Board_Del_Dimmed {
