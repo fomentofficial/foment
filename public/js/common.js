@@ -1408,44 +1408,85 @@ window.onload = function () {
         }
     })();
 
-
-
-
-    // 계좌번호 그룹추가
-    let accountitemIdx = 3;
-    let accordionitemIdx = 3;
+    // let AccountBtn = document.getElementById('AddAccountBtn');
+    // if (AccountBtn) {
+    //   AccountBtn.addEventListener("click", function () {
+    //     let inputArea = document.querySelector('.InputArea');
+    //     if (inputArea) {
+    //       inputArea.classList.add('NameBox');
+    
+    //       let nameBox = document.querySelector('.NameBox');
+    //       if (nameBox) {
+    //         let nameBoxSubClasses = nameBox.classList;
+    //         nameBoxSubClasses.forEach(function (subClass) {
+    //           inputArea.classList.add(subClass);
+    //         });
+    //       }
+    //     }
+    //   });
+    // }
+    
     let AccountBtn = document.getElementById('AddAccountBtn');
 
     if (AccountBtn) {
-        AccountBtn.addEventListener("click", function () {
-            if (accordionitemIdx >= 7) {
-                alert("최대 만들 수 있는 계좌그룹의 갯수를 초과하였습니다");
-                return;
-            }
-            var accountGroup = document.getElementById("AccountGroup");
-            var accountItem = document.createElement("div");
-            accountItem.classList.add("AccountItem");
-            accountItem.id = "AccointItem" + accountitemIdx;
-            accountGroup.appendChild(accountItem);
-            accountitemIdx++;
-
-            var childDivs = document.querySelectorAll(".DetailItem");
-            var firstChild = childDivs[0];
-            accountItem.appendChild(firstChild.cloneNode(true));
-
-            // Add the li element to the accordion
-            var accordion = document.querySelector(".accordion");
-            var newLi = document.createElement("li");
-            newLi.classList.add("accordionitem");
-            newLi.id = "accordionitem" + accordionitemIdx;
-            accordion.appendChild(newLi);
-            accordionitemIdx++;
-
-            var childLi = document.querySelectorAll(".licontents");
-            var firstChildLi = childLi[0];
-            newLi.appendChild(firstChildLi.cloneNode(true));
+      AccountBtn.addEventListener("click", function () {
+        let inputAreas = document.querySelectorAll('.AccountItemGroups');
+        inputAreas.forEach(function (inputArea) {
+          let nameBox = document.createElement('div');
+          nameBox.classList.add('AccountItem');
+          
+          // 복사할 대상 요소 찾기
+          let nameBoxSource = document.querySelector('.AccountItem');
+          if (nameBoxSource) {
+            // 하위 클래스들을 복사하여 추가
+            nameBoxSource.querySelectorAll(':scope > *').forEach(function (childElement) {
+              nameBox.appendChild(childElement.cloneNode(true));
+            });
+          }
+          
+          inputArea.appendChild(nameBox);
         });
+      });
     }
+    
+    
+    
+
+    // // 계좌번호 그룹추가
+    // let accountitemIdx = 3;
+    // let accordionitemIdx = 3;
+    // let AccountBtn = document.getElementById('AddAccountBtn');
+
+    // if (AccountBtn) {
+    //     AccountBtn.addEventListener("click", function () {
+    //         if (accordionitemIdx >= 7) {
+    //             alert("최대 만들 수 있는 계좌그룹의 갯수를 초과하였습니다");
+    //             return;
+    //         }
+    //         var accountGroup = document.getElementById("AccountGroup");
+    //         var accountItem = document.createElement("div");
+    //         accountItem.classList.add("AccountItem");
+    //         accountItem.id = "AccointItem" + accountitemIdx;
+    //         accountGroup.appendChild(accountItem);
+    //         accountitemIdx++;
+
+    //         var childDivs = document.querySelectorAll(".DetailItem");
+    //         var firstChild = childDivs[0];
+    //         accountItem.appendChild(firstChild.cloneNode(true));
+
+    //         // Add the li element to the accordion
+    //         var accordion = document.querySelector(".accordion");
+    //         var newLi = document.createElement("li");
+    //         newLi.classList.add("accordionitem");
+    //         newLi.id = "accordionitem" + accordionitemIdx;
+    //         accordion.appendChild(newLi);
+    //         accordionitemIdx++;
+
+    //         var childLi = document.querySelectorAll(".licontents");
+    //         var firstChildLi = childLi[0];
+    //         newLi.appendChild(firstChildLi.cloneNode(true));
+    //     });
+    // }
 
 
     // 서체 변경 셀렉트박스

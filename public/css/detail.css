@@ -884,6 +884,12 @@ li.TabItemGallery:hover {
   height: 48px;
 }
 
+.DeleteAccountBtn{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 .ddaysection {
   display: flex;
   justify-content: center;

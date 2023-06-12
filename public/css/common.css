@@ -160,9 +160,8 @@ body {
 #AddAccountBtn{
     background: var(--ColorSurface);
     border-radius: var(--BorderRadius-Md);
-    border: 1px solid var(--ColorBorder10);
+    border: 1px solid var(--ColorTextTertiary);
     padding: 8px 32px;
-    height: 44px;
 }
 
 
