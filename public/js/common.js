@@ -1408,49 +1408,58 @@ window.onload = function () {
         }
     })();
 
-    // let AccountBtn = document.getElementById('AddAccountBtn');
-    // if (AccountBtn) {
-    //   AccountBtn.addEventListener("click", function () {
-    //     let inputArea = document.querySelector('.InputArea');
-    //     if (inputArea) {
-    //       inputArea.classList.add('NameBox');
-    
-    //       let nameBox = document.querySelector('.NameBox');
-    //       if (nameBox) {
-    //         let nameBoxSubClasses = nameBox.classList;
-    //         nameBoxSubClasses.forEach(function (subClass) {
-    //           inputArea.classList.add(subClass);
-    //         });
-    //       }
-    //     }
-    //   });
-    // }
-    
+
+
+    // 계좌번호 추가와 삭제 관련 함수
     let AccountBtn = document.getElementById('AddAccountBtn');
 
     if (AccountBtn) {
-      AccountBtn.addEventListener("click", function () {
-        let inputAreas = document.querySelectorAll('.AccountItemGroups');
-        inputAreas.forEach(function (inputArea) {
-          let nameBox = document.createElement('div');
-          nameBox.classList.add('AccountItem');
-          
-          // 복사할 대상 요소 찾기
-          let nameBoxSource = document.querySelector('.AccountItem');
-          if (nameBoxSource) {
-            // 하위 클래스들을 복사하여 추가
-            nameBoxSource.querySelectorAll(':scope > *').forEach(function (childElement) {
-              nameBox.appendChild(childElement.cloneNode(true));
+        AccountBtn.addEventListener("click", function () {
+            let inputAreas = document.querySelectorAll('.AccountInputGroups');
+            inputAreas.forEach(function (inputArea) {
+                let nameBox = document.createElement('div');
+                nameBox.classList.add('AccountInputs');
+
+                let nameBoxSource = document.querySelector('.AccountInputs');
+                if (nameBoxSource) {
+                    nameBoxSource.querySelectorAll(':scope > *').forEach(function (childElement) {
+                        nameBox.appendChild(childElement.cloneNode(true));
+                    });
+                }
+
+                inputArea.appendChild(nameBox);
+
+                // After appending new AccountInputs, bind delete event to the new DeleteAccountBtn
+                let deleteBtn = nameBox.querySelector('.DeleteAccountBtn');
+                deleteBtn.addEventListener('click', deleteAccountFunc);
             });
-          }
-          
-          inputArea.appendChild(nameBox);
         });
-      });
     }
-    
-    
-    
+
+    function deleteAccountFunc(event) {
+        let accountInputGroups = document.querySelector('.AccountInputGroups');
+        let accountInputCount = accountInputGroups.childElementCount;
+        if (accountInputCount < 2) {
+            alert('계좌번호는 1개 이하로는 삭제하실 수 없습니다.');
+        } else {
+            let parentElement = event.target.closest('.AccountInputs');
+            parentElement.remove();
+        }
+    }
+
+    // For initially loaded DeleteAccountBtn
+    let initialDeleteBtns = document.querySelectorAll('.DeleteAccountBtn');
+    initialDeleteBtns.forEach(function (btn) {
+        btn.addEventListener('click', deleteAccountFunc);
+    });
+
+
+
+
+
+
+
+
 
     // // 계좌번호 그룹추가
     // let accountitemIdx = 3;
@@ -2726,7 +2735,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 let WriterInfo = targetElement.innerText;
                                 let password = document.getElementById('deletePassword');
                                 let DeleteConfirm = document.getElementById('DeleteConfirm');
-                                console.log('내부요소:'+ WriterInfo);
+                                console.log('내부요소:' + WriterInfo);
 
                                 // 방명록 삭제 관련 코드
                                 DeleteConfirm.addEventListener('click', () => {
@@ -2734,30 +2743,30 @@ document.addEventListener('DOMContentLoaded', () => {
                                     let targetElement = classArea.querySelector('.FromTarget');
                                     let name = targetElement.innerText;
                                     let password = document.getElementById('deletePassword').value;
-                                    
+
                                     const DeletAPI = `/api_DeleteBoard/${templateID}`
                                     // POST 요청을 보냅니다.
                                     fetch(DeletAPI, {
-                                      method: 'POST',
-                                      headers: {
-                                        'Content-Type': 'application/json'
-                                      },
-                                      body: JSON.stringify({ name, password })
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({ name, password })
                                     })
-                                      .then(response => response.text())
-                                      .then(data => {
-                                        // 응답 결과를 처리합니다.
-                                        alert(data); // "삭제되었습니다 혹은 비밀번호가 틀립니다" 알림 창으로 표시합니다.
-                                        BoardDelDimmed.classList.toggle('is-active');
-                                        updateBoardList();
-                                      })
-                                      .catch(error => {
-                                        console.error('Error:', error);
-                                        // 에러가 발생한 경우 에러 메시지를 표시합니다.
-                                        alert('서버 오류: 삭제에 실패했습니다.');
-                                      });
-                                  });
-                                  
+                                        .then(response => response.text())
+                                        .then(data => {
+                                            // 응답 결과를 처리합니다.
+                                            alert(data); // "삭제되었습니다 혹은 비밀번호가 틀립니다" 알림 창으로 표시합니다.
+                                            BoardDelDimmed.classList.toggle('is-active');
+                                            updateBoardList();
+                                        })
+                                        .catch(error => {
+                                            console.error('Error:', error);
+                                            // 에러가 발생한 경우 에러 메시지를 표시합니다.
+                                            alert('서버 오류: 삭제에 실패했습니다.');
+                                        });
+                                });
+
                             });
                         });
                     }
