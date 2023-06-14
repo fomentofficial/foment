@@ -355,7 +355,7 @@ body {
 
 #custom-options {
     z-index: 1001;
-    padding: 24px;
+    padding: 12px;
     position: absolute;
     top: calc(100% + 8px);
     left: 0;
@@ -372,11 +372,11 @@ body {
 
 #custom-options-account {
     z-index: 1001;
-    padding: 24px;
+    padding: 12px;
     position: absolute;
     top: calc(100% + 8px);
     left: 0;
-    width: calc(100% - 50px);
+    width: calc(100% - 26px);
     background-color: var(--ColorSurface);
     border-radius: var(--BorderRadius-Md);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -391,7 +391,7 @@ body {
     max-height: 360px;
     overflow-y: scroll;
     z-index: 1001;
-    padding: 24px;
+    padding: 12px;
     position: absolute;
     top: calc(100% + 8px);
     left: 0;
@@ -426,6 +426,26 @@ body {
 .custom-option:hover {
     border-radius: var(--BorderRadius-Xs);
     background-color: var(--ColorBorderSolid);
+}
+
+#optionAccount{
+    padding: 8px;
+    font-size: var(--Text-Supported);
+    text-align: start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#optionAccountAdd{
+    border: none;
+    padding: 8px;
+    font-size: var(--Text-Supported);
+    color: var(--ColorTextSecondary);
+    text-align: start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #TypeGowun {

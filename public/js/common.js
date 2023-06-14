@@ -1458,7 +1458,32 @@ window.onload = function () {
             var childElementText = childElement.innerText;
             inputBox.value = childElementText;
             invitebody.innerText = childElementText;
+
         }
+
+        // 계좌 그룹을 추가합니다
+        let accountGroupAdd = document.getElementById('optionAccountAdd');
+        accountGroupAdd.addEventListener('click', function() {
+            let optionAccount = document.getElementById('optionAccount');
+            let clonedOptionAccount = optionAccount.cloneNode(true);
+            
+            // 새로운 <option> 요소를 생성합니다
+            let newOption = document.createElement('option');
+            newOption.value = '새로운 계좌번호';
+            newOption.textContent = '새로운 계좌번호';
+            
+            // <select> 요소를 찾아내어 새로운 <option> 요소를 추가합니다
+            let selectElement = clonedOptionAccount.querySelector('#custom-select-account');
+            selectElement.appendChild(newOption);
+            
+            console.log(selectElement);
+            
+            // 클래스를 추가하려는 요소의 ID
+            let targetElement = document.getElementById('custom-options-account');
+            console.log(targetElement);
+            // 복제된 optionAccount와 해당 클래스들을 추가
+            targetElement.appendChild(clonedOptionAccount);
+        });
 
         // 문서의 다른 영역을 클릭했을 때 옵션 컨테이너를 숨기는 이벤트 리스너를 추가합니다.
         document.addEventListener('click', hideOptions);
@@ -1470,8 +1495,7 @@ window.onload = function () {
             }
         }
     })();
-
-
+      
 
 
     // 계좌번호 추가와 삭제 관련 함수
