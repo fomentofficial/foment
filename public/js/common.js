@@ -1474,7 +1474,7 @@ window.onload = function () {
             
             // <select> 요소를 찾아내어 새로운 <option> 요소를 추가합니다
             let selectElement = clonedOptionAccount.querySelector('#custom-select-account');
-            selectElement.appendChild(newOption);
+            // selectElement.appendChild(newOption); << 얘 코드가 문제가 있음
             
             console.log(selectElement);
             
