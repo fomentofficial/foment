@@ -1409,6 +1409,70 @@ window.onload = function () {
     })();
 
 
+    // 계좌번호 셀렉트박스
+    (function () {
+        // 계좌번호를 선택하는 셀렉트박스와 옵션 컨테이너 요소를 가져옵니다.
+        let selectAccount = document.querySelector('#custom-select-account');
+        let optionsContainerAccount = document.querySelector('#custom-options-account');
+        let optionsAccount;
+
+        // 셀렉트박스와 옵션 컨테이너 요소가 없는 경우 코드 실행을 중단합니다.
+        if (!selectAccount || !optionsContainerAccount) {
+            return;
+        } else {
+            // 옵션 요소들을 가져옵니다.
+            optionsAccount = optionsContainerAccount.querySelectorAll(".custom-option");
+        }
+
+        // 셀렉트박스 클릭 시 옵션들을 토글하는 이벤트 리스너를 추가합니다.
+        selectAccount.addEventListener('click', toggleOptions);
+
+        // 각 옵션을 클릭했을 때 선택 이벤트를 처리하는 이벤트 리스너를 추가합니다.
+        optionsAccount.forEach(optionAccount => optionAccount.addEventListener('click', selectOptionAccount));
+
+        // 옵션들을 토글하는 함수입니다.
+        function toggleOptions() {
+            if (optionsContainerAccount.style.display === 'grid') {
+                optionsContainerAccount.style.display = 'none';
+                optionsContainerAccount.style.animation = 'slideDown 0.2s ease';
+            } else {
+                optionsContainerAccount.style.display = 'none';
+                optionsContainerAccount.style.display = 'grid';
+                optionsContainerAccount.style.animation = 'slideUp 0.2s ease';
+            }
+        }
+
+        // 옵션을 선택했을 때 실행되는 함수입니다.
+        function selectOptionAccount() {
+            // 선택된 옵션의 값을 셀렉트박스의 값으로 설정합니다.
+            selectAccount.value = this.dataset.value;
+            // 옵션 컨테이너를 숨깁니다.
+            optionsContainerAccount.style.display = 'none';
+
+            // 초대합니다 입력박스와 관련된 요소들을 가져옵니다.
+            var inputBox = document.getElementById("TextBoxInput");
+            var invitebody = document.getElementById("InviteBodyText");
+
+            // 선택된 옵션의 하위 요소인 .optiondecription의 텍스트를 가져와 입력박스와 초대합니다 텍스트에 설정합니다.
+            var childElement = this.querySelector(".optiondecription");
+            var childElementText = childElement.innerText;
+            inputBox.value = childElementText;
+            invitebody.innerText = childElementText;
+        }
+
+        // 문서의 다른 영역을 클릭했을 때 옵션 컨테이너를 숨기는 이벤트 리스너를 추가합니다.
+        document.addEventListener('click', hideOptions);
+
+        // 옵션 컨테이너 외부를 클릭했을 때 옵션 컨테이너를 숨기는 함수입니다.
+        function hideOptions(event) {
+            if (!optionsContainerAccount.contains(event.target) && !selectAccount.contains(event.target)) {
+                optionsContainerAccount.style.display = 'none';
+            }
+        }
+    })();
+
+
+
 
     // 계좌번호 추가와 삭제 관련 함수
     let AccountBtn = document.getElementById('AddAccountBtn');
@@ -1454,50 +1518,6 @@ window.onload = function () {
     });
 
 
-
-
-
-
-
-
-
-    // // 계좌번호 그룹추가
-    // let accountitemIdx = 3;
-    // let accordionitemIdx = 3;
-    // let AccountBtn = document.getElementById('AddAccountBtn');
-
-    // if (AccountBtn) {
-    //     AccountBtn.addEventListener("click", function () {
-    //         if (accordionitemIdx >= 7) {
-    //             alert("최대 만들 수 있는 계좌그룹의 갯수를 초과하였습니다");
-    //             return;
-    //         }
-    //         var accountGroup = document.getElementById("AccountGroup");
-    //         var accountItem = document.createElement("div");
-    //         accountItem.classList.add("AccountItem");
-    //         accountItem.id = "AccointItem" + accountitemIdx;
-    //         accountGroup.appendChild(accountItem);
-    //         accountitemIdx++;
-
-    //         var childDivs = document.querySelectorAll(".DetailItem");
-    //         var firstChild = childDivs[0];
-    //         accountItem.appendChild(firstChild.cloneNode(true));
-
-    //         // Add the li element to the accordion
-    //         var accordion = document.querySelector(".accordion");
-    //         var newLi = document.createElement("li");
-    //         newLi.classList.add("accordionitem");
-    //         newLi.id = "accordionitem" + accordionitemIdx;
-    //         accordion.appendChild(newLi);
-    //         accordionitemIdx++;
-
-    //         var childLi = document.querySelectorAll(".licontents");
-    //         var firstChildLi = childLi[0];
-    //         newLi.appendChild(firstChildLi.cloneNode(true));
-    //     });
-    // }
-
-
     // 서체 변경 셀렉트박스
 
     const select = document.querySelector('.custom-select');
@@ -1522,7 +1542,6 @@ window.onload = function () {
     } else {
         return;
     }
-
 
     function selectOption() {
         select.value = this.dataset.value;

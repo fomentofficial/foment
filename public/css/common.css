@@ -370,6 +370,23 @@ body {
     border: 1px solid var(--ColorBorder10);
 }
 
+#custom-options-account {
+    z-index: 1001;
+    padding: 24px;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: calc(100% - 50px);
+    background-color: var(--ColorSurface);
+    border-radius: var(--BorderRadius-Md);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: none;
+    animation-fill-mode: both;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+    border: 1px solid var(--ColorBorder10);
+}
+
 #custom-options-invite {
     max-height: 360px;
     overflow-y: scroll;
@@ -568,6 +585,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .selectbox_detail {
+    position: relative;
     display: flex;
     flex-direction: row;
     gap: 8px;

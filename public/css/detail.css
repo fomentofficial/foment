@@ -149,6 +149,7 @@
 }
 
 .NameBox {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -165,6 +166,7 @@
 
 .InputArea,
 .ToggleArea {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
