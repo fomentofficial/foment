@@ -1446,19 +1446,9 @@ window.onload = function () {
         function selectOptionAccount() {
             // 선택된 옵션의 값을 셀렉트박스의 값으로 설정합니다.
             selectAccount.value = this.dataset.value;
+            console.log(selectAccount.value);
             // 옵션 컨테이너를 숨깁니다.
             optionsContainerAccount.style.display = 'none';
-
-            // 초대합니다 입력박스와 관련된 요소들을 가져옵니다.
-            var inputBox = document.getElementById("TextBoxInput");
-            var invitebody = document.getElementById("InviteBodyText");
-
-            // 선택된 옵션의 하위 요소인 .optiondecription의 텍스트를 가져와 입력박스와 초대합니다 텍스트에 설정합니다.
-            var childElement = this.querySelector(".optiondecription");
-            var childElementText = childElement.innerText;
-            inputBox.value = childElementText;
-            invitebody.innerText = childElementText;
-
         }
 
         // 계좌 그룹을 추가합니다
@@ -1466,24 +1456,20 @@ window.onload = function () {
         accountGroupAdd.addEventListener('click', function() {
             let optionAccount = document.getElementById('optionAccount');
             let clonedOptionAccount = optionAccount.cloneNode(true);
-            
-            // 새로운 <option> 요소를 생성합니다
-            let newOption = document.createElement('option');
-            newOption.value = '새로운 계좌번호';
-            newOption.textContent = '새로운 계좌번호';
-            
-            // <select> 요소를 찾아내어 새로운 <option> 요소를 추가합니다
-            let selectElement = clonedOptionAccount.querySelector('#custom-select-account');
-            // selectElement.appendChild(newOption); << 얘 코드가 문제가 있음
-            
-            console.log(selectElement);
-            
-            // 클래스를 추가하려는 요소의 ID
-            let targetElement = document.getElementById('custom-options-account');
-            console.log(targetElement);
-            // 복제된 optionAccount와 해당 클래스들을 추가
+            clonedOptionAccount.dataset.value = '계좌그룹'; // data-value 값을 설정합니다
+            clonedOptionAccount.querySelector('.optiondecription').textContent = '계좌그룹'; // 텍스트 변경
+
+            let targetElement = document.getElementById('custom-option-childGroup');
             targetElement.appendChild(clonedOptionAccount);
+
+            // "custom-select-account" select 요소를 업데이트합니다
+            let selectAccount = document.getElementById('custom-select-account');
+            let newOption = document.createElement('option');
+            newOption.value = '계좌그룹';
+            newOption.textContent = '계좌그룹';
+            selectAccount.appendChild(newOption);
         });
+
 
         // 문서의 다른 영역을 클릭했을 때 옵션 컨테이너를 숨기는 이벤트 리스너를 추가합니다.
         document.addEventListener('click', hideOptions);
