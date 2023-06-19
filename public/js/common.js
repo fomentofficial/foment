@@ -1,8 +1,6 @@
 
 window.onload = function () {
 
-
-
     // Create_InvitationBtn 요소를 가져옵니다.
     const CreateBtn = document.getElementById('Create_InvitationBtn');
 
@@ -1411,77 +1409,89 @@ window.onload = function () {
 
     // 계좌번호 셀렉트박스
     (function () {
-        // 계좌번호를 선택하는 셀렉트박스와 옵션 컨테이너 요소를 가져옵니다.
         let selectAccount = document.querySelector('#custom-select-account');
         let optionsContainerAccount = document.querySelector('#custom-options-account');
-        let optionsAccount;
-
-        // 셀렉트박스와 옵션 컨테이너 요소가 없는 경우 코드 실행을 중단합니다.
-        if (!selectAccount || !optionsContainerAccount) {
-            return;
-        } else {
-            // 옵션 요소들을 가져옵니다.
-            optionsAccount = optionsContainerAccount.querySelectorAll(".custom-option");
-        }
-
-        // 셀렉트박스 클릭 시 옵션들을 토글하는 이벤트 리스너를 추가합니다.
-        selectAccount.addEventListener('click', toggleOptions);
-
-        // 각 옵션을 클릭했을 때 선택 이벤트를 처리하는 이벤트 리스너를 추가합니다.
-        optionsAccount.forEach(optionAccount => optionAccount.addEventListener('click', selectOptionAccount));
-
-        // 옵션들을 토글하는 함수입니다.
-        function toggleOptions() {
-            if (optionsContainerAccount.style.display === 'grid') {
-                optionsContainerAccount.style.display = 'none';
-                optionsContainerAccount.style.animation = 'slideDown 0.2s ease';
-            } else {
-                optionsContainerAccount.style.display = 'none';
-                optionsContainerAccount.style.display = 'grid';
-                optionsContainerAccount.style.animation = 'slideUp 0.2s ease';
-            }
-        }
-
-        // 옵션을 선택했을 때 실행되는 함수입니다.
-        function selectOptionAccount() {
-            // 선택된 옵션의 값을 셀렉트박스의 값으로 설정합니다.
-            selectAccount.value = this.dataset.value;
-            console.log(selectAccount.value);
-            // 옵션 컨테이너를 숨깁니다.
-            optionsContainerAccount.style.display = 'none';
-        }
-
-        // 계좌 그룹을 추가합니다
-        let accountGroupAdd = document.getElementById('optionAccountAdd');
-        accountGroupAdd.addEventListener('click', function() {
-            let optionAccount = document.getElementById('optionAccount');
-            let clonedOptionAccount = optionAccount.cloneNode(true);
-            clonedOptionAccount.dataset.value = '계좌그룹'; // data-value 값을 설정합니다
-            clonedOptionAccount.querySelector('.optiondecription').textContent = '계좌그룹'; // 텍스트 변경
-
-            let targetElement = document.getElementById('custom-option-childGroup');
-            targetElement.appendChild(clonedOptionAccount);
-
-            // "custom-select-account" select 요소를 업데이트합니다
-            let selectAccount = document.getElementById('custom-select-account');
-            let newOption = document.createElement('option');
-            newOption.value = '계좌그룹';
-            newOption.textContent = '계좌그룹';
-            selectAccount.appendChild(newOption);
-        });
-
-
-        // 문서의 다른 영역을 클릭했을 때 옵션 컨테이너를 숨기는 이벤트 리스너를 추가합니다.
-        document.addEventListener('click', hideOptions);
-
-        // 옵션 컨테이너 외부를 클릭했을 때 옵션 컨테이너를 숨기는 함수입니다.
-        function hideOptions(event) {
-            if (!optionsContainerAccount.contains(event.target) && !selectAccount.contains(event.target)) {
-                optionsContainerAccount.style.display = 'none';
-            }
-        }
-    })();
+        let optionsAccount = optionsContainerAccount.querySelectorAll(".custom-option");
       
+        if (!selectAccount || !optionsContainerAccount) {
+          return;
+        }
+      
+        selectAccount.addEventListener('click', toggleOptions);
+        selectAccount.addEventListener('input', syncOptionValue); // 추가: 입력값이 변경되었을 때 이벤트 처리
+        selectAccount.addEventListener('keyup', updateOptionValue); // 추가: 입력값이 변경될 때 this의 dataset.value 변경
+      
+        optionsAccount.forEach(optionAccount => optionAccount.addEventListener('click', selectOptionAccount));
+      
+        function toggleOptions() {
+          if (optionsContainerAccount.style.display === 'grid') {
+            optionsContainerAccount.style.display = 'none';
+            optionsContainerAccount.style.animation = 'slideDown 0.2s ease';
+          } else {
+            optionsContainerAccount.style.display = 'none';
+            optionsContainerAccount.style.display = 'grid';
+            optionsContainerAccount.style.animation = 'slideUp 0.2s ease';
+          }
+        }
+      
+        function selectOptionAccount() {
+          selectAccount.value = this.dataset.value;
+          syncOptionValue(); // 추가: 선택된 값과 동기화
+          optionsContainerAccount.style.display = 'none';
+        }
+      
+        function syncOptionValue() {
+          let selectedOption = Array.from(optionsAccount).find(option => option.dataset.value === selectAccount.value);
+          if (selectedOption) {
+            selectedOption.classList.add('selected');
+          }
+          optionsAccount.forEach(option => {
+            if (option !== selectedOption) {
+              option.classList.remove('selected');
+            }
+          });
+        }
+      
+        function updateOptionValue() {
+            console.log(this.dataset.value);
+          this.dataset.value = this.value;
+          selectAccount.value = this.value; // 추가: value 값도 변경
+        }
+      
+        let accountGroupAdd = document.getElementById('optionAccountAdd');
+        accountGroupAdd.addEventListener('click', addAccountGroup);
+      
+        function addAccountGroup() {
+          let optionAccount = document.getElementById('optionAccount');
+          let clonedOptionAccount = optionAccount.cloneNode(true);
+          clonedOptionAccount.dataset.value = '계좌그룹';
+          clonedOptionAccount.querySelector('.optiondecription').textContent = '계좌그룹';
+      
+          let targetElement = document.getElementById('custom-option-childGroup');
+          targetElement.appendChild(clonedOptionAccount);
+      
+          let selectAccount = document.getElementById('custom-select-account');
+          let newOption = document.createElement('option');
+          newOption.value = '계좌그룹';
+          newOption.textContent = '계좌그룹';
+          selectAccount.appendChild(newOption);
+      
+          clonedOptionAccount.addEventListener('click', selectOptionAccount);
+        }
+      
+        document.addEventListener('click', hideOptions);
+      
+        function hideOptions(event) {
+          if (!optionsContainerAccount.contains(event.target) && !selectAccount.contains(event.target)) {
+            optionsContainerAccount.style.display = 'none';
+          }
+        }
+      })();
+      
+      
+
+
+
 
 
     // 계좌번호 추가와 삭제 관련 함수
