@@ -1451,12 +1451,22 @@ window.onload = function () {
             }
           });
         }
-      
+        
+        // updateOptionValue 함수
         function updateOptionValue() {
-            console.log(this.dataset.value);
-          this.dataset.value = this.value;
-          selectAccount.value = this.value; // 추가: value 값도 변경
+            // 인풋의 data-value를 입력받은 값과 동일하도록 변경
+            this.dataset.value = this.value;
+            selectAccount.value = this.value;
+        
+            // 추가: 선택된 계좌그룹만 값 변경
+            let selectedOptionAccount = document.querySelector(`.custom-option.selected`);
+            console.log(selectedOptionAccount);
+            if (selectedOptionAccount) {
+            selectedOptionAccount.querySelector('.optiondecription').textContent = this.value;
+            }
         }
+  
+  
       
         let accountGroupAdd = document.getElementById('optionAccountAdd');
         accountGroupAdd.addEventListener('click', addAccountGroup);
@@ -1475,6 +1485,7 @@ window.onload = function () {
           newOption.value = '계좌그룹';
           newOption.textContent = '계좌그룹';
           selectAccount.appendChild(newOption);
+          console.log(newOption);
       
           clonedOptionAccount.addEventListener('click', selectOptionAccount);
         }
