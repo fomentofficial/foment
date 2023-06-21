@@ -1454,18 +1454,21 @@ window.onload = function () {
         
         // updateOptionValue 함수
         function updateOptionValue() {
-            // 인풋의 data-value를 입력받은 값과 동일하도록 변경
-            this.dataset.value = this.value;
-            selectAccount.value = this.value;
-        
-            // 추가: 선택된 계좌그룹만 값 변경
-            let selectedOptionAccount = document.querySelector(`.custom-option.selected`);
-            console.log(selectedOptionAccount);
-            if (selectedOptionAccount) {
-            selectedOptionAccount.querySelector('.optiondecription').textContent = this.value;
+            // 선택된 셀렉트박스와 동기화된 목록 정의
+            let selectedOptionAccount = document.querySelector('.custom-option.selected');
+            // 값을 변경할 동기화된 목록
+            let accountName = selectedOptionAccount.querySelector('.optiondecription')
+            console.log(accountName);
+
+            // 인풋 값
+            let accountInputValue = this.value;
+            console.log(selectedOptionAccount.dataset.value);
+
+            if (accountInputValue === selectedOptionAccount.dataset.value) {
+                accountName.innerText = accountInputValue;
             }
         }
-  
+        
   
       
         let accountGroupAdd = document.getElementById('optionAccountAdd');
