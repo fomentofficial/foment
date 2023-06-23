@@ -1434,30 +1434,47 @@ window.onload = function () {
             }
         }
 
+
+        // 계좌 그룹 설정 셀렉트박스 선택시 함수
         function selectOptionAccount() {
             selectAccount.value = this.dataset.value;
             this.classList.add('selected');
-            
+          
+            var accordionTitles = document.getElementsByClassName('accordion-title');
+          
+            // 'accordion-title' 클래스 중에서 dataset.value가 this.dataset.value와 일치하는 클래스에는 'selected' 클래스를 추가
+            // 그렇지 않은 클래스에는 'selected' 클래스를 제거
+            for (var i = 0; i < accordionTitles.length; i++) {
+              var accordionTitle = accordionTitles[i];
+              if (accordionTitle.dataset.value === this.dataset.value) {
+                accordionTitle.classList.add('selected');
+              } else {
+                accordionTitle.classList.remove('selected');
+              }
+            }
+          
+            var siblingElements = this.parentElement.getElementsByClassName(this.classList[0]);
+          
             // 동일한 레벨에 있는 클래스들 중에서 'selected' 클래스가 있는 경우 제거
-            var siblingElements = this.parentElement.getElementsByClassName(this.classList[0]); // Use the first class name of the element
             for (var i = 0; i < siblingElements.length; i++) {
               var siblingElement = siblingElements[i];
               if (siblingElement !== this && siblingElement.classList.contains('selected') && siblingElement.id !== 'optionAccountAdd') {
                 siblingElement.classList.remove('selected');
               }
             }
-            
+          
             if (optionsContainerAccount) {
               optionsContainerAccount.style.display = 'none';
             }
           }
           
           
-                  
-        let accountGroupAdd = document.getElementById('optionAccountAdd');
-        accountGroupAdd.addEventListener('click', addAccountGroup);
-
-        function addAccountGroup() {
+          
+        // 계좌그룹 추가 버튼 클릭시 함수
+          let accountGroupAdd = document.getElementById('optionAccountAdd');
+          accountGroupAdd.addEventListener('click', addAccountGroup);
+          
+          function addAccountGroup() {
             let optionAccount = document.getElementById('optionAccount');
             let clonedOptionAccount = optionAccount.cloneNode(true);
             clonedOptionAccount.dataset.value = '계좌그룹';
@@ -1477,9 +1494,27 @@ window.onload = function () {
           
             // 추가된 클래스에 'selected' 추가
             clonedOptionAccount.classList.add('selected');
+          
+            // 아코디언 아이템을 추가합니다.
+            addAccordionItem();
           }
           
-
+          function addAccordionItem() {
+            let accordion = document.querySelector('.accordion');
+          
+            // 기존 아코디언 아이템을 복제합니다.
+            let clonedAccordionItem = accordion.querySelector('.accordionitem').cloneNode(true);
+          
+            // 'accordion-title' 클래스의 textContent를 '계좌그룹'으로 수정합니다.
+            clonedAccordionItem.querySelector('.accordion-title').textContent = '계좌그룹';
+            clonedAccordionItem.querySelector('.accordion-title').dataset.value = '계좌그룹';
+            clonedAccordionItem.querySelector('.accordion-title').classList.add('selected');
+          
+            // 복제된 아코디언 아이템을 아코디언에 추가합니다.
+            accordion.appendChild(clonedAccordionItem);
+          }
+          
+          
         document.addEventListener('click', hideOptions);
 
         function hideOptions(event) {
@@ -1489,21 +1524,34 @@ window.onload = function () {
         }
     })();
 
-    function deleteAccountGroup(event) {
-        let targetBtn = event.target.closest('.DeleteAccountGroupBtn');
-        if (targetBtn) {
-          let parentElement = targetBtn.closest('.custom-option');
-          if (parentElement) {
-            let customOptions = document.querySelectorAll('.custom-option-childGroup .custom-option');
-            console.log(customOptions.length);
-            if (customOptions.length > 1) {
-              parentElement.remove();
-            } else {
-              alert('계좌그룹은 1개 이하로 삭제하실 수 없습니다');
+// 계좌 그룹 삭제시 함수
+function deleteAccountGroup(event) {
+    let targetBtn = event.target.closest('.DeleteAccountGroupBtn');
+    if (targetBtn) {
+      let parentElement = targetBtn.closest('.custom-option');
+      if (parentElement) {
+        let customOptions = document.querySelectorAll('.custom-option-childGroup .custom-option');
+        console.log(customOptions.length);
+        if (customOptions.length > 1) {
+          // parentElement 삭제 처리
+          parentElement.remove();
+  
+          // 삭제된 parentElement의 data-set-value와 일치하는 'accordion-title' 클래스를 찾아 삭제 처리
+          let accordionTitles = document.getElementsByClassName('accordion-title');
+          for (let i = 0; i < accordionTitles.length; i++) {
+            let accordionTitle = accordionTitles[i];
+            if (accordionTitle.dataset.value === parentElement.dataset.value) {
+              accordionTitle.remove();
+              break;
             }
           }
+        } else {
+          alert('계좌그룹은 1개 이하로 삭제하실 수 없습니다');
         }
       }
+    }
+  }
+  
       
       // 삭제버튼 클릭시
       document.addEventListener('click', deleteAccountGroup);
@@ -2012,11 +2060,15 @@ function updateOptionValue() {
     console.log(accountInputValue);
     // 선택된 셀렉트박스와 동기화된 목록 정의
     let selectedOptionAccount = document.querySelector('.custom-option.selected');
+    let selectedTemplateGroupAccount = document.querySelector('.accordion-title.selected');
+    console.log(selectedTemplateGroupAccount);
     // 값을 변경할 동기화된 목록
     let accountName = selectedOptionAccount.querySelector('.optiondecription')
     console.log(accountName);
 
     accountName.innerText = accountInputValue;
+    selectedTemplateGroupAccount.innerText = accountInputValue;
+    selectedTemplateGroupAccount.dataset.value = accountInputValue;
     selectedOptionAccount.dataset.value = accountInputValue;
 }
 
