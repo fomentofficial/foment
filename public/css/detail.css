@@ -291,7 +291,14 @@
 .accodian-inner {
   display: flex;
   justify-content: space-between;
+  padding: 12px 0px;
+  align-items: baseline;
   gap: 8px;
+  border-bottom: 1px solid var(--ColorBorder5);
+}
+
+.accodian-inner:last-child {
+  border: none;
 }
 
 .accodian-info {
@@ -301,7 +308,7 @@
   align-items: flex-start;
 }
 
-.accounttarget {
+.accounttarget, .accountinfo {
   gap: 4px;
   display: flex;
   align-items: center;
@@ -621,7 +628,7 @@
   display: none;
   font-size: var(--Text-Supported);
   color: var(--ColorTextPrimary);
-  padding: 8px 16px 16px 16px;
+  padding: 0px 16px 16px 16px;
 }
 
 .accordion-content p {

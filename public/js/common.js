@@ -2190,27 +2190,12 @@ function printInviteBody() {
     document.getElementById("InviteBodyText").innerText = PrintInvite;
 };
 
-// 신랑측 계좌번호
-function printAccountGroom() {
-    let PrintAccount = document.getElementById('AccountGroomInput').value;
+// 계좌번호 영역
+function printBankNameTerms() {
+    let printBankNameTerms = document.getElementById('bank_nameTerms_Input').value;
 
-    document.getElementById("accountinformation").innerText = PrintAccount;
+    document.getElementById("bank_nameTerms").innerText = printBankNameTerms;
 };
-
-// 신랑측 은행
-function printBankGroom() {
-    let PrintAccount = document.getElementById('BankGroomInput').value;
-
-    document.getElementById("bankinfo").innerText = PrintAccount;
-};
-
-// 신랑측 예금주
-function printHolderGroom() {
-    let PrintAccount = document.getElementById('HolderGroomInput').value;
-
-    document.getElementById("holderinfo").innerText = PrintAccount;
-};
-
 
 
 
