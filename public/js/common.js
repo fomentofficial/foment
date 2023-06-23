@@ -1412,99 +1412,103 @@ window.onload = function () {
         let selectAccount = document.querySelector('#custom-select-account');
         let optionsContainerAccount = document.querySelector('#custom-options-account');
         let optionsAccount = optionsContainerAccount.querySelectorAll(".custom-option");
-      
+
         if (!selectAccount || !optionsContainerAccount) {
-          return;
+            return;
         }
-      
+
         selectAccount.addEventListener('click', toggleOptions);
-        selectAccount.addEventListener('input', syncOptionValue); // 추가: 입력값이 변경되었을 때 이벤트 처리
-        selectAccount.addEventListener('keyup', updateOptionValue); // 추가: 입력값이 변경될 때 this의 dataset.value 변경
-      
+        // selectAccount.addEventListener('input', syncOptionValue); // 추가: 입력값이 변경되었을 때 이벤트 처리
+        // selectAccount.addEventListener('keyup', updateOptionValue); // 추가: 입력값이 변경될 때 this의 dataset.value 변경
+
         optionsAccount.forEach(optionAccount => optionAccount.addEventListener('click', selectOptionAccount));
-      
+
         function toggleOptions() {
-          if (optionsContainerAccount.style.display === 'grid') {
-            optionsContainerAccount.style.display = 'none';
-            optionsContainerAccount.style.animation = 'slideDown 0.2s ease';
-          } else {
-            optionsContainerAccount.style.display = 'none';
-            optionsContainerAccount.style.display = 'grid';
-            optionsContainerAccount.style.animation = 'slideUp 0.2s ease';
-          }
+            if (optionsContainerAccount.style.display === 'grid') {
+                optionsContainerAccount.style.display = 'none';
+                optionsContainerAccount.style.animation = 'slideDown 0.2s ease';
+            } else {
+                optionsContainerAccount.style.display = 'none';
+                optionsContainerAccount.style.display = 'grid';
+                optionsContainerAccount.style.animation = 'slideUp 0.2s ease';
+            }
         }
-      
+
         function selectOptionAccount() {
-          selectAccount.value = this.dataset.value;
-          syncOptionValue(); // 추가: 선택된 값과 동기화
-          optionsContainerAccount.style.display = 'none';
-        }
-      
-        function syncOptionValue() {
-          let selectedOption = Array.from(optionsAccount).find(option => option.dataset.value === selectAccount.value);
-          if (selectedOption) {
-            selectedOption.classList.add('selected');
+            selectAccount.value = this.dataset.value;
+            this.classList.add('selected');
+            
+            // 동일한 레벨에 있는 클래스들 중에서 'selected' 클래스가 있는 경우 제거
+            var siblingElements = this.parentElement.getElementsByClassName(this.classList[0]); // Use the first class name of the element
+            for (var i = 0; i < siblingElements.length; i++) {
+              var siblingElement = siblingElements[i];
+              if (siblingElement !== this && siblingElement.classList.contains('selected') && siblingElement.id !== 'optionAccountAdd') {
+                siblingElement.classList.remove('selected');
+              }
+            }
+            
+            if (optionsContainerAccount) {
+              optionsContainerAccount.style.display = 'none';
+            }
           }
-          optionsAccount.forEach(option => {
-            if (option !== selectedOption) {
-              option.classList.remove('selected');
-            }
-          });
-        }
-        
-        // updateOptionValue 함수
-        function updateOptionValue() {
-            // 선택된 셀렉트박스와 동기화된 목록 정의
-            let selectedOptionAccount = document.querySelector('.custom-option.selected');
-            // 값을 변경할 동기화된 목록
-            let accountName = selectedOptionAccount.querySelector('.optiondecription')
-            console.log(accountName);
-
-            // 인풋 값
-            let accountInputValue = this.value;
-            console.log(selectedOptionAccount.dataset.value);
-
-            if (accountInputValue === selectedOptionAccount.dataset.value) {
-                accountName.innerText = accountInputValue;
-            }
-        }
-        
-  
-      
+          
+          
+                  
         let accountGroupAdd = document.getElementById('optionAccountAdd');
         accountGroupAdd.addEventListener('click', addAccountGroup);
-      
+
         function addAccountGroup() {
-          let optionAccount = document.getElementById('optionAccount');
-          let clonedOptionAccount = optionAccount.cloneNode(true);
-          clonedOptionAccount.dataset.value = '계좌그룹';
-          clonedOptionAccount.querySelector('.optiondecription').textContent = '계좌그룹';
-      
-          let targetElement = document.getElementById('custom-option-childGroup');
-          targetElement.appendChild(clonedOptionAccount);
-      
-          let selectAccount = document.getElementById('custom-select-account');
-          let newOption = document.createElement('option');
-          newOption.value = '계좌그룹';
-          newOption.textContent = '계좌그룹';
-          selectAccount.appendChild(newOption);
-          console.log(newOption);
-      
-          clonedOptionAccount.addEventListener('click', selectOptionAccount);
-        }
-      
+            let optionAccount = document.getElementById('optionAccount');
+            let clonedOptionAccount = optionAccount.cloneNode(true);
+            clonedOptionAccount.dataset.value = '계좌그룹';
+            clonedOptionAccount.querySelector('.optiondecription').textContent = '계좌그룹';
+          
+            let targetElement = document.getElementById('custom-option-childGroup-account');
+            targetElement.appendChild(clonedOptionAccount);
+          
+            let selectAccount = document.getElementById('custom-select-account');
+            let newOption = document.createElement('option');
+            newOption.value = '계좌그룹';
+            newOption.textContent = '계좌그룹';
+            selectAccount.appendChild(newOption);
+            console.log(newOption);
+          
+            clonedOptionAccount.addEventListener('click', selectOptionAccount);
+          
+            // 추가된 클래스에 'selected' 추가
+            clonedOptionAccount.classList.add('selected');
+          }
+          
+
         document.addEventListener('click', hideOptions);
-      
+
         function hideOptions(event) {
-          if (!optionsContainerAccount.contains(event.target) && !selectAccount.contains(event.target)) {
-            optionsContainerAccount.style.display = 'none';
+            if (!optionsContainerAccount.contains(event.target) && !selectAccount.contains(event.target)) {
+                optionsContainerAccount.style.display = 'none';
+            }
+        }
+    })();
+
+    function deleteAccountGroup(event) {
+        let targetBtn = event.target.closest('.DeleteAccountGroupBtn');
+        if (targetBtn) {
+          let parentElement = targetBtn.closest('.custom-option');
+          if (parentElement) {
+            let customOptions = document.querySelectorAll('.custom-option-childGroup .custom-option');
+            console.log(customOptions.length);
+            if (customOptions.length > 1) {
+              parentElement.remove();
+            } else {
+              alert('계좌그룹은 1개 이하로 삭제하실 수 없습니다');
+            }
           }
         }
-      })();
+      }
+      
+      // 삭제버튼 클릭시
+      document.addEventListener('click', deleteAccountGroup);
       
       
-
-
 
 
 
@@ -1998,6 +2002,25 @@ function handleOnChange(e, target) {
     }
 
 }
+
+
+// updateOptionValue 함수
+function updateOptionValue() {
+
+    // 인풋 값에 따라 셀렉트박스 값 변경
+    let accountInputValue = document.getElementById("custom-select-account").value;
+    console.log(accountInputValue);
+    // 선택된 셀렉트박스와 동기화된 목록 정의
+    let selectedOptionAccount = document.querySelector('.custom-option.selected');
+    // 값을 변경할 동기화된 목록
+    let accountName = selectedOptionAccount.querySelector('.optiondecription')
+    console.log(accountName);
+
+    accountName.innerText = accountInputValue;
+    selectedOptionAccount.dataset.value = accountInputValue;
+}
+
+
 
 // 예식장 명 입력
 function WeddingLocationInput() {
