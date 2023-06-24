@@ -460,7 +460,16 @@ window.onload = function () {
 
     addScrollEventListener(inviteInfoInputs, '.TabContent');
 
+    // 계좌번호 작성 및 클릭시 스크롤
+       let AccountInfoInputs = [
+        document.getElementById('custom-select-account'),
+        document.getElementById('bank_nameTerms_Input'),
+        document.getElementById('bank_holder_Input'),
+        document.getElementById('bank_bankName_Input'),
+        document.getElementById('bank_accountInfo_Input'),
+    ];
 
+    addScrollEventListener(AccountInfoInputs, '.AccountSection');
 
     // 가족관계 상태값 정의
 
@@ -2190,11 +2199,33 @@ function printInviteBody() {
     document.getElementById("InviteBodyText").innerText = PrintInvite;
 };
 
-// 계좌번호 영역
+// 계좌 호칭 입력
 function printBankNameTerms() {
     let printBankNameTerms = document.getElementById('bank_nameTerms_Input').value;
 
     document.getElementById("bank_nameTerms").innerText = printBankNameTerms;
+};
+
+// 예금주 입력
+function printBankHolderInfo() {
+    let printBankHolderInfo = document.getElementById('bank_holder_Input').value;
+
+    document.getElementById("holderinfo").innerText = printBankHolderInfo;
+};
+
+// 은행명 입력
+function printBankName() {
+    let printBankName = document.getElementById('bank_bankName_Input').value;
+
+    document.getElementById("bank_bankName").innerText = printBankName;
+};
+
+
+// 계좌번호 입력
+function printBankAccountInfo() {
+    let printBankAccountInfo = document.getElementById('bank_accountInfo_Input').value;
+
+    document.getElementById("bank_accountInfo").innerText = printBankAccountInfo;
 };
 
 
