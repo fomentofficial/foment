@@ -1619,16 +1619,16 @@ window.onload = function () {
         let accodianAccountsContents = accodianAccountsGroup.querySelectorAll('.accodian-inner');
         console.log(accodianAccountsGroup);
         console.log(accodianAccountsContents);
-    
+
         if (accountInputCount < 2) {
             alert('계좌번호는 1개 이하로는 삭제하실 수 없습니다.');
         } else {
             let parentElement = event.target.closest('.AccountInputs');
             let index = Array.from(parentElement.parentNode.children).indexOf(parentElement);
-    
+
             console.log("Deleting index:", index);
             parentElement.remove(); // AccountInputs 요소 삭제
-    
+
             if (accodianAccountsContents[index]) {
                 accodianAccountsContents[index].remove(); // 동일한 순서의 accordion-inner 삭제
             } else {
@@ -1636,18 +1636,18 @@ window.onload = function () {
             }
         }
     }
-    
-    
+
+
     // 초기에 로드된 DeleteAccountBtn에 대한 이벤트 처리
     let initialDeleteBtns = document.querySelectorAll('.DeleteAccountBtn');
     initialDeleteBtns.forEach(function (btn) {
         btn.addEventListener('click', deleteAccountFunc);
     });
-    
-    
-    
-      
-      
+
+
+
+
+
 
 
     // 서체 변경 셀렉트박스
@@ -2644,8 +2644,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
                 // |- 계좌 정보 탭
+                const AccountBody = document.querySelectorAll('.accordionitem');
 
-                // └─ 그룹명 타이틀 JSON
+                const accountData = [];
+
+                AccountBody.forEach(item => {
+                    const accordionTitle = item.querySelector('.accordion-title').textContent.trim();
+                    const accordionContent = item.querySelector('.accordion-content');
+                    const accodianInnerList = accordionContent.querySelectorAll('.accodian-inner');
+
+                    const innerData = [];
+
+                    accodianInnerList.forEach(innerItem => {
+                        const bankNameTerms = innerItem.querySelector('#bank_nameTerms').textContent.trim();
+                        const holderInfo = innerItem.querySelector('#holderinfo').textContent.trim();
+                        const bankBankName = innerItem.querySelector('#bank_bankName').textContent.trim();
+                        const bankAccountInfo = innerItem.querySelector('#bank_accountInfo').textContent.trim();
+
+                        const innerItemData = {
+                            "bankNameTerms": bankNameTerms,
+                            "holderInfo": holderInfo,
+                            "bankBankName": bankBankName,
+                            "bankAccountInfo": bankAccountInfo
+                        };
+
+                        innerData.push(innerItemData);
+                    });
+
+                    const accountItem = {
+                        "accordionTitle": accordionTitle,
+                        "innerData": innerData
+                    };
+
+                    accountData.push(accountItem);
+                });
+
+                console.log(JSON.stringify(accountData));
 
 
                 // |- 이미지 갤러리 탭
@@ -2698,7 +2732,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     effect_type: ActiveEffectElementData,
                     font_type: FontselectData,
                     font_size: FontSizeData,
-                    // URL_data: UrlData,
                     invitation_title: InvitationTitleData,
                     title_upload_img: TitleUploadImgData,
                     kakao_share_img: KaKaoShareImgData,
@@ -2734,6 +2767,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     wedding_address: WeddingAddressData,
                     invite_title: InviteTitleData,
                     invite_body: InvitationBodyData,
+                    account_info: accountData,
                     gallery_type: GalleryTypeData,
                     img_group_element: ImgGroupElementData,
                     board_password: BoardPasswordData,

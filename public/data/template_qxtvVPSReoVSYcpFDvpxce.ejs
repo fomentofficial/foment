@@ -244,7 +244,7 @@
                     </div>
                     <div class="innerframe"></div>
                     
-                            <img id="preview-image" src="/Resource/mainasset/WeddingTitleImg.jpg">
+                            <img id="preview-image" src="http://localhost:3000/Resource/mainasset/WeddingTitleImg.jpg">
                             
 
                 </div>
@@ -260,13 +260,13 @@
                     
                     <span class="WeddingDate" id="WeddingDateTitle">
                         
-                        6 월 25 일
+                        6 월
                             </span>
 
 
 
                             <span class="WeddingDay" id="WeddingDayTitle">
-                                일요일
+                                25
                             </span>
                             <span class="AMPM" id="AMPM">
                                 오후
@@ -414,13 +414,13 @@
                             <div class="sec_cal" data-id="Toggle_Calendar">
                                 <div class="cal_nav">
                                     <div class="year-month" id="TextDateCalendar">
-                                        6 월 25 일
+                                        6 월
                                     </div>
                                 </div>
                                 <div class="WeddingBodyText" id="CalDayTime">
                                     <span class="WeddingDay" id="CalWeddingDayTitle">
                                         
-                                            일요일
+                                            25
                                     </span>
                                     <span class="AMPM" id="CalAMPM">
                                         오후
@@ -468,8 +468,13 @@
                                         </div>
                                     </div>
                                     
-                                        <ul class="grid-container" >
+                                        <ul class="grid-container" style =display:grid;>
                                             
+                                                <li class="grid-item" file="https://foment.s3.ap-northeast-2.amazonaws.com/foment_img_storage/1687821866396-ee6fceac-e8b2-4f4d-b7a7-2e5d9c5c93ee-toast.png">
+                                                    <img class="grid-thumb" id="appendimg"
+                                                        src="https://foment.s3.ap-northeast-2.amazonaws.com/foment_img_storage/1687821866396-ee6fceac-e8b2-4f4d-b7a7-2e5d9c5c93ee-toast.png" />
+                                                </li>
+                                                
                                         </ul>
 
                                         <button class="BtnBasic" id="LoadMoreBtn">더 보기</button>
@@ -534,6 +539,40 @@
                                                         <a href="#" class="accordion-title selected" data-value="신랑측 계좌번호">신랑측 계좌번호</a>
                                                         <div class="accordion-content" id="accodion-content">
 
+                                                            <div class="accodian-inner">
+                                                                <div class="accodian-info">
+                                                                    <div class="accounttarget">
+                                                                        <div class="WeddingBodyText" id="bank_nameTerms">
+                                                                            신랑
+                                                                        </div>
+                                                                        <div class="WeddingBodyText" id="holderinfo">예금주</div>
+                                                                    </div>
+                                                                    <div class="accountinfo">
+                                                                        <div class="WeddingBodyText" id="bank_bankName">은행명</div>
+                                                                        <div class="WeddingBodyText" id="bank_accountInfo">계좌번호</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="accodian-btninfo">
+                                                                    <button class="Btnsmall" id="copybtn">복사하기</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="accodian-inner">
+                                                                <div class="accodian-info">
+                                                                    <div class="accounttarget">
+                                                                        <div class="WeddingBodyText" id="bank_nameTerms">
+                                                                            신랑
+                                                                        </div>
+                                                                        <div class="WeddingBodyText" id="holderinfo">예금주</div>
+                                                                    </div>
+                                                                    <div class="accountinfo">
+                                                                        <div class="WeddingBodyText" id="bank_bankName">은행명</div>
+                                                                        <div class="WeddingBodyText" id="bank_accountInfo">계좌번호</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="accodian-btninfo">
+                                                                    <button class="Btnsmall" id="copybtn">복사하기</button>
+                                                                </div>
+                                                            </div>
                                                             <div class="accodian-inner">
                                                                 <div class="accodian-info">
                                                                     <div class="accounttarget">
@@ -838,7 +877,7 @@
                                                         </div>
                                                         
                                                                 <img class="uploadsrc" id="TitleImgUpload"
-                                                                    src="/Resource/mainasset/WeddingTitleImg.jpg"
+                                                                    src="http://localhost:3000/Resource/mainasset/WeddingTitleImg.jpg"
                                                                     alt="">
                                                                 
                                                     </div>
@@ -865,7 +904,7 @@
                                             <div class="KaKaoShare">
                                                 
                                                         <img class="KaKaosrc" id="KaKaosrc"
-                                                            src="/Resource/mainasset/WeddingTitleImg.jpg" alt="">
+                                                            src="http://localhost:3000/Resource/mainasset/WeddingTitleImg.jpg" alt="">
                                                         
                                                             <div class="ShareText">
                                                                 <div class="kakaoTitle">1월14일 현석 ♥ 성희 결혼합니다.</div>
@@ -1138,14 +1177,14 @@
                             <div class="selectbox_detail">
                                 <label class="selectbox_label" for="file">예식 일자</label>
                                 <input type="date" id="date" onchange="dateChange()"
-                                    value="">
+                                    value="6 월 25 일 일요일 ">
                                 <div class="InputArea">
                                     <div class="ToggleUI">
                                         <div class="ToggleTitle">
                                             D-Day 표시
                                         </div>
                                         <label for="toggle"
-                                            class="toggleSwitch Active"
+                                            class="toggleSwitch "
                                             id="DDay">
                                             <span class="toggleButton" id=""></span>
                                         </label>
@@ -1509,6 +1548,14 @@
                                         <ul class="cvf_uploaded_files">
                                             
                                                 
+                                                    <li class='multiimg' id="multiimg_https://foment.s3.ap-northeast-2.amazonaws.com/foment_img_storage/1687821866396-ee6fceac-e8b2-4f4d-b7a7-2e5d9c5c93ee-toast.png"
+                                                        file="https://foment.s3.ap-northeast-2.amazonaws.com/foment_img_storage/1687821866396-ee6fceac-e8b2-4f4d-b7a7-2e5d9c5c93ee-toast.png">
+                                                        <img class='img-thumb' src="https://foment.s3.ap-northeast-2.amazonaws.com/foment_img_storage/1687821866396-ee6fceac-e8b2-4f4d-b7a7-2e5d9c5c93ee-toast.png" />
+                                                        <a href='' class='cvf_delete_image' id='deleteimg_https://foment.s3.ap-northeast-2.amazonaws.com/foment_img_storage/1687821866396-ee6fceac-e8b2-4f4d-b7a7-2e5d9c5c93ee-toast.png'
+                                                            file="https://foment.s3.ap-northeast-2.amazonaws.com/foment_img_storage/1687821866396-ee6fceac-e8b2-4f4d-b7a7-2e5d9c5c93ee-toast.png" title='Cancel'><img class='delete-btn'
+                                                                src='../Resource/assets/Icon/Delete.svg' /></a>
+                                                    </li>
+                                                    
                                                         
                                         </ul>
                                 </div>
