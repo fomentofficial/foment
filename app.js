@@ -64,6 +64,7 @@ const URLCheck = require('./routes/route_api_URLCheck');
 const Mypage = require('./routes/route_api_Mypage');
 const CreateTemplate = require('./routes/route_api_CreateTemplate');
 const GetInvitationPageRouter = require('./routes/route_GetInvitation');
+const AccountInfo = require('./routes/route_api_AccountInfo');
 
 // 게시판 관련 라우터
 const Board = require('./routes/route_api_Board');
@@ -97,6 +98,9 @@ app.use('/api_CreateTemplate', CreateTemplate);
 
 // myPage Data 생성 라우터
 app.use('/mypage', Mypage);
+
+// 계좌정보 라우터
+app.use('/api_Account', AccountInfo);
 
 // 클라이언트 ID값
 app.get('/api_naver_client_id', function(req, res) {

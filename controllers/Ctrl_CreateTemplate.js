@@ -56,9 +56,9 @@ let CreateTemplate = {
         const newTemplateFilePath = path.join(__dirname, '..', 'public', 'data', newTemplateFileName);
 
         const Templatedata = {
-          Templatedata :{
-            data :{
-              theme_type : '',
+          Templatedata: {
+            data: {
+              theme_type: '',
               BGM_type: 'NoneAudio',
               effect_type: 'CherryblossomEffect',
               font_type: 'GowunDodum-Regular',
@@ -101,10 +101,47 @@ let CreateTemplate = {
               gallery_type: 'BoardType',
               img_group_element: '[]',
               board_password: '',
-              order_tab : '[{"class":"InviteArea","data-id":"Toggle_Invite"},{"class":"sec_cal is-visible","data-id":"Toggle_Calendar"},{"class":"GalleryArea","data-id":"Toggle_Gallery"},{"class":"LocationSection","data-id":"Toggle_WeddingLocation"},{"class":"AccountSection","data-id":"Toggle_Account"},{"class":"BoardSection","data-id":"Toggle_Board"}]',
+              order_tab: '[{"class":"InviteArea","data-id":"Toggle_Invite"},{"class":"sec_cal is-visible","data-id":"Toggle_Calendar"},{"class":"GalleryArea","data-id":"Toggle_Gallery"},{"class":"LocationSection","data-id":"Toggle_WeddingLocation"},{"class":"AccountSection","data-id":"Toggle_Account"},{"class":"BoardSection","data-id":"Toggle_Board"}]',
+              accountData: [
+                {
+                  accordionTitle: '신랑측 계좌번호',
+                  innerData: [
+                    {
+                      bankNameTerms: '신랑',
+                      holderInfo: '',
+                      bankBankName: '',
+                      bankAccountInfo: ''
+                    },
+                    {
+                      bankNameTerms: '아버님',
+                      holderInfo: '',
+                      bankBankName: '',
+                      bankAccountInfo: ''
+                    },
+                    {
+                      bankNameTerms: '어머님',
+                      holderInfo: '',
+                      bankBankName: '',
+                      bankAccountInfo: ''
+                    }
+                  ]
+                },
+                {
+                  accordionTitle: '신부측 계좌번호',
+                  innerData: [
+                    {
+                      bankNameTerms: '어머님',
+                      holderInfo: '',
+                      bankBankName: '',
+                      bankAccountInfo: ''
+                    }
+                  ]
+                }
+              ]
             }
           }
         }
+        
 
         // 템플릿 파일 렌더링, 여기 데이터를 ejs와 동일한 형식으로 변경
         ejs.renderFile(templateFilePath, Templatedata, (err, html) => {

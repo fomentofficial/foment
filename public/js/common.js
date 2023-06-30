@@ -1427,8 +1427,6 @@ window.onload = function () {
         }
 
         selectAccount.addEventListener('click', toggleOptions);
-        // selectAccount.addEventListener('input', syncOptionValue); // 추가: 입력값이 변경되었을 때 이벤트 처리
-        // selectAccount.addEventListener('keyup', updateOptionValue); // 추가: 입력값이 변경될 때 this의 dataset.value 변경
 
         optionsAccount.forEach(optionAccount => optionAccount.addEventListener('click', selectOptionAccount));
 
@@ -2767,14 +2765,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     wedding_address: WeddingAddressData,
                     invite_title: InviteTitleData,
                     invite_body: InvitationBodyData,
-                    account_info: accountData,
                     gallery_type: GalleryTypeData,
                     img_group_element: ImgGroupElementData,
                     board_password: BoardPasswordData,
                     order_tab: OrderTabData
                 }
-
-
 
                 // DB Post API
                 fetch('/api_DBtest', {
@@ -2784,6 +2779,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     body: JSON.stringify(DBData)
                 });
+
+                // 템플릿 ID 조회용
+                let templateIDParameter = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
+                let accountDataInfo = JSON.stringify(accountData)
+
+                fetch(`/api_Account/${templateIDParameter}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    },
+                    body: accountDataInfo
+                })
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
 
 
 

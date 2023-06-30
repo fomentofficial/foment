@@ -11,6 +11,8 @@ const fs = require('fs').promises;
 const Board = {
   // 방명록 작성 함수
   Createboard: async (req, res) => {
+
+    
     try {
       const {
         template_ID,
