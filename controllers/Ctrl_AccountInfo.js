@@ -95,7 +95,7 @@ const accountInfoController = {
     console.log(templateURL);
 
     // MySQL 쿼리 실행하여 행 가져오기
-    const query = 'SELECT * FROM account WHERE template_ID = (SELECT template_ID FROM template WHERE template_URL = ?)';
+    const query = 'SELECT * FROM account WHERE template_ID = (SELECT template_ID FROM template WHERE template_ID = ?)';
     const values = [templateURL];
     connection.query(query, values, (error, results) => {
       if (error) {

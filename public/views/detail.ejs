@@ -828,7 +828,7 @@
                                 <label class="selectbox_label" for="file">계좌 그룹 선택</label>
                                 <div class="InputArea">
                                     <div class="custom-select-container" id="custom-select-container-invite">
-                                        <input class="custom-select" type="text" name="" id="custom-select-account" value="신랑측 계좌번호" onkeyup="updateOptionValue()" >
+                                        <input class="custom-select" type="text" name="" id="custom-select-account" value="신랑측 계좌번호" onkeyup="updateOptionValue()">
 
                                         <div class="custom-options" id="custom-options-account" onclick="">
                                             <div class="custom-option-childGroup" id="custom-option-childGroup-account">
@@ -870,7 +870,7 @@
                                                 <div class="AccountInputGroups">
 
                                                     <% for (let i = 0; i < Templatedata.data.accountData.length; i++) { %>
-                                                        <% if (Templatedata.data.accountData[i].accordionTitle === "신랑측 계좌번호") { %>
+                                                        <% if (Templatedata.data.accountData[i].accordionTitle && i === 0) { %>
                                                           <% console.log(Templatedata.data.accountData[i].innerData.length); %>
                                                           <% for (let j = 0; j < Templatedata.data.accountData[i].innerData.length; j++) { %>
                                                             <div class="AccountInputs">
@@ -895,6 +895,7 @@
                                                           <% } %>
                                                         <% } %>
                                                       <% } %>
+                                                      
                                                       
                                                       
                                                       

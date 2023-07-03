@@ -1473,7 +1473,51 @@ window.onload = function () {
             if (optionsContainerAccount) {
                 optionsContainerAccount.style.display = 'none';
             }
+
+            // 선택한 템플릿 ID 가져오기
+            const currentUrl = window.location.href;
+            const templateId = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+
+            // 서버로부터 데이터 가져오기
+            fetch(`/api_Account/${templateId}`, {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // 데이터 콘솔 출력
+
+                    // 가져온 데이터와 선택된 계좌 값 비교 및 업데이트
+                    const matchingData = data.filter(item => item.accordionTitle === selectAccount.value);
+                    console.log(matchingData);
+
+                    // 기존의 AccountInputsContainer 클래스 요소들 제거
+                    const accountInputsContainer = document.querySelector('.AccountInputGroups');
+                    accountInputsContainer.innerHTML = '';
+
+                    for (let i = 0; i < matchingData.length; i++) {
+                        updateOptionValue(matchingData[i]);
+
+                        // AccountInputs 클래스 추가 및 내부 내용 매핑
+                        const accountInputsDiv = document.createElement('div');
+                        accountInputsDiv.classList.add('AccountInputs');
+                        accountInputsDiv.innerHTML = `
+        <div class="NameBox">
+          <input class="base" id="bank_nameTerms_Input" name="base" type="base" onkeyup="printBankNameTerms()" placeholder="호칭" value="${matchingData[i].bankNameTerms}">
+          <input class="base" id="bank_holder_Input" name="base" type="base" onkeyup="printBankHolderInfo()" placeholder="예금주" value="${matchingData[i].holderInfo}">
+          <input class="base" id="bank_bankName_Input" name="base" type="base" onkeyup="printBankName()" placeholder="은행" value="${matchingData[i].bankBankName}">
+          <input class="base" id="bank_accountInfo_Input" name="base" type="base" onkeyup="printBankAccountInfo()" placeholder="계좌번호" value="${matchingData[i].bankAccountInfo}">
+          <div class="DeleteAccountBtn">
+            <img src="../Resource/assets/Icon/Del.svg" alt="" class="delIcon">
+          </div>
+        </div>
+      `;
+                        accountInputsContainer.appendChild(accountInputsDiv);
+                    }
+                })
+                .catch(error => console.error(error));
+
         }
+
 
 
 
@@ -1584,8 +1628,8 @@ window.onload = function () {
                     });
                 }
 
-                let selectedAccordion = document.querySelector('.accordion-title.selected'); // 수정: selected 클래스가 추가된 accordion-title을 찾음
-                let accodianAccountsGroup = selectedAccordion.nextElementSibling; // 수정: 선택된 accordion-title의 동위레벨에 있는 accodianAccountsGroup을 찾음
+                let selectedAccordion = document.querySelector('.accordion-title.selected');
+                let accodianAccountsGroup = selectedAccordion.nextElementSibling;
 
                 let accodionAccounts = document.createElement('div');
                 accodionAccounts.classList.add('accodian-inner');
@@ -1600,12 +1644,12 @@ window.onload = function () {
                 inputArea.appendChild(nameBox);
                 accodianAccountsGroup.appendChild(accodionAccounts);
 
-                // 새로운 AccountInputs을 추가한 후, DeleteAccountBtn에 삭제 이벤트를 바인딩합니다.
                 let deleteBtn = nameBox.querySelector('.DeleteAccountBtn');
                 deleteBtn.addEventListener('click', deleteAccountFunc);
             });
         });
     }
+
 
 
     function deleteAccountFunc(event) {
@@ -2101,14 +2145,11 @@ function updateOptionValue() {
 
     // 인풋 값에 따라 셀렉트박스 값 변경
     let accountInputValue = document.getElementById("custom-select-account").value;
-    console.log(accountInputValue);
     // 선택된 셀렉트박스와 동기화된 목록 정의
     let selectedOptionAccount = document.querySelector('.custom-option.selected');
     let selectedTemplateGroupAccount = document.querySelector('.accordion-title.selected');
-    console.log(selectedTemplateGroupAccount);
     // 값을 변경할 동기화된 목록
     let accountName = selectedOptionAccount.querySelector('.optiondecription')
-    console.log(accountName);
 
     accountName.innerText = accountInputValue;
     selectedTemplateGroupAccount.innerText = accountInputValue;
@@ -2949,7 +2990,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 // 서버 응답 처리
-                console.log(data);
 
                 let BoardSection = document.querySelector('.BoardArea'); // BoardArea 요소 선택
 
