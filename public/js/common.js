@@ -1,6 +1,107 @@
 
 window.onload = function () {
 
+    let AccountBtn = document.getElementById('AddAccountBtn');
+
+
+    if (AccountBtn) {
+        AccountBtn.addEventListener("click", function () {
+            let inputAreas = document.querySelectorAll('.AccountInputGroups');
+            inputAreas.forEach(function (inputArea) {
+                let nameBox = document.createElement('div');
+                nameBox.classList.add('AccountInputs');
+
+
+                let nameBoxSource = document.querySelector('.AccountInputs');
+                if (nameBoxSource) {
+                    nameBoxSource.querySelectorAll(':scope > *').forEach(function (childElement) {
+                        nameBox.appendChild(childElement.cloneNode(true));
+                    });
+                }
+
+                let selectedAccordion = document.querySelector('.accordion-title.selected');
+                let accodianAccountsGroup = selectedAccordion.nextElementSibling;
+
+                let accodionAccounts = document.createElement('div');
+                accodionAccounts.classList.add('accodian-inner');
+
+                let accodionAccountsSec = document.querySelector('.accodian-inner');
+                if (accodionAccountsSec) {
+                    accodionAccountsSec.querySelectorAll(':scope > *').forEach(function (childElement) {
+                        accodionAccounts.appendChild(childElement.cloneNode(true));
+                    });
+                }
+
+                inputArea.appendChild(nameBox);
+                accodianAccountsGroup.appendChild(accodionAccounts);
+
+                let deleteBtn = nameBox.querySelector('.DeleteAccountBtn');
+                deleteBtn.addEventListener('click', deleteAccountFunc);
+
+                postAccountData();
+            });
+        });
+    }
+
+    function postAccountData() {
+        let AccountBody = document.querySelectorAll('.accordionitem');
+        let accountData = [];
+
+        AccountBody.forEach(item => {
+            let accordionTitle = item.querySelector('.accordion-title').textContent.trim();
+            let accordionContent = item.querySelector('.accordion-content');
+            let accodianInnerList = accordionContent.querySelectorAll('.accodian-inner');
+
+            let innerData = [];
+
+            accodianInnerList.forEach(innerItem => {
+                let bankNameTerms = innerItem.querySelector('#bank_nameTerms').textContent.trim();
+                let holderInfo = innerItem.querySelector('#holderinfo').textContent.trim();
+                let bankBankName = innerItem.querySelector('#bank_bankName').textContent.trim();
+                let bankAccountInfo = innerItem.querySelector('#bank_accountInfo').textContent.trim();
+
+                let innerItemData = {
+                    "bankNameTerms": bankNameTerms,
+                    "holderInfo": holderInfo,
+                    "bankBankName": bankBankName,
+                    "bankAccountInfo": bankAccountInfo
+                };
+
+                innerData.push(innerItemData);
+            });
+
+            let accountItem = {
+                "accordionTitle": accordionTitle,
+                "innerData": innerData
+            };
+
+            accountData.push(accountItem);
+        });
+
+
+        // 템플릿 ID 조회용
+        let templateIDParameter = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
+        let accountDataInfo = JSON.stringify(accountData);
+
+        return fetch(`/api_Account/${templateIDParameter}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: accountDataInfo
+        })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+
+
+
+
     // Create_InvitationBtn 요소를 가져옵니다.
     const CreateBtn = document.getElementById('Create_InvitationBtn');
 
@@ -1430,6 +1531,8 @@ window.onload = function () {
 
         optionsAccount.forEach(optionAccount => optionAccount.addEventListener('click', selectOptionAccount));
 
+
+
         function toggleOptions() {
             if (optionsContainerAccount.style.display === 'grid') {
                 optionsContainerAccount.style.display = 'none';
@@ -1441,6 +1544,86 @@ window.onload = function () {
             }
         }
 
+
+
+
+
+
+        // 계좌그룹 추가 버튼 클릭시 함수
+        let accountGroupAdd = document.getElementById('optionAccountAdd');
+        let accountGroupIndex = 0; // 계좌그룹 일련번호 변수
+        accountGroupAdd.addEventListener('click', addAccountGroup);
+
+        function addAccountGroup() {
+            accountGroupIndex++; // 일련번호 증가
+            let optionAccount = document.getElementById('optionAccount');
+            let clonedOptionAccount = optionAccount.cloneNode(true);
+            clonedOptionAccount.dataset.value = '계좌그룹' + accountGroupIndex;
+            clonedOptionAccount.querySelector('.optiondecription').textContent = '계좌그룹' + accountGroupIndex;
+
+            let targetElement = document.getElementById('custom-option-childGroup-account');
+            targetElement.appendChild(clonedOptionAccount);
+            console.log(clonedOptionAccount);
+
+
+            clonedOptionAccount.addEventListener('click', selectOptionAccount);
+
+            // 추가된 클래스에 'selected' 추가
+            clonedOptionAccount.classList.add('selected');
+
+            // 아코디언 아이템을 추가합니다.
+            addAccordionItem();
+            postAccountData();
+            renderAccountInputs();
+        }
+
+
+
+        // 계좌 선택시 렌더링 함수
+        function renderAccountInputs() {
+            // 선택한 템플릿 ID 가져오기
+            let currentUrl = window.location.href;
+            let templateId = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+
+            // 서버로부터 데이터 가져오기
+            fetch(`/api_Account/${templateId}`, {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // 데이터 콘솔 출력
+
+                    // 가져온 데이터와 선택된 계좌 값 비교 및 업데이트
+                    const matchingData = data.filter(item => item.accordionTitle === selectAccount.value);
+                    console.log(matchingData);
+
+                    // 기존의 AccountInputsContainer 클래스 요소들 제거
+                    const accountInputsContainer = document.querySelector('.AccountInputGroups');
+                    accountInputsContainer.innerHTML = '';
+
+                    for (let i = 0; i < matchingData.length; i++) {
+                        updateOptionValue(matchingData[i]);
+
+                        // AccountInputs 클래스 추가 및 내부 내용 매핑
+                        const accountInputsDiv = document.createElement('div');
+                        accountInputsDiv.classList.add('AccountInputs');
+                        accountInputsDiv.innerHTML = `
+    <div class="NameBox">
+      <input class="base" id="bank_nameTerms_Input" name="base" type="base" onkeyup="printBankNameTerms()" placeholder="호칭" value="${matchingData[i].bankNameTerms}">
+      <input class="base" id="bank_holder_Input" name="base" type="base" onkeyup="printBankHolderInfo()" placeholder="예금주" value="${matchingData[i].holderInfo}">
+      <input class="base" id="bank_bankName_Input" name="base" type="base" onkeyup="printBankName()" placeholder="은행" value="${matchingData[i].bankBankName}">
+      <input class="base" id="bank_accountInfo_Input" name="base" type="base" onkeyup="printBankAccountInfo()" placeholder="계좌번호" value="${matchingData[i].bankAccountInfo}">
+      <div class="DeleteAccountBtn">
+        <img src="../Resource/assets/Icon/Del.svg" alt="" class="delIcon">
+      </div>
+    </div>
+  `;
+                        accountInputsContainer.appendChild(accountInputsDiv);
+                    }
+                })
+                .catch(error => console.error(error));
+
+        }
 
         // 계좌 그룹 설정 셀렉트박스 선택시 함수
         function selectOptionAccount() {
@@ -1473,92 +1656,21 @@ window.onload = function () {
             if (optionsContainerAccount) {
                 optionsContainerAccount.style.display = 'none';
             }
-
-            // 선택한 템플릿 ID 가져오기
-            const currentUrl = window.location.href;
-            const templateId = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
-
-            // 서버로부터 데이터 가져오기
-            fetch(`/api_Account/${templateId}`, {
-                method: 'GET'
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data); // 데이터 콘솔 출력
-
-                    // 가져온 데이터와 선택된 계좌 값 비교 및 업데이트
-                    const matchingData = data.filter(item => item.accordionTitle === selectAccount.value);
-                    console.log(matchingData);
-
-                    // 기존의 AccountInputsContainer 클래스 요소들 제거
-                    const accountInputsContainer = document.querySelector('.AccountInputGroups');
-                    accountInputsContainer.innerHTML = '';
-
-                    for (let i = 0; i < matchingData.length; i++) {
-                        updateOptionValue(matchingData[i]);
-
-                        // AccountInputs 클래스 추가 및 내부 내용 매핑
-                        const accountInputsDiv = document.createElement('div');
-                        accountInputsDiv.classList.add('AccountInputs');
-                        accountInputsDiv.innerHTML = `
-        <div class="NameBox">
-          <input class="base" id="bank_nameTerms_Input" name="base" type="base" onkeyup="printBankNameTerms()" placeholder="호칭" value="${matchingData[i].bankNameTerms}">
-          <input class="base" id="bank_holder_Input" name="base" type="base" onkeyup="printBankHolderInfo()" placeholder="예금주" value="${matchingData[i].holderInfo}">
-          <input class="base" id="bank_bankName_Input" name="base" type="base" onkeyup="printBankName()" placeholder="은행" value="${matchingData[i].bankBankName}">
-          <input class="base" id="bank_accountInfo_Input" name="base" type="base" onkeyup="printBankAccountInfo()" placeholder="계좌번호" value="${matchingData[i].bankAccountInfo}">
-          <div class="DeleteAccountBtn">
-            <img src="../Resource/assets/Icon/Del.svg" alt="" class="delIcon">
-          </div>
-        </div>
-      `;
-                        accountInputsContainer.appendChild(accountInputsDiv);
-                    }
-                })
-                .catch(error => console.error(error));
-
+            postAccountData();
+            renderAccountInputs();
         }
 
 
 
-
-        // 계좌그룹 추가 버튼 클릭시 함수
-        let accountGroupAdd = document.getElementById('optionAccountAdd');
-        accountGroupAdd.addEventListener('click', addAccountGroup);
-
-        function addAccountGroup() {
-            let optionAccount = document.getElementById('optionAccount');
-            let clonedOptionAccount = optionAccount.cloneNode(true);
-            clonedOptionAccount.dataset.value = '계좌그룹';
-            clonedOptionAccount.querySelector('.optiondecription').textContent = '계좌그룹';
-
-            let targetElement = document.getElementById('custom-option-childGroup-account');
-            targetElement.appendChild(clonedOptionAccount);
-
-            let selectAccount = document.getElementById('custom-select-account');
-            let newOption = document.createElement('option');
-            newOption.value = '계좌그룹';
-            newOption.textContent = '계좌그룹';
-            selectAccount.appendChild(newOption);
-            console.log(newOption);
-
-            clonedOptionAccount.addEventListener('click', selectOptionAccount);
-
-            // 추가된 클래스에 'selected' 추가
-            clonedOptionAccount.classList.add('selected');
-
-            // 아코디언 아이템을 추가합니다.
-            addAccordionItem();
-        }
 
         function addAccordionItem() {
             let accordion = document.querySelector('.accordion');
-
             // 기존 아코디언 아이템을 복제합니다.
             let clonedAccordionItem = accordion.querySelector('.accordionitem').cloneNode(true);
 
             // 'accordion-title' 클래스의 textContent를 '계좌그룹'으로 수정합니다.
-            clonedAccordionItem.querySelector('.accordion-title').textContent = '계좌그룹';
-            clonedAccordionItem.querySelector('.accordion-title').dataset.value = '계좌그룹';
+            clonedAccordionItem.querySelector('.accordion-title').textContent = '계좌그룹' + accountGroupIndex;
+            clonedAccordionItem.querySelector('.accordion-title').dataset.value = '계좌그룹' + accountGroupIndex;
             clonedAccordionItem.querySelector('.accordion-title').classList.add('selected');
 
             // 복제된 아코디언 아이템을 아코디언에 추가합니다.
@@ -1603,61 +1715,25 @@ window.onload = function () {
         }
     }
 
+    // 초기에 로드된 DeleteAccountBtn에 대한 이벤트 처리
+    let initialDeleteBtns = document.querySelectorAll('.DeleteAccountBtn');
+    initialDeleteBtns.forEach(function (btn) {
+        btn.addEventListener('click', deleteAccountFunc);
+    });
 
     // 삭제버튼 클릭시
-    document.addEventListener('click', deleteAccountGroup);
-
-
-
-
-
-    // 계좌번호 추가와 삭제 관련 함수
-    let AccountBtn = document.getElementById('AddAccountBtn');
-
-    if (AccountBtn) {
-        AccountBtn.addEventListener("click", function () {
-            let inputAreas = document.querySelectorAll('.AccountInputGroups');
-            inputAreas.forEach(function (inputArea) {
-                let nameBox = document.createElement('div');
-                nameBox.classList.add('AccountInputs');
-
-                let nameBoxSource = document.querySelector('.AccountInputs');
-                if (nameBoxSource) {
-                    nameBoxSource.querySelectorAll(':scope > *').forEach(function (childElement) {
-                        nameBox.appendChild(childElement.cloneNode(true));
-                    });
-                }
-
-                let selectedAccordion = document.querySelector('.accordion-title.selected');
-                let accodianAccountsGroup = selectedAccordion.nextElementSibling;
-
-                let accodionAccounts = document.createElement('div');
-                accodionAccounts.classList.add('accodian-inner');
-
-                let accodionAccountsSec = document.querySelector('.accodian-inner');
-                if (accodionAccountsSec) {
-                    accodionAccountsSec.querySelectorAll(':scope > *').forEach(function (childElement) {
-                        accodionAccounts.appendChild(childElement.cloneNode(true));
-                    });
-                }
-
-                inputArea.appendChild(nameBox);
-                accodianAccountsGroup.appendChild(accodionAccounts);
-
-                let deleteBtn = nameBox.querySelector('.DeleteAccountBtn');
-                deleteBtn.addEventListener('click', deleteAccountFunc);
-            });
-        });
-    }
-
-
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('DeleteAccountBtn')) {
+            deleteAccountFunc(event);
+        }
+    });
 
     function deleteAccountFunc(event) {
         let accountInputGroups = document.querySelector('.AccountInputGroups');
         let accountInputCount = accountInputGroups.childElementCount;
 
-        let selectedAccordion = document.querySelector('.accordion-title.selected'); // 수정: selected 클래스가 추가된 accordion-title을 찾음
-        let accodianAccountsGroup = selectedAccordion.nextElementSibling; // 수정: 선택된 accordion-title의 동위레벨에 있는 accodianAccountsGroup을 찾음
+        let selectedAccordion = document.querySelector('.accordion-title.selected');
+        let accodianAccountsGroup = selectedAccordion.nextElementSibling;
         let accodianAccountsContents = accodianAccountsGroup.querySelectorAll('.accodian-inner');
         console.log(accodianAccountsGroup);
         console.log(accodianAccountsContents);
@@ -1669,24 +1745,16 @@ window.onload = function () {
             let index = Array.from(parentElement.parentNode.children).indexOf(parentElement);
 
             console.log("Deleting index:", index);
-            parentElement.remove(); // AccountInputs 요소 삭제
+            parentElement.remove();
 
             if (accodianAccountsContents[index]) {
-                accodianAccountsContents[index].remove(); // 동일한 순서의 accordion-inner 삭제
+                accodianAccountsContents[index].remove();
+                postAccountData();
             } else {
                 console.log(".accordion-inner at index does not exist:", index);
             }
         }
     }
-
-
-    // 초기에 로드된 DeleteAccountBtn에 대한 이벤트 처리
-    let initialDeleteBtns = document.querySelectorAll('.DeleteAccountBtn');
-    initialDeleteBtns.forEach(function (btn) {
-        btn.addEventListener('click', deleteAccountFunc);
-    });
-
-
 
 
 
@@ -2683,24 +2751,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
                 // |- 계좌 정보 탭
-                const AccountBody = document.querySelectorAll('.accordionitem');
+                let AccountBody = document.querySelectorAll('.accordionitem');
 
-                const accountData = [];
+                let accountData = [];
 
                 AccountBody.forEach(item => {
-                    const accordionTitle = item.querySelector('.accordion-title').textContent.trim();
-                    const accordionContent = item.querySelector('.accordion-content');
-                    const accodianInnerList = accordionContent.querySelectorAll('.accodian-inner');
+                    let accordionTitle = item.querySelector('.accordion-title').textContent.trim();
+                    let accordionContent = item.querySelector('.accordion-content');
+                    let accodianInnerList = accordionContent.querySelectorAll('.accodian-inner');
 
-                    const innerData = [];
+                    let innerData = [];
 
                     accodianInnerList.forEach(innerItem => {
-                        const bankNameTerms = innerItem.querySelector('#bank_nameTerms').textContent.trim();
-                        const holderInfo = innerItem.querySelector('#holderinfo').textContent.trim();
-                        const bankBankName = innerItem.querySelector('#bank_bankName').textContent.trim();
-                        const bankAccountInfo = innerItem.querySelector('#bank_accountInfo').textContent.trim();
+                        let bankNameTerms = innerItem.querySelector('#bank_nameTerms').textContent.trim();
+                        let holderInfo = innerItem.querySelector('#holderinfo').textContent.trim();
+                        let bankBankName = innerItem.querySelector('#bank_bankName').textContent.trim();
+                        let bankAccountInfo = innerItem.querySelector('#bank_accountInfo').textContent.trim();
 
-                        const innerItemData = {
+                        let innerItemData = {
                             "bankNameTerms": bankNameTerms,
                             "holderInfo": holderInfo,
                             "bankBankName": bankBankName,
@@ -2710,7 +2778,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         innerData.push(innerItemData);
                     });
 
-                    const accountItem = {
+                    let accountItem = {
                         "accordionTitle": accordionTitle,
                         "innerData": innerData
                     };

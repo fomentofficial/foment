@@ -26,12 +26,37 @@ const accountInfoController = {
           return;
         }
   
-        // 찾은 user_ID와 함께 account 데이터 삽입 또는 업데이트
+        // 찾은 user_ID와 함께 account 데이터 삭제 및 삽입
         const userID = results[0]?.user_ID;
         if (!userID) {
           res.status(404).json({ error: '해당 템플릿을 사용하는 사용자를 찾을 수 없습니다.' });
           return;
         }
+  
+        // 삭제 및 삽입 처리 함수
+        const processAccountData = (accordionTitle, bankNameTerms, holderInfo, bankBankName, bankAccountInfo) => {
+          // MySQL에서 template_ID, accordionTitle이 일치하는 데이터 삭제
+          const deleteQuery = 'DELETE FROM account WHERE template_ID = ? AND accordionTitle = ?';
+          const deleteValues = [templateURL, accordionTitle];
+          connection.query(deleteQuery, deleteValues, (error, results) => {
+            if (error) {
+              console.error(error);
+            } else {
+              console.log('데이터가 성공적으로 제거되었습니다.');
+  
+              // 데이터 삽입
+              const insertQuery = 'INSERT INTO account (template_ID, user_ID, accordionTitle, bankNameTerms, holderInfo, bankBankName, bankAccountInfo) VALUES (?, ?, ?, ?, ?, ?, ?)';
+              const insertValues = [templateURL, userID, accordionTitle, bankNameTerms, holderInfo, bankBankName, bankAccountInfo];
+              connection.query(insertQuery, insertValues, (error, results) => {
+                if (error) {
+                  console.error(error);
+                } else {
+                  console.log('데이터가 성공적으로 삽입되었습니다.');
+                }
+              });
+            }
+          });
+        };
   
         // 각 계좌 그룹에 대한 처리
         for (const group of dataArray) {
@@ -53,27 +78,12 @@ const accountInfoController = {
               if (error) {
                 console.error(error);
               } else {
-                // 조회 결과에 따라 INSERT 또는 UPDATE 수행
+                // 조회 결과에 따라 삭제 또는 삽입 수행
                 if (results.length > 0) {
-                  const updateQuery = 'UPDATE account SET bankNameTerms = ?, holderInfo = ?, bankBankName = ?, bankAccountInfo = ? WHERE template_ID = ? AND accordionTitle = ?';
-                  const updateValues = [bankNameTerms, holderInfo, bankBankName, bankAccountInfo, templateURL, accordionTitle];
-                  connection.query(updateQuery, updateValues, (error, results) => {
-                    if (error) {
-                      console.error(error);
-                    } else {
-                      console.log('데이터가 성공적으로 업데이트되었습니다.');
-                    }
-                  });
+                  console.log(results);
+                  processAccountData(accordionTitle, bankNameTerms, holderInfo, bankBankName, bankAccountInfo);
                 } else {
-                  const insertQuery = 'INSERT INTO account (template_ID, user_ID, accordionTitle, bankNameTerms, holderInfo, bankBankName, bankAccountInfo) VALUES (?, ?, ?, ?, ?, ?, ?)';
-                  const insertValues = [templateURL, userID, accordionTitle, bankNameTerms, holderInfo, bankBankName, bankAccountInfo];
-                  connection.query(insertQuery, insertValues, (error, results) => {
-                    if (error) {
-                      console.error(error);
-                    } else {
-                      console.log('데이터가 성공적으로 삽입되었습니다.');
-                    }
-                  });
+                  processAccountData(accordionTitle, bankNameTerms, holderInfo, bankBankName, bankAccountInfo);
                 }
               }
             });
@@ -88,6 +98,8 @@ const accountInfoController = {
       res.status(500).json({ error: '서버 오류' });
     }
   },
+  
+
 
 
   getInfo: (req, res) => {

@@ -370,7 +370,7 @@ body {
     border: 1px solid var(--ColorBorder10);
 }
 
-#custom-options-account {
+#custom-options-account{
     z-index: 1001;
     padding: 12px;
     position: absolute;
@@ -405,7 +405,7 @@ body {
     border: 1px solid var(--ColorBorder10);
 }
 
-.custom-option {
+.custom-option, .optionAccountAdd {
     line-height: 28px;
     display: flex;
     flex-direction: column;
@@ -418,12 +418,14 @@ body {
 }
 
 
+
+
 .OptionTitle {
     font-weight: bold;
     margin-bottom: 12px;
 }
 
-.custom-option:hover {
+.custom-option:hover, .optionAccountAdd:hover{
     border-radius: var(--BorderRadius-Xs);
     background-color: var(--ColorBorderSolid);
 }

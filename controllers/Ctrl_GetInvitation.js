@@ -7,6 +7,7 @@ function renderGetPage(req, res) {
 
   const templateFileName = `${templateURL}.ejs`;
   const templateFilePath = path.join(__dirname, '..', 'public', 'data', templateFileName);
+  console.log(templateFilePath);
 
   const detailData = {
     pageTitle: 'Preview Invitation',
