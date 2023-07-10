@@ -1,8 +1,17 @@
 
 window.onload = function () {
 
-    let AccountBtn = document.getElementById('AddAccountBtn');
+    function showLoadingSpinner() {
+        document.getElementById('overlay').style.display = 'block';
+    }
 
+    function hideLoadingSpinner() {
+        document.getElementById('overlay').style.display = 'none';
+    }
+
+
+
+    let AccountBtn = document.getElementById('AddAccountBtn');
 
     if (AccountBtn) {
         AccountBtn.addEventListener("click", function () {
@@ -734,45 +743,77 @@ window.onload = function () {
     $(function () {
         var cropper;
 
-        $('#photoBtn').on('change', function () {
-            $('.photo_them').css("display", "block");
-            $('#complete').css("display", "block");
-            $('.them_img').empty().append('<img id="image" src="">');
-            var image = $('#image');
-            var imgFile = $('#photoBtn').val();
-            var fileForm = /(.*?)\.(jpg|jpeg|png)$/;
-            let BG = document.getElementById('CropDimmed');
+        function showLoadingSpinner() {
+            return new Promise((resolve) => {
+                $('#overlay').css('display', 'block');
+                resolve();
+            });
+        }
 
-            if (imgFile.match(fileForm)) {
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                    image.attr("src", event.target.result);
-                    cropper = image.cropper({
-                        dragMode: 'move',
-                        viewMode: 1,
-                        aspectRatio: 200 / 300,
-                        autoCropArea: 0.9,
-                        minContainerWidth: 600,
-                        minContainerHeight: 600,
-                        restore: false,
-                        guides: true,
-                        center: true,
-                        highlight: true,
-                        cropBoxMovable: false,
-                        cropBoxResizable: false,
-                        toggleDragModeOnDblclick: false,
-                    });
-                };
-                BG.classList.toggle('is-active');
-                reader.readAsDataURL(event.target.files[0]);
-            } else {
-                alert("이미지 파일(jpg, png형식의 파일)만 올려주세요");
+        function hideLoadingSpinner() {
+            $('#overlay').css('display', 'none');
+        }
+
+        $('#photoBtn').on('change', async function () {
+            try {
+                const file = event.target.files[0];
+                const fileForm = /(.*?)\.(jpg|jpeg|png)$/;
+
+                if (!file.name.match(fileForm)) {
+                    throw new Error('이미지 파일(jpg, png 형식의 파일)만 올려주세요');
+                }
+
+                await showLoadingSpinner();
+
+                $('.photo_them').css('display', 'block');
+                $('#complete').css('display', 'block');
+                $('.them_img').empty().append('<img id="image" src="">');
+
+                const image = $('#image');
+                const imageDataUrl = await readFileAsDataURL(file);
+
+                $('#complete').css('display', 'none');
+                $('#CropDimmed').toggleClass('is-active');
+                image.attr('src', imageDataUrl);
+
+                await image.cropper({
+                    dragMode: 'move',
+                    viewMode: 1,
+                    aspectRatio: 200 / 300,
+                    autoCropArea: 0.9,
+                    minContainerWidth: 600,
+                    minContainerHeight: 600,
+                    restore: false,
+                    guides: true,
+                    center: true,
+                    highlight: true,
+                    cropBoxMovable: false,
+                    cropBoxResizable: false,
+                    toggleDragModeOnDblclick: false,
+                });
+
+                hideLoadingSpinner();
+                // $('#complete').css('display', 'block'); 코드를 500ms 후에 실행되도록 설정
+                setTimeout(() => {
+                    $('#complete').css('display', 'block');
+                }, 50);
+            } catch (error) {
+                alert(error.message);
                 $('#photoBtn').focus();
-                $('.photo_them').css("display", "none");
-                $('#complete').css("display", "none");
-                return;
+                $('.photo_them').css('display', 'none');
+                $('#complete').css('display', 'none');
             }
         });
+
+
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
 
         $('#complete').on('click', function () {
             var files = $('#photoBtn')[0].files;
@@ -785,49 +826,45 @@ window.onload = function () {
                 if (file.type.match('image.*')) {
                     compressImage(file, function (compressedFile) {
                         var formData = new FormData();
-                        formData.append("images", compressedFile);
+                        formData.append('images', compressedFile);
 
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("POST", "../api_TitleImgUpload");
-                        xhr.send(formData);
-                        console.log(formData);
+                        showLoadingSpinner().then(() => {
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('POST', '../api_TitleImgUpload');
+                            xhr.send(formData);
 
-                        xhr.onreadystatechange = function () {
-                            if (xhr.readyState === XMLHttpRequest.DONE) {
-                                if (xhr.status === 200) {
-                                    // 서버로부터의 응답 처리
-                                    console.log(xhr.responseText);
-                                    let resURL = xhr.responseText;
-                                    let imageUrl = JSON.parse(resURL).fileUrls;
-                                    console.log(imageUrl);
-                                    // 기존 이미지 URL 덮어쓰기
-                                    $('#preview-image').attr('src', imageUrl);
-                                    $('#TitleImgUpload').attr('src', imageUrl);
-                                    $('#KaKaosrc').attr('src', imageUrl);
-                                    alert('대표 이미지가 변경되었습니다.');
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState === XMLHttpRequest.DONE) {
+                                    if (xhr.status === 200) {
+                                        console.log(xhr.responseText);
+                                        let resURL = xhr.responseText;
+                                        let imageUrl = JSON.parse(resURL).fileUrls;
+                                        console.log(imageUrl);
 
-                                    // 수정 시작
-                                    var cropper = $('#image').data('cropper');
-                                    var canvas;
-                                    var BG = document.getElementById('CropDimmed');
-                                    canvas = cropper.getCroppedCanvas({
-                                        width: 4000,
-                                        height: 1000
-                                    });
-                                    // 수정 끝
+                                        $('#preview-image').attr('src', imageUrl);
+                                        $('#TitleImgUpload').attr('src', imageUrl);
+                                        $('#KaKaosrc').attr('src', imageUrl);
+                                        alert('대표 이미지가 변경되었습니다.');
 
-                                    BG.classList.toggle('is-active');
-                                    $('.photo_them').css("display", "none");
-                                    $('#complete').css("display", "none");
-                                } else {
-                                    console.log('There was a problem with the request.');
+                                        var cropper = $('#image').data('cropper');
+                                        var canvas = cropper.getCroppedCanvas({
+                                            width: 4000,
+                                            height: 1000,
+                                        });
+
+                                        hideLoadingSpinner();
+                                        $('#CropDimmed').toggleClass('is-active');
+                                        $('.photo_them').css('display', 'none');
+                                        $('#complete').css('display', 'none');
+                                    } else {
+                                        console.log('There was a problem with the request.');
+                                    }
                                 }
-                            }
-                        };
-
+                            };
+                        });
                     });
                 } else {
-                    alert('the file ' + file.name + ' is not an image<br/>');
+                    alert('The file ' + file.name + ' is not an image.');
                 }
             }
         });
@@ -869,7 +906,7 @@ window.onload = function () {
                     canvas.toBlob(function (blob) {
                         var compressedFile = new File([blob], file.name, {
                             type: file.type,
-                            lastModified: Date.now()
+                            lastModified: Date.now(),
                         });
                         callback(compressedFile);
                     }, file.type, 0.2);
@@ -899,6 +936,7 @@ window.onload = function () {
             return canvas;
         }
     });
+
 
 
 
@@ -1565,7 +1603,6 @@ window.onload = function () {
             targetElement.appendChild(clonedOptionAccount);
             console.log(clonedOptionAccount);
 
-
             clonedOptionAccount.addEventListener('click', selectOptionAccount);
 
             // 추가된 클래스에 'selected' 추가
@@ -1573,9 +1610,20 @@ window.onload = function () {
 
             // 아코디언 아이템을 추가합니다.
             addAccordionItem();
-            postAccountData();
-            renderAccountInputs();
+
+            // API 호출 전에 로딩 표시를 표시합니다.
+
+            // postAccountData() 호출
+            postAccountData()
+                .then(() => {
+                    // API 호출 완료 후에 로딩 표시를 숨깁니다.
+                    renderAccountInputs();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
+
 
 
 
@@ -1592,7 +1640,6 @@ window.onload = function () {
                 .then(response => response.json())
                 .then(data => {
                     console.log(data); // 데이터 콘솔 출력
-
                     // 가져온 데이터와 선택된 계좌 값 비교 및 업데이트
                     const matchingData = data.filter(item => item.accordionTitle === selectAccount.value);
                     console.log(matchingData);
@@ -1625,7 +1672,6 @@ window.onload = function () {
 
         }
 
-        // 계좌 그룹 설정 셀렉트박스 선택시 함수
         function selectOptionAccount() {
             selectAccount.value = this.dataset.value;
             this.classList.add('selected');
@@ -1656,9 +1702,27 @@ window.onload = function () {
             if (optionsContainerAccount) {
                 optionsContainerAccount.style.display = 'none';
             }
-            postAccountData();
-            renderAccountInputs();
+
+            // API 호출 전에 로딩 표시를 표시합니다.
+            showLoadingSpinner();
+
+            // postAccountData() 호출
+            postAccountData()
+                .then(() => {
+                    // 1초의 딜레이 후에 renderAccountInputs() 함수를 호출합니다.
+                    setTimeout(() => {
+                        // 로딩 스피너를 숨기고 renderAccountInputs() 함수를 호출합니다.
+                        hideLoadingSpinner();
+                        renderAccountInputs();
+                    }, 1000);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    hideLoadingSpinner();
+                });
         }
+
+
 
 
 

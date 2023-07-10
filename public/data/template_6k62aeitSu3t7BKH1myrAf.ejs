@@ -1,0 +1,1831 @@
+<html lang="kor">
+<head><!-- head.ejs -->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>포먼트 청첩장</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/detail.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/login.css">
+<link rel="stylesheet" href="../css/font.css">
+<link rel="stylesheet" href="../css/mypage.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500&display=swap" rel="stylesheet">
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aead73005a77433d268644553628caba&libraries=services"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js" integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script script src="https://apis.openapi.sk.com/tmap/vectorjs?version=1&appKey=x1DDg2svJkaH73F7kDOD11W4C0siglCT1iCJ4tNu"></script>
+<script src="https://code.jquery.com/jquery-3.6.2.js"
+    integrity="sha256-pkn2CUZmheSeyssYw3vMp1+xyub4m+e+QK4sQskvuo4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+<script src="https://fengyuanchen.github.io/cropper/js/cropper.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="../js/login.js"></script>
+<script src="../js/common.js"></script></head>
+<body>
+    <div class="ModalGroups">
+        <!-- 청첩장 미리보기 -->
+<div class="PreviewArea">
+    <div class="PreviewPage"></div>
+    <div class="BgDimmed" id="PreviewDimmed">
+        <button class="close-button">
+            <img src="../Resource/assets/Icon/Del.svg" alt="">
+        </button>
+    </div>
+</div>
+        <!-- 청첩장 저장 Alert -->
+<div class="SavedArea">
+    <div class="BgDimmed" id="SaveCompleteDimmed">
+        <div class="ModalSaveComplete">
+            <div class="ModalTextWrap">
+                <div class="ModalTitle">저장 완료</div>
+                <div class="ModalDes">저장한 내용은 제작 내역에서 확인하실 수 있어요.</div>
+            </div>
+            <div class="InviteBtnGroups">
+                <button class="ProgressSave" id="previewInvitation">청첩장 미리보기</button>
+                <button class="ProgressSave" id="SavedView">마이페이지</button>
+                <button class="ProgressSave" id="ClosedView">닫기</button>
+            </div>
+        </div>
+        <button class="close-button">
+            <img src="../Resource/assets/Icon/Del.svg" alt="">
+        </button>
+    </div>
+</div>
+            <!-- 이미지 크롭영역 -->
+    <div class="BgDimmed" id="CropDimmed">
+        <div class="ImgCropModal">
+            <div class="photo_them">
+                <div class="them_img">
+                    <img id="image" src="">
+                </div>
+            </div>
+            <a href="javascript:void(0);" id="complete">업로드</a>
+        </div>
+    </div>
+        <!-- 이미지 갤러리 미리보기 -->
+<div class="BgDimmed" id="GalleryPreview">
+    <img src="" alt="your-image-description" class="full-image">
+    <button class="close-button" id="GalleryPreviewExit">
+        <img src="../Resource/assets/Icon/Del.svg" alt="">
+    </button>
+</div>
+        <div class="DimmedArea">
+    <div class="BgDimmed" id="Board_Create_Dimmed">
+        <div class="AlertWrap">
+            <div class="AlertHeader">
+                방명록
+            </div>
+            <div class="borderline_modal"></div>
+            <div class="AlertBody">
+                <div class="selectbox_modal_detail">
+                    <label class="selectbox_modal_label" for="file">작성자</label>
+                    <div class="NameBox">
+                        <input class="base" id="Board_Writer" name="base" type="base" placeholder="작성자"
+                            data-value="" value="">
+                    </div>
+                </div>
+                <div class="selectbox_modal_detail">
+                    <label class="selectbox_modal_label" for="file">내용</label>
+                    <div class="NameBox">
+                        <textarea class="TextBox_Alert" id="Board_Contents" name="" rows="10" cols="10" placeholder="내용 입력"></textarea>
+                    </div>
+                </div>
+                <div class="selectbox_modal_detail">
+                    <label class="selectbox_modal_label" for="file">비밀번호</label>
+                    <div class="NameBox">
+                        <input class="base" id="Board_Password" name="base" type="base" placeholder="비밀번호 입력"
+                            data-value="" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="AlertControl">
+                <button class="CloseAlert" id="CloseAlert_Create">닫기</button>
+                <button class="SaveAlert" id="SaveBoard">저장하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="DimmedArea">
+    <div class="BgDimmed" id="Board_View_Dimmed">
+        <div class="AlertWrap">
+            <div class="AlertHeader">
+                방명록
+            </div>
+            <div class="borderline_modal"></div>
+            <div class="AlertBody">
+                <div class="BoardArea_Alert">
+                    <div class="BoardItem">
+                        <div class="BoardText">
+                            <div class="BoardFrom">
+                                <div class="From">From</div>
+                                <div class="FromTarget">강스캉</div>
+                            </div>
+                            <div class="BoardBody">
+                                너무 축하해~^^ 행복하게 살아
+                            </div>
+                        </div>
+                        <div class="BoardDelete">
+                            <img class="BoardIconDel"
+                                src="../Resource/assets/Icon/Del.svg" alt="">
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="AlertControl">
+                <button class="CloseAlert" id="CloseAlert_View">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="DimmedArea">
+    <div class="BgDimmed" id="Board_Del_Dimmed">
+        <div class="AlertWrap">
+            <div class="AlertHeader">
+                방명록 삭제
+            </div>
+            <div class="borderline_modal"></div>
+            <div class="AlertBody">
+                <div class="selectbox_modal_detail">
+                    <label class="selectbox_modal_label" for="file">비밀번호</label>
+                    <div class="NameBox">
+                        <input class="base" id="deletePassword" name="base" type="base" placeholder="비밀번호 입력"
+                            data-value="" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="AlertControl">
+                <button class="CloseAlert" id="CloseAlert_Del">취소</button>
+                <button class="SaveAlert" id="DeleteConfirm">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+
+    <!-- 헤더 -->
+    <!-- header.ejs -->
+<div class="header">
+    <div class="header_wrap">
+      <div class="LogoWrap">
+        <a class="SymbolLink" href="/">
+          <img class="LogoSymbol" src="../Resource/Logo_Symbol1.svg" alt="">
+        </a>
+      </div>
+      <div class="LoginWrap">
+        <div class="Create_InvitationBtn" id="Create_InvitationBtn">제작하기</div>
+        <div class="LoginBound"></div>
+        <a class="LoginInfo" href="/mypage" id="myPage">seokhkang</a>
+        <div class="LoginBound"></div>
+        <div class="LogOut" id="LogoutBtn">
+          <button class="LoginBtn">로그아웃</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+        <div class="main_contents">
+            <div id="overlay">
+                <div id="loader"></div>
+            </div>
+            <!-- 좌측 네비게이션 -->
+            <div class="side_contents">
+    <div class="TitleSection">
+        <!-- 오디오 조정 -->
+        <div class="AudioPlayPause">
+            <div class="AudioControl">
+                <img src="../Resource/assets/Icon/BtnPlay.svg" class="audiobutton" id="button">
+                <img src="../Resource/assets/Icon/BtnPause.svg" class="audiobutton" id="buttonpause">
+            </div>
+        </div>
+        <!-- 타이틀 -->
+        <div class="TitleSectionWrap">
+            <div class="TitleDeco">
+                <img class="DecorationImg" src="../Resource/assets/Icon/deco.svg" alt="">
+            </div>
+            <div class="BrideGroom">
+                <div class="GroomName">
+                    <span class="WeddingTitleText" id="GroomFirstName">
+                        신랑
+                    </span>
+                    <span class="WeddingTitleText" id="GroomLastName">
+                        이름
+                    </span>
+                </div>
+                <div class="BridgeText">
+                    <span class="WeddingBodyText" id="">
+                        그리고
+                    </span>
+                </div>
+                <div class="BrideName">
+                    <span class="WeddingTitleText" id="BrideFirstName">
+                        신부
+                    </span>
+                    <span class="WeddingTitleText" id="BrideLastName">
+                        이름
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 대표이미지 -->
+        <div class="image-container">
+            <div class="preview">
+                <div class="previewframe">
+                    <div class="VideoEffect">
+                        <img class="effects" src="../Resource/assets/Effect/effect_cherryblossom.png">
+                        <video class="audio" src="" autoplay="autoplay" loop="loop"></video>
+                    </div>
+                    <div class="innerframe"></div>
+                    
+                            <img id="preview-image" src="/Resource/mainasset/WeddingTitleImg.jpg">
+                            
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 웨딩날짜&장소 -->
+        <div class="WeddingDateLocation">
+            <div class="DateLocation">
+                <div class="WeddingBodyText">
+                    <!-- 서버로부터 웨딩날짜 데이터를 가져와서 가공 -->
+                    
+                    
+                    <span class="WeddingDate" id="WeddingDateTitle">
+                        
+                        7 월 10 일
+                            </span>
+
+
+
+                            <span class="WeddingDay" id="WeddingDayTitle">
+                                월요일
+                            </span>
+                            <span class="AMPM" id="AMPM">
+                                오후
+                            </span>
+                            <span class="WeddingTime" id="WeddingTime">
+                                1시
+                            </span>
+                            <span class="WeddingMinute" id="WeddingMinute">
+                                00분
+                            </span>
+                </div>
+                <div class="WeddingLocate">
+                    <div class="WeddingBodyText" id="WeddingLocateTitle">
+                        서울숲 보테가마지오
+                    </div>
+                    <div class="WeddingBodyText" id="WeddingHallInfo">
+                        로스타뇨홀 2F
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="OrderSection">
+        <!-- 청첩장 순서 변경 -->
+        
+            
+                
+                    
+                        <div class="InviteArea" data-id="Toggle_Invite">
+                            <!-- 초대문구 -->
+                            <div class="InviteContentsArea">
+                                <div class="TabContent Active" id="Tab-1">
+                                    <div class="InvitationTextArea">
+                                        <div class="WeddingTitleText" id="InviteTitle">
+                                            초대합니다
+                                        </div>
+                                        <div class="WeddingBodyText" id="InviteBodyText">
+                                            <div class="WeddingBodyText" id="InviteBodyText">
+                                                <div class="WeddingBodyText" id="InviteBodyText">
+                                                    
+                                                        평생을 함께하고 싶은 사람이 생겼습니다.<br>처음처럼 변치않는 마음으로 서로 아끼며<br>예쁘게 살겠습니다.<br>부디 함께하시어<br>저희의 하나됨을 따듯한 미소로<br>축복해주시기를 바랍니다.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="TabContent" id="Tab-2">
+                                    <div class="InvitationTextArea">
+                                        <div class="WeddingBodyTitle">
+                                            이제 함께 하려합니다.
+                                        </div>
+                                        <div class="WeddingBodyText">
+                                            평생을 같이 하고 싶은 사람을 만났습니다.<br>서로 아껴주고 이해하며 사랑하는 부부로 살고자 합니다.<br>저희 약속 위에
+                                            따뜻한 축복해주시어
+                                            힘찬 출발의 디딤이 되어 주십시오. <br>참석해 주셔서 함께 축복해주시면 감사하겠습니다.<br> 신랑 신부 올림
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="TabContent" id="Tab-3">
+                                    <div class="InvitationTextArea">
+                                        <div class="WeddingBodyTitle">
+                                            초대합니다333333
+                                        </div>
+                                        <div class="WeddingBodyText">
+                                            더 이상 헤어지는 길을 아쉬워하고 싶지 않습니다<br>오랜 만남 끝에 저희 둘이 하나 되는 날<br>귀한 분들을 모시고 평생의
+                                            서약을 올리고자
+                                            합니다. 저희의 첫 시작을
+                                            내딛는 날<br>참석해 주셔서 함께 축복해주시면 감사하겠습니다.<br> 신랑 신부 올림
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 구분선 -->
+                            <div class="DivDivider">
+                                <div class="divider"></div>
+                            </div>
+
+                            <!-- 가족정보 -->
+                            <div class="FamilyInfo" id="scrollFamilyinfo">
+                                <div class="WeddingBodyText">
+                                    <div class="GroomFamilyStatusInfo" id="GroomFamilyStatusInfo">
+                                        <span class="statustype" id="GroomFatherStatusInfo"></span>
+                                        <img class="ImgMum" id="GroomFatherMum" src="../Resource/assets/Icon/mum.png"
+                                            alt="">
+                                        <span id="GroomFatherFirstName">
+                                            김
+                                        </span><span id="GroomFatherLastName">
+                                            덕환
+                                        </span>
+                                        <span class="dot">∙</span>
+                                        <img class="ImgMum" id="GroomMotherMum" src="../Resource/assets/Icon/mum.png"
+                                            alt="">
+                                        <span class="statustype" id="GroomMotherStatusInfo"></span>
+                                        <span id="GroomMotherFirstName">
+                                            조
+                                        </span><span id="GroomMotherLastName">
+                                            희연
+                                        </span>
+                                        <span class="relationship" id="GroomRelationship">
+                                            의 아들</span>
+                            <span id="GroomFirstName2"> 신랑
+                                        </span><span id="GroomLastName2">
+                                            이름
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="WeddingBodyText">
+                                    <div class="BrideFamilyStatusInfo" id="BrideFamilyStatusInfo">
+                                        <span class="statustype" id="BrideFatherStatusInfo"></span>
+                                        <img class="ImgMum" id="BrideFatherMum" src="../Resource/assets/Icon/mum.png"
+                                            alt="">
+                                        <span id="BrideFatherFirstName">
+                                            곽
+                                        </span>
+                                        <span id="BrideFatherLastName">
+                                            상돈
+                                        </span>
+                                        <span class="dot">∙</span>
+                                        <span class="statustype" id="BrideMotherStatusInfo"></span>
+                                        <img class="ImgMum" id="BrideMotherMum" src="../Resource/assets/Icon/mum.png"
+                                            alt="">
+                                        <span id="BrideMotherFirstName">
+                                            최
+                                        </span>
+                                        <span id="BrideMotherLastName">
+                                            순자
+                                        </span>
+                                        <span class="relationship" id="BrideRelationship">
+                                            의 딸</span>
+                            <span id="BrideFirstName2"> 신부
+                                        </span><span id="BrideLastName2">
+                                            이름
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                                                
+                
+                    
+                            <!-- 캘린더 -->
+                            <div class="sec_cal" data-id="Toggle_Calendar">
+                                <div class="cal_nav">
+                                    <div class="year-month" id="TextDateCalendar">
+                                        7 월 10 일
+                                    </div>
+                                </div>
+                                <div class="WeddingBodyText" id="CalDayTime">
+                                    <span class="WeddingDay" id="CalWeddingDayTitle">
+                                        
+                                            월요일
+                                    </span>
+                                    <span class="AMPM" id="CalAMPM">
+                                        오후
+                                    </span>
+                                    <span class="WeddingTime" id="CalWeddingTime">
+                                        1시
+                                    </span>
+                                    <span class="WeddingMinute" id="CalWeddingMinute">
+                                        00분
+                                    </span>
+                                </div>
+                                <div class="cal_wrap">
+                                    <div class="days">
+                                        <div class="day">일</div>
+                                        <div class="day">월</div>
+                                        <div class="day">화</div>
+                                        <div class="day">수</div>
+                                        <div class="day">목</div>
+                                        <div class="day">금</div>
+                                        <div class="day">토</div>
+                                    </div>
+                                    <div class="dates"></div>
+                                    <div class="WeddingBodyText">
+                                        <div class="ddaysection">
+                                            <div class="ddaytext1">결혼식이 </div>
+                                            <div class="dday" id="dday">0일</div>
+                                            <div class="ddaytext1">남았습니다.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                                                
+                
+                    
+                                <!-- 웨딩 갤러리 -->
+                                <div class="GalleryArea" data-id="Toggle_Gallery">
+                                    <div class="GalleryTitleArea">
+                                        <div class="WeddingBodyTitle">
+                                            갤러리
+                                        </div>
+                                        <div class="WeddingBodyText">
+                                            GALLERY
+                                        </div>
+                                    </div>
+                                    
+                                        <ul class="grid-container" >
+                                            
+                                        </ul>
+
+                                        <button class="BtnBasic" id="LoadMoreBtn">더 보기</button>
+                                </div>
+
+                                
+                                                
+                
+                    
+                                    <!-- 식장 위치 -->
+                                    <div class="LocationSection" data-id="Toggle_WeddingLocation">
+                                        <div class="WeddingTitleText" id="AddressTitle">
+                                            식장 위치
+                                        </div>
+                                        <div class="WeddingLocate">
+                                            <div class="WeddingBodyText" id="WeddingLocateTitleMap">
+                                                서울숲 보테가마지오
+                                            </div>
+                                            <div class="WeddingBodyText" id="WeddingHallInfoMap">
+                                                로스타뇨 홀 2F
+                                            </div>
+                                        </div>
+                                        <div class="WeddingBodyText" id="WeddingAddress">
+                                            성동구 2가 1길 27
+                                        </div>
+                                        <div class="map_area">
+                                            <div class="mapinfo" id="map"></div>
+                                            <div class="NavigationSection">
+                                                <div class="NavigationItem" id="NaverNav">
+                                                    <span class="NaverNavIcon"><img class="NavIcon"
+                                                            src="../Resource/assets/Icon/icon_navermap.png"
+                                                            alt=""></span>
+                                                    <span>네이버 지도</span>
+                                                </div>
+                                                <div class="NavigationItem" id="KakaoNav">
+                                                    <span class="KakaoNavIcon"><img class="NavIcon"
+                                                            src="../Resource/assets/Icon/icon_kakaonavi.png"
+                                                            alt=""></span>
+                                                    <span>카카오 네비</span>
+                                                </div>
+                                                <div class="NavigationItem" id="TmapNav">
+                                                    <span class="TmapNavIcon"><img class="NavIcon"
+                                                            src="../Resource/assets/Icon/icon_tmap.png" alt=""></span>
+                                                    <span>티맵</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+                                                
+                
+                    
+                                        <!--계좌번호 영역-->
+                                        <div class="AccountSection" data-id="Toggle_Account">
+                                            <div class="WeddingTitleText">
+                                                마음 전하실 곳
+                                            </div>
+                                            <ul class="accordion">
+                                                <li class="accordionitem" id="accordionitem">
+                                                    <div class="licontents">
+                                                        <a href="#" class="accordion-title selected" data-value="신랑측 계좌번호">신랑측 계좌번호</a>
+                                                        <div class="accordion-content" id="accodion-content">
+
+                                                            <div class="accodian-inner">
+                                                                <div class="accodian-info">
+                                                                    <div class="accounttarget">
+                                                                        <div class="WeddingBodyText" id="bank_nameTerms">
+                                                                            신랑
+                                                                        </div>
+                                                                        <div class="WeddingBodyText" id="holderinfo">예금주</div>
+                                                                    </div>
+                                                                    <div class="accountinfo">
+                                                                        <div class="WeddingBodyText" id="bank_bankName">은행명</div>
+                                                                        <div class="WeddingBodyText" id="bank_accountInfo">계좌번호</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="accodian-btninfo">
+                                                                    <button class="Btnsmall" id="copybtn">복사하기</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="accodian-inner">
+                                                                <div class="accodian-info">
+                                                                    <div class="accounttarget">
+                                                                        <div class="WeddingBodyText" id="bank_nameTerms">
+                                                                            아버님
+                                                                        </div>
+                                                                        <div class="WeddingBodyText" id="holderinfo">예금주</div>
+                                                                    </div>
+                                                                    <div class="accountinfo">
+                                                                        <div class="WeddingBodyText" id="bank_bankName">은행명</div>
+                                                                        <div class="WeddingBodyText" id="bank_accountInfo">계좌번호</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="accodian-btninfo">
+                                                                    <button class="Btnsmall" id="copybtn">복사하기</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="accodian-inner">
+                                                                <div class="accodian-info">
+                                                                    <div class="accounttarget">
+                                                                        <div class="WeddingBodyText" id="bank_nameTerms">
+                                                                            어머님
+                                                                        </div>
+                                                                        <div class="WeddingBodyText" id="holderinfo">예금주</div>
+                                                                    </div>
+                                                                    <div class="accountinfo">
+                                                                        <div class="WeddingBodyText" id="bank_bankName">은행명</div>
+                                                                        <div class="WeddingBodyText" id="bank_accountInfo">계좌번호</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="accodian-btninfo">
+                                                                    <button class="Btnsmall" id="copybtn">복사하기</button>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="accordionitem" id="accordionitem">
+                                                    <div class="licontents">
+                                                        <a href="#" class="accordion-title" data-value="신부측 계좌번호">신부측 계좌번호</a>
+                                                        <div class="accordion-content" id="accodion-content">
+
+                                                            <div class="accodian-inner">
+                                                                <div class="accodian-info">
+                                                                    <div class="accounttarget">
+                                                                        <div class="WeddingBodyText" id="bank_nameTerms">
+                                                                            신부
+                                                                        </div>
+                                                                        <div class="WeddingBodyText" id="holderinfo">예금주</div>
+                                                                    </div>
+                                                                    <div class="accountinfo">
+                                                                        <div class="WeddingBodyText" id="bank_bankName">은행명</div>
+                                                                        <div class="WeddingBodyText" id="bank_accountInfo">계좌번호</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="accodian-btninfo">
+                                                                    <button class="Btnsmall" id="copybtn">복사하기</button>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="accodian-inner">
+                                                                <div class="accodian-info">
+                                                                    <div class="accounttarget">
+                                                                        <div class="WeddingBodyText" id="bank_nameTerms">
+                                                                            아버님
+                                                                        </div>
+                                                                        <div class="WeddingBodyText" id="holderinfo">예금주</div>
+                                                                    </div>
+                                                                    <div class="accountinfo">
+                                                                        <div class="WeddingBodyText" id="bank_bankName">은행명</div>
+                                                                        <div class="WeddingBodyText" id="bank_accountInfo">계좌번호</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="accodian-btninfo">
+                                                                    <button class="Btnsmall" id="copybtn">복사하기</button>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="accodian-inner">
+                                                                <div class="accodian-info">
+                                                                    <div class="accounttarget">
+                                                                        <div class="WeddingBodyText" id="bank_nameTerms">
+                                                                            어머님
+                                                                        </div>
+                                                                        <div class="WeddingBodyText" id="holderinfo">예금주</div>
+                                                                    </div>
+                                                                    <div class="accountinfo">
+                                                                        <div class="WeddingBodyText" id="bank_bankName">은행명</div>
+                                                                        <div class="WeddingBodyText" id="bank_accountInfo">계좌번호</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="accodian-btninfo">
+                                                                    <button class="Btnsmall" id="copybtn">복사하기</button>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        
+                                                
+                
+                    
+                                            <!-- 방명록 -->
+                                            <div class="BoardSection" data-id="Toggle_Board">
+                                                <div class="WeddingTitleText">
+                                                    방명록
+                                                </div>
+                                                <!-- 방명록 데이터 -->
+                                                <div class="BoardArea">
+                                                </div>
+                                                                                    <div class="BoardControl">
+                                                                                        <button class="BtnIcon"
+                                                                                            id="BoardViewBtn">
+                                                                                            <span>전체 보기</span>
+                                                                                            <img class="BtnInnerIc"
+                                                                                                src="../Resource/assets/Icon/menu.svg"
+                                                                                                alt="">
+                                                                                        </button>
+                                                                                        <button class="BtnIcon"
+                                                                                            id="BoardCreateBtn">
+                                                                                            <span>작성하기</span>
+                                                                                            <img class="BtnInnerIc"
+                                                                                                src="../Resource/assets/Icon/Edit.svg"
+                                                                                                alt="">
+                                                                                        </button>
+                                                                                    </div>
+                                            </div>
+                                            
+                                                
+    </div>
+    <!-- 공유 섹션 -->
+    <div class="ShareSection">
+        <button class="BtnIcon" id="KakaoShareBtn">
+            <span>카카오톡으로 공유하기</span>
+            <img class="BtnInnerIc" src="../Resource/assets/Icon/Kakao.svg" alt="">
+        </button>
+        <button class="BtnIcon" id="InviteAddressCopyBtn">
+            <span>청첩장 주소 복사하기</span>
+            <img class="BtnInnerIc" src="../Resource/assets/Icon/link.svg" alt="">
+        </button>
+    </div>
+
+    <!-- 푸터 -->
+    <div class="footer">
+        <div class="logo">
+            <img class="footerlogo" src="../Resource/Logo_Symbol.svg" alt="">
+        </div>
+        <div class="copyright">
+            Copyright © Foment All rights reserved.
+        </div>
+    </div>
+</div>
+
+            <!-- 우측 네비게이션 -->
+            <div class="right_contents">
+                <div class="RightContentsArea">
+                    <!-- Section 1 디자인 포멧 선택 -->
+                    <div class="DesignSection">
+                        <div class="section">
+                            <div class="sectionFront">
+                                <div class="section-mark">
+                                    #1
+                                </div>
+                                <div class="section-title">
+                                    디자인 선택
+                                </div>
+                            </div>
+                        </div>
+                        <div class="borderline"></div>
+                        <div class="coachmark">
+                            <div class="MarkIcon">
+                                💡
+                            </div>
+                            <div class="MarkText">
+                                모바일 청첩장의 전체적인 디자인을 이곳에서 수정 하실 수 있어요 :)
+                            </div>
+                        </div>
+                        <div class="contents_detail">
+                            <!-- 디자인 테마 선택 -->
+                            <!-- 디자인 테마 선택 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="pet-select">디자인 테마 선택</label>
+                                <div class="TabUI">
+                                    <ul class="TabListDesign">
+                                        <li class="TabItemDesign Active"
+                                            id="DesignArch">아치</li>
+                                        <li class="TabItemDesign "
+                                            id="DesignTrip">여정</li>
+                                        <li class="TabItemDesign "
+                                            id="DesignTogether">투게더</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- BGM 적용 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="pet-select">배경음악 적용</label>
+                                <div class="TabUI">
+                                    <ul class="TabListBGM">
+                                        <li class="TabItemBGM Active"
+                                            id="NoneAudio">적용 안함</li>
+                                        <li class="TabItemBGM "
+                                            id="BaseAudio_1">기본 배경음1</li>
+                                        <label class="BgmUpload_Btn" for="BGMBtn">
+                                            <input type="file" id="BgmBtn" name="upload" multiple="multiple"
+                                                class="form-control user_picked_files"
+                                                accept="image/jpeg, image/png, image/jpg" />
+                                            <label class="attatch" for="BGMBtn">직접 업로드</label>
+                                        </label>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 이펙트 적용 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="pet-select">효과 적용</label>
+                                <div class="TabUI">
+                                    <ul class="TabListEffect">
+                                        <li class="TabItemEffect Active"
+                                            id="CherryblossomEffect">벚꽃 효과</li>
+                                        <li class="TabItemEffect "
+                                            id="SnowEffect">눈 효과</li>
+                                        <li class="TabItemEffect "
+                                            id="NoneEffect">효과 없음</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="pet-select">서체 선택</label>
+
+                                <div class="custom-select-container" id="custom-select-container">
+                                    <select class="custom-select" id="custom-select">
+                                        <option value="GowunDodum-Regular" 
+                                            selected>고운돋움</option>
+                                        <option value="Chosunilbo_myungjo" 
+                                                >조선일보명조</option>
+                                        <option value="MapoFlowerIsland" >마포꽃섬
+                                        </option>
+                                        <option value="pretendard" >프리텐다드</option>
+                                    </select>
+                                    <div class="custom-options" id="custom-options">
+                                        <div class="custom-option" data-value="GowunDodum-Regular" id="TypeGowun">
+                                            <div class="OptionTitle">고운돋움</div>
+                                            <div class="optiondecription">하늘을 헤엄치는 구름처럼</div>
+                                        </div>
+                                        <div class="custom-option" data-value="Chosunilbo_myungjo" id="TypeChosunilbo">
+                                            <div class="OptionTitle">조선일보명조</div>
+                                            <div class="optiondecription">하늘을 헤엄치는 구름처럼</div>
+                                        </div>
+                                        <div class="custom-option" data-value="MapoFlowerIsland" id="TypeMapo">
+                                            <div class="OptionTitle">마포꽃섬</div>
+                                            <div class="optiondecription">하늘을 헤엄치는 구름처럼</div>
+                                        </div>
+                                        <div class="custom-option" data-value="pretendard" id="TypePretendard">
+                                            <div class="OptionTitle">프리텐다드</div>
+                                            <div class="optiondecription">하늘을 헤엄치는 구름처럼</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="pet-select">글자 크기</label>
+                                <div class="TabUI">
+                                    <ul class="TabListFont">
+                                        <li class="TabItemFont Active"
+                                            value="14" data-tab="Tab-1">기본</li>
+                                        <li class="TabItemFont "
+                                            value="15" data-tab="Tab-2">중간</li>
+                                        <li class="TabItemFont "
+                                            value="16" data-tab="Tab-3">크게</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Section 메인 꾸미기 선택 -->
+                    <div class="DesignSection">
+                        <div class="section">
+                            <div class="sectionFront">
+                                <div class="section-mark">
+                                    #2
+                                </div>
+                                <div class="section-title">
+                                    메인 꾸미기
+                                </div>
+                            </div>
+                        </div>
+                        <div class="borderline"></div>
+                        <div class="coachmark">
+                            <div class="MarkIcon">
+                                💡
+                            </div>
+                            <div class="MarkText">
+                                메인화면과 카카오톡 공유하기에서 보이게 될 정보들을 이곳에서 작성하실 수 있어요
+                            </div>
+                        </div>
+                        <div class="contents_detail">
+
+                            <!-- 청첩장 URL 입력란
+                        <div class="selectbox_detail">
+                            <label class="selectbox_label" for="file">청첩장 URL(필수)</label>
+                            <div class="InputArea">
+                                <div class="NameBox">
+                                    <input class="base" id="InputURL" name="base" type="base" onkeyup="printURL()"
+                                        placeholder="URL 입력">
+                                    <button class="BtnBasic" id="URL_Btn">
+                                        URL 등록
+                                    </button>
+                                </div>
+                                <div class="inputdescription">
+                                    <span class="DefaultUrl">https://foment.co.kr/</span>
+                                    <span class="CustomUrl" id="CustomUrl"></span>
+                                </div>
+                                <div class="info">※ 영문,숫자 및 일부 특수문자(&+-)만 사용 가능합니다.</div>
+                            </div>
+                        </div> -->
+                            <!-- 청첩장 제목 입력란 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="file">청첩장 제목</label>
+                                <div class="NameBox">
+                                    <input class="base" id="InvitationTitleInput" name="base" type="base"
+                                        onkeyup="InvitationTitleInput()" placeholder="청첩장 제목을 입력하세요"
+                                        data-value=""
+                                        value="">
+                                </div>
+                            </div>
+                            <!-- 대표이미지, 공유이미지 영역 -->
+                            <div class="ImgSection">
+                                <div class="TitleImgSection">
+                                    <div class="sectiondes">
+                                        <label class="selectbox_label" for="file">대표이미지 등록 (필수)</label>
+                                        <div class="info">
+                                            98x98픽셀 이상, 4MB 이하의 사진이 권장됩니다.<br>PNG 또는 JPG 파일을 사용하세요.
+                                        </div>
+                                    </div>
+
+                                    <!-- 메인 사진업로드 -->
+                                    <div class="KakaoSection">
+                                        <div class="photo_box">
+                                            <label class="upload_btn" for="photoBtn">
+                                                <div class="upload">
+                                                    <div class="uploadarea">
+                                                        <div class="edit">
+                                                            <label class="AttatchTitleImg" for="photoBtn">클릭 후
+                                                                업로드</label>
+                                                        </div>
+                                                        
+                                                                <img class="uploadsrc" id="TitleImgUpload"
+                                                                    src="/Resource/mainasset/WeddingTitleImg.jpg"
+                                                                    alt="">
+                                                                
+                                                    </div>
+                                                    <input type="file" name="images"
+                                                        accept="image/jpeg, image/png, image/jpg" capture="camera"
+                                                        id="photoBtn">
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- 카카오 공유하기 미리보기 -->
+                                <div class="TitleImgSection">
+                                    <div class="sectiondes">
+                                        <label class="selectbox_label" for="file">카카오 공유화면 미리보기 예시</label>
+                                        <div class="info">
+                                            대표 이미지를 등록하시면<br>카카오 공유하기 화면이 위와 같이 노출됩니다.
+                                        </div>
+                                    </div>
+                                    <!-- 메인 사진업로드 -->
+                                    <div class="kakaoShareArea">
+                                        <div class="KakaoSection">
+                                            <div class="KaKaoShare">
+                                                
+                                                        <img class="KaKaosrc" id="KaKaosrc"
+                                                            src="/Resource/mainasset/WeddingTitleImg.jpg" alt="">
+                                                        
+                                                            <div class="ShareText">
+                                                                <div class="kakaoTitle">1월14일 현석 ♥ 성희 결혼합니다.</div>
+                                                                <div class="buttonGroups">
+                                                                    <div class="buttonArea">모바일 청첩장</div>
+                                                                    <div class="buttonArea">위치 보기</div>
+                                                                </div>
+                                                                <div class="FomentArea">
+                                                                    <div class="corparea">
+                                                                        <div class="Corplogo">
+                                                                            <img src="../Resource/assets/Icon/icon_tmap.png"
+                                                                                alt="">
+                                                                        </div>
+                                                                        <div class="corpname">포먼트 모바일 청첩장</div>
+                                                                    </div>
+                                                                    <div class="Corpicon">
+                                                                        <img src="../Resource/assets/Icon/Arrow.svg"
+                                                                            alt="">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 신랑측 정보 -->
+                    <div class="DesignSection">
+                        <div class="section">
+                            <div class="sectionFront">
+                                <div class="section-mark">
+                                    #3
+                                </div>
+                                <div class="section-title">
+                                    신랑 정보
+                                </div>
+                            </div>
+                        </div>
+                        <div class="borderline"></div>
+                        <div class="coachmark">
+                            <div class="MarkIcon">
+                                💡
+                            </div>
+                            <div class="MarkText">
+                                신랑님의 성함과 가족 정보를 입력하는 영역이에요
+                            </div>
+                        </div>
+                        <div class="contents2">
+                            <div class="IllustImg">
+                                <img src="../Resource/mainasset/illust_Bride.png" alt="">
+                            </div>
+                            <div class="contents_detail">
+                                <!-- 신랑 정보 -->
+                                <div class="selectbox_detail">
+                                    <label class="selectbox_label" for="file">신랑 성함 (필수)</label>
+                                    <div class="NameBox">
+                                        <div class="inputtype1">
+                                            <input class="base" id="GroomFirstNameInput" name="base" type="base"
+                                                onkeyup="printGroomFirst()" placeholder="성"
+                                                value="">
+                                            <input class="base" id="GroomLastNameInput" name="base" type="base"
+                                                onkeyup="printGroomLast()" placeholder="이름"
+                                                value="">
+                                        </div>
+                                        <select class="selectboxname" name="Groom" id="SelectGroomRelationship"
+                                            onchange="handleOnChange(this)">
+                                            <option value="아들" selected>아들</option>
+                                            <option value="장남" >장남</option>
+                                            <option value="차남" >차남</option>
+                                            <option value="삼남" >삼남</option>
+                                            <option value="사남" >사남</option>
+                                            <option value="오남" >오남</option>
+                                            <option value="육남" >육남</option>
+                                            <option value="칠남" >칠남</option>
+                                            <option value="팔남" >팔남</option>
+                                            <option value="막내" >막내</option>
+                                            <option value="조카" >조카</option>
+                                            <option value="손자" >손자</option>
+                                            <option value="동생" >동생</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- 아버님 -->
+                                <div class="selectbox_detail">
+                                    <label class="selectbox_label" for="file">신랑 아버님</label>
+                                    <div class="NameBox">
+                                        <div class="inputtype1">
+                                            <input class="base" id="GroomFatherFirstNameInput" name="base" type="base"
+                                                onkeyup="printGroomFatherFirst()" placeholder="성"
+                                                value="">
+                                            <input class="base" id="GroomFatherLastNameInput" name="base" type="base"
+                                                onkeyup="printGroomFatherLast()" placeholder="이름"
+                                                value="">
+                                        </div>
+                                        <div class="checkselection">
+                                            <select disabled class="innerselectbox" id="Groomfatherstatustype"
+                                                onchange="handleOnChange(this)">
+                                                <option value="故" >故</option>
+                                                <option value="국화꽃" >국화꽃</option>
+                                            </select>
+                                            <div class="check_wrap">
+                                                <input type="checkbox" id="Groomfatherstatus" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 어머님 -->
+                                <div class="selectbox_detail">
+                                    <label class="selectbox_label" for="file">신랑 어머님</label>
+                                    <div class="NameBox">
+                                        <div class="inputtype1">
+                                            <input class="base" id="GroomMotherFirstNameInput" name="base" type="base"
+                                                onkeyup="printGroomMotherFirst()" placeholder="성"
+                                                value="">
+                                            <input class="base" id="GroomMotherLastNameInput" name="base" type="base"
+                                                onkeyup="printGroomMotherLast()" placeholder="이름"
+                                                value="">
+                                        </div>
+                                        <div class="checkselection">
+                                            <select disabled class="innerselectbox" id="Groommotherstatustype"
+                                                onchange="handleOnChange(this)">
+                                                <option value="故" >故</option>
+                                                <option value="국화꽃" >국화꽃</option>
+                                            </select>
+                                            <div class="check_wrap">
+                                                <input type="checkbox" id="Groommotherstatus" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 신부측 정보 -->
+                    <div class="DesignSection">
+                        <div class="section">
+                            <div class="sectionFront">
+                                <div class="section-mark">
+                                    #4
+                                </div>
+                                <div class="section-title">
+                                    신부 정보
+                                </div>
+                            </div>
+                        </div>
+                        <div class="borderline"></div>
+                        <div class="coachmark">
+                            <div class="MarkIcon">
+                                💡
+                            </div>
+                            <div class="MarkText">
+                                신부님의 성함과 가족 정보를 입력하는 영역이에요
+                            </div>
+                        </div>
+                        <div class="contents2">
+                            <div class="IllustImg">
+                                <img src="../Resource/mainasset/illust_Bride.png" alt="">
+                            </div>
+                            <div class="contents_detail">
+                                <!-- 신부 정보 -->
+                                <div class="selectbox_detail">
+                                    <label class="selectbox_label" for="file">신부 성함 (필수)</label>
+                                    <div class="NameBox">
+                                        <div class="inputtype1">
+                                            <input class="base" id="BrideFirstNameInput" name="base" type="base"
+                                                onkeyup="printBrideFirst()" placeholder="성"
+                                                value="">
+                                            <input class="base" id="BrideLastNameInput" name="base" type="base"
+                                                onkeyup="printBrideLast()" placeholder="이름"
+                                                value="">
+                                        </div>
+                                        <select class="selectboxname" name="Bride" id="SelectBrideRelationship"
+                                            onchange="handleOnChange(this)">
+                                            <option value="딸" selected>딸</option>
+                                            <option value="장녀" >장녀</option>
+                                            <option value="차녀" >차녀</option>
+                                            <option value="삼녀" >삼녀</option>
+                                            <option value="사녀" >사녀</option>
+                                            <option value="오녀" >오녀</option>
+                                            <option value="육녀" >육녀</option>
+                                            <option value="칠녀" >칠녀</option>
+                                            <option value="팔녀" >팔녀</option>
+                                            <option value="막내" >막내</option>
+                                            <option value="조카" >조카</option>
+                                            <option value="손자" >손자</option>
+                                            <option value="동생" >동생</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- 신부 아버님 정보 -->
+                                <div class="selectbox_detail">
+                                    <label class="selectbox_label" for="file">신부 아버님</label>
+                                    <div class="NameBox">
+                                        <div class="inputtype1">
+                                            <input class="base" id="BrideFatherFirstNameInput" name="base" type="base"
+                                                onkeyup="printBrideFatherFirst()" placeholder="성"
+                                                value="">
+                                            <input class="base" id="BrideFatherLastNameInput" name="base" type="base"
+                                                onkeyup="printBrideFatherLast()" placeholder="이름"
+                                                value="">
+                                        </div>
+                                        <div class="checkselection">
+                                            <select disabled class="innerselectbox" id="Bridefatherstatustype"
+                                                onchange="handleOnChange(this)">
+                                                <option value="故" >故</option>
+                                                <option value="국화꽃" >국화꽃</option>
+                                            </select>
+                                            <div class="check_wrap">
+                                                <input type="checkbox" id="Bridefatherstatus" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 신부 어머님 정보 -->
+                                <div class="selectbox_detail">
+                                    <label class="selectbox_label" for="file">신부 어머님</label>
+                                    <div class="NameBox">
+                                        <div class="inputtype1">
+                                            <input class="base" id="BrideMotherFirstNameInput" name="base" type="base"
+                                                onkeyup="printBrideMotherFirst()" placeholder="성"
+                                                value="">
+                                            <input class="base" id="BrideMotherLastNameInput" name="base" type="base"
+                                                onkeyup="printBrideMotherLast()" placeholder="이름"
+                                                value="">
+                                        </div>
+                                        <div class="checkselection">
+                                            <select disabled class="innerselectbox" id="Bridemotherstatustype"
+                                                onchange="handleOnChange(this)">
+                                                <option value="故" >故</option>
+                                                <option value="국화꽃" >국화꽃</option>
+                                            </select>
+                                            <div class="check_wrap">
+                                                <input type="checkbox" id="Bridemotherstatus" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Section 예식 정보 -->
+                    <div class="DesignSection">
+                        <div class="section">
+                            <div class="sectionFront">
+                                <div class="section-mark">
+                                    #5
+                                </div>
+                                <div class="section-title">
+                                    예식 정보
+                                </div>
+                            </div>
+                        </div>
+                        <div class="borderline"></div>
+                        <div class="coachmark">
+                            <div class="MarkIcon">
+                                💡
+                            </div>
+                            <div class="MarkText">
+                                진행 예정이신 예식 정보를 기입 해주세요
+                            </div>
+                        </div>
+                        <div class="contents_detail">
+
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="file">예식 일자</label>
+                                <input type="date" id="date" onchange="dateChange()"
+                                    value="">
+                                <div class="InputArea">
+                                    <div class="ToggleUI">
+                                        <div class="ToggleTitle">
+                                            D-Day 표시
+                                        </div>
+                                        <label for="toggle"
+                                            class="toggleSwitch Active"
+                                            id="DDay">
+                                            <span class="toggleButton" id=""></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 예식 시간 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="file">예식 시간</label>
+                                <div class="NameBox">
+                                    <select class="selectboxname" name="" id="SelectAMPM"
+                                        onchange="handleOnChange(this)">
+                                        <option value="오후" selected>오후</option>
+                                        <option value="오전" >오전</option>
+                                    </select>
+                                    <select class="selectboxname" name="" id="SelectTime"
+                                        onchange="handleOnChange(this)">
+                                        <option value="1시" selected>1시</option>
+                                        <option value="2시" >2시</option>
+                                        <option value="3시" >3시</option>
+                                        <option value="4시" >4시</option>
+                                        <option value="5시" >5시</option>
+                                        <option value="6시" >6시</option>
+                                        <option value="7시" >7시</option>
+                                        <option value="8시" >8시</option>
+                                        <option value="9시" >9시</option>
+                                        <option value="10시" >10시
+                                        </option>
+                                        <option value="11시" >11시
+                                        </option>
+                                        <option value="12시" >12시
+                                        </option>
+                                    </select>
+                                    <select class="selectboxname" name="" id="SelectMinute"
+                                        onchange="handleOnChange(this)">
+                                        <option value="00분" 
+                                            selected>00분</option>
+                                        <option value="10분" >10분</option>
+                                        <option value="20분" >20분</option>
+                                        <option value="30분" >30분</option>
+                                        <option value="40분" >40분</option>
+                                        <option value="50분" >50분</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 예식장 이름 입력 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="file">예식장 명</label>
+                                <div class="NameBox">
+                                    <input class="base" id="WeddingLocateTitleInput" name="base" type="base"
+                                        onkeyup="WeddingLocationInput()" placeholder="예식장 이름을 입력해주세요"
+                                        value="">
+                                </div>
+                            </div>
+
+                            <!-- 예식장 홀,층수 입력 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="file">예식장 층과 홀</label>
+                                <div class="NameBox">
+                                    <input class="base" id="WeddingHallInfoInput" name="base" type="base"
+                                        onkeyup="WeddingHallInfoInput()" placeholder="예식장 층과 홀 이름을 입력"
+                                        value="">
+                                </div>
+                            </div>
+                            <!-- 예식장 주소 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="file">예식장 주소</label>
+                                <div class="InputArea">
+                                    <div class="NameBox">
+                                        <input class="base" id="SearchAddressInput" name="base" type="base"
+                                            placeholder="주소 검색을 먼저 해주세요"
+                                            value="">
+                                        <button class="BtnBasic" id="SearchAddressBtn">
+                                            주소 검색
+                                        </button>
+                                    </div>
+                                    <!-- 네이버 지도 API -->
+                                    <div class="map_area">
+                                        <div class="mapinfo" id="map"></div>
+                                        <div class="mapdes">마커를 드래그하여 위치를 옮길 수 있습니다.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Section 초대글 정보 -->
+                    <div class="DesignSection">
+                        <div class="section">
+                            <div class="sectionFront">
+                                <div class="section-mark">
+                                    #6
+                                </div>
+                                <div class="section-title">
+                                    초대 글
+                                </div>
+                            </div>
+                        </div>
+                        <div class="borderline"></div>
+                        <div class="coachmark">
+                            <div class="MarkIcon">
+                                💡
+                            </div>
+                            <div class="MarkText">
+                                초대 문구 작성이 어렵다면, 샘플 텍스트 보기를 통해 초대 문구를 간편히 작성할 수 있어요
+                            </div>
+                        </div>
+                        <div class="contents_detail">
+                            <!-- 초대 글 제목 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="file">초대 글 제목</label>
+                                <div class="NameBox">
+                                    <input class="base" id="InviteTitleInput" name="base" type="base"
+                                        onkeyup="printInvite()" placeholder="초대합니다"
+                                        value="">
+                                </div>
+                            </div>
+
+                            <!-- 초대 글 내용 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="file">샘플 텍스트 보기</label>
+                                <div class="InputArea">
+
+                                    <div class="NameBox">
+                                        <textarea class="TextBox" id="TextBoxInput" cols="50" rows="10" pattern="[^\s]+"
+                                            required placeholder="초대 글 내용 입력"
+                                            onkeyup="printInviteBody()"></textarea>
+                                    </div>
+
+                                    <div class="custom-select-container" id="custom-select-container-invite">
+
+                                        <select class="custom-select" id="custom-select-invite">
+                                            <option value="샘플 텍스트보기 1">샘플 텍스트보기 1</option>
+                                            <option value="샘플 텍스트보기 2">샘플 텍스트보기 2</option>
+                                            <option value="샘플 텍스트보기 3">샘플 텍스트보기 3</option>
+                                            <option value="샘플 텍스트보기 4">샘플 텍스트보기 4</option>
+                                        </select>
+
+                                        <div class="custom-options" id="custom-options-invite">
+                                            <div class="custom-option" data-value="샘플 텍스트보기 1">
+                                                <div class="OptionTitle">
+                                                    샘플 텍스트보기 1
+                                                </div>
+                                                <div class="optiondecription">평생을 함께하고 싶은 사람이 생겼습니다.
+                                                    처음처럼 변치않는 마음으로 서로 아끼며
+                                                    예쁘게 살겠습니다.
+                                                    부디 함께하시어
+                                                    저희의 하나됨을 따듯한 미소로
+                                                    축복해주시기를 바랍니다.</div>
+                                            </div>
+
+                                            <div class="custom-option" data-value="샘플 텍스트보기 1">
+                                                <div class="OptionTitle">
+                                                    샘플 텍스트보기 2
+                                                </div>
+                                                <div class="optiondecription">평생을 같이 하고 싶은 사람을 만났습니다.
+                                                    서로 아껴주고 이해하며
+                                                    사랑하는 부부로 살고자 합니다.
+                                                    저희 약속 위에 따뜻한 축복해주시어
+                                                    힘찬 출발의 디딤이 되어 주십시오.
+                                                </div>
+                                            </div>
+
+                                            <div class="custom-option" data-value="샘플 텍스트보기 1">
+                                                <div class="OptionTitle">
+                                                    샘플 텍스트보기 3
+                                                </div>
+                                                <div class="optiondecription">평생을 함께하고 싶은 사람이 생겼습니다.
+                                                    처음처럼 변치않는 마음으로 서로 아끼며
+                                                    예쁘게 살겠습니다.
+                                                    부디 함께하시어
+                                                    저희의 하나됨을 따듯한 미소로
+                                                    축복해주시기를 바랍니다.</div>
+                                            </div>
+
+                                            <div class="custom-option" data-value="샘플 텍스트보기 1">
+                                                <div class="OptionTitle">
+                                                    샘플 텍스트보기 4
+                                                </div>
+                                                <div class="optiondecription">평생을 함께하고 싶은 사람이 생겼습니다.
+                                                    처음처럼 변치않는 마음으로 서로 아끼며
+                                                    예쁘게 살겠습니다.
+                                                    부디 함께하시어
+                                                    저희의 하나됨을 따듯한 미소로
+                                                    축복해주시기를 바랍니다.</div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 계좌 정보 -->
+                    <div class="DesignSection">
+                        <div class="section">
+                            <div class="sectionFront">
+                                <div class="section-mark">
+                                    #7
+                                </div>
+                                <div class="section-title">
+                                    계좌 정보
+                                </div>
+                            </div>
+                            <div class="sectionBack">
+
+                                    <div class="ToggleTitle">
+                                        계좌 정보 펼쳐두기
+                                    </div>
+                                    <label for="toggle" class="toggleSwitch" id="AccountFold">
+                                        <span class="toggleButton" id=""></span>
+                                    </label>
+                            </div>
+                        </div>
+                        <div class="borderline"></div>
+                        <div class="coachmark">
+                            <div class="MarkIcon">
+                                💡
+                            </div>
+                            <div class="MarkText">
+                                신랑 / 신부님 외에도 '계좌번호 추가하기' 를 눌러 혼주분들의 계좌도 추가하실 수 있어요
+                            </div>
+                        </div>
+                        <div class="contents_detail">
+                            <!-- 신랑 정보 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="file">계좌 그룹 선택</label>
+                                <div class="InputArea">
+                                    <div class="custom-select-container" id="custom-select-container-invite">
+                                        <input class="custom-select" type="text" name="" id="custom-select-account" value="신랑측 계좌번호" onkeyup="updateOptionValue()">
+
+                                        <div class="custom-options" id="custom-options-account" onclick="">
+                                            <div class="custom-option-childGroup" id="custom-option-childGroup-account">
+                                                <div class="custom-option selected" id="optionAccount" data-value="신랑측 계좌번호">
+                                                    <div class="optiondecription">신랑측 계좌번호</div>
+                                                    <div class="DeleteAccountGroupBtn">
+                                                        <img src="../Resource/assets/Icon/Del.svg" alt="" class="delIcon">
+                                                    </div>
+                                                </div>
+
+                                                <div class="custom-option" id="optionAccount" data-value="신부측 계좌번호">
+                                                    <div class="optiondecription">신부측 계좌번호</div>
+                                                    <div class="DeleteAccountGroupBtn">
+                                                        <img src="../Resource/assets/Icon/Del.svg" alt="" class="delIcon">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="bordercontentsline-sm"></div>
+
+                                            <div class="optionAccountAdd" id="optionAccountAdd" data-value="계좌그룹">
+                                                <div class="optiondecription">새 계좌그룹 추가하기</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="AccountGroup" id="AccountGroup">
+                                <!-- 그룹 명 -->
+                                <!-- 구분선 -->
+                                <div class="bordercontentsline"></div>
+                                <div class="AccountItem" id="AccountItem1">
+                                    <div class="DetailItem">
+                                        <!-- 그룹명 -->
+                                        <div class="selectbox_detail">
+                                            <label class="selectbox_label" for="file">계좌번호</label>
+                                            <div class="InputArea">
+                                                <div class="AccountInputGroups">
+
+                                                    
+                                                        
+                                                          
+                                                          
+                                                            <div class="AccountInputs">
+                                                              <div class="NameBox">
+                                                                <input class="base" id="bank_nameTerms_Input" name="base" type="base"
+                                                                  onkeyup="printBankNameTerms()" placeholder="호칭"
+                                                                  value="신랑">
+                                                                <input class="base" id="bank_holder_Input" name="base" type="base"
+                                                                  onkeyup="printBankHolderInfo()" placeholder="예금주"
+                                                                  value="">
+                                                                <input class="base" id="bank_bankName_Input" name="base" type="base"
+                                                                  onkeyup="printBankName()" placeholder="은행"
+                                                                  value="">
+                                                                <input class="base" id="bank_accountInfo_Input" name="base" type="base"
+                                                                  onkeyup="printBankAccountInfo()" placeholder="계좌번호"
+                                                                  value="">
+                                                                <div class="DeleteAccountBtn">
+                                                                  <img src="../Resource/assets/Icon/Del.svg" alt="" class="delIcon">
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          
+                                                            <div class="AccountInputs">
+                                                              <div class="NameBox">
+                                                                <input class="base" id="bank_nameTerms_Input" name="base" type="base"
+                                                                  onkeyup="printBankNameTerms()" placeholder="호칭"
+                                                                  value="아버님">
+                                                                <input class="base" id="bank_holder_Input" name="base" type="base"
+                                                                  onkeyup="printBankHolderInfo()" placeholder="예금주"
+                                                                  value="">
+                                                                <input class="base" id="bank_bankName_Input" name="base" type="base"
+                                                                  onkeyup="printBankName()" placeholder="은행"
+                                                                  value="">
+                                                                <input class="base" id="bank_accountInfo_Input" name="base" type="base"
+                                                                  onkeyup="printBankAccountInfo()" placeholder="계좌번호"
+                                                                  value="">
+                                                                <div class="DeleteAccountBtn">
+                                                                  <img src="../Resource/assets/Icon/Del.svg" alt="" class="delIcon">
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          
+                                                            <div class="AccountInputs">
+                                                              <div class="NameBox">
+                                                                <input class="base" id="bank_nameTerms_Input" name="base" type="base"
+                                                                  onkeyup="printBankNameTerms()" placeholder="호칭"
+                                                                  value="어머님">
+                                                                <input class="base" id="bank_holder_Input" name="base" type="base"
+                                                                  onkeyup="printBankHolderInfo()" placeholder="예금주"
+                                                                  value="">
+                                                                <input class="base" id="bank_bankName_Input" name="base" type="base"
+                                                                  onkeyup="printBankName()" placeholder="은행"
+                                                                  value="">
+                                                                <input class="base" id="bank_accountInfo_Input" name="base" type="base"
+                                                                  onkeyup="printBankAccountInfo()" placeholder="계좌번호"
+                                                                  value="">
+                                                                <div class="DeleteAccountBtn">
+                                                                  <img src="../Resource/assets/Icon/Del.svg" alt="" class="delIcon">
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          
+                                                        
+                                                      
+                                                        
+                                                      
+                                                      
+                                                      
+                                                      
+                                                      
+
+                                                </div>
+
+                                                <div class="bordercontentsline-Sm"></div>
+                                                <div class="addcount">
+                                                    <button class="BtnBasic" id="AddAccountBtn">계좌번호 추가하기</button>
+                                                </div>              
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 사진 갤러리 -->
+                    <div class="DesignSection">
+                        <div class="section">
+                            <div class="sectionFront">
+                                <div class="section-mark">
+                                    #8
+                                </div>
+                                <div class="section-title">
+                                    이미지 갤러리
+                                </div>
+                            </div>
+                        </div>
+                        <div class="borderline"></div>
+                        <div class="coachmark">
+                            <div class="MarkIcon">
+                                💡
+                            </div>
+                            <div class="MarkText">
+                                갤러리에 신랑 신부님의 아름다운 사진들을 추가해 보세요
+                            </div>
+                        </div>
+                        <div class="contents_detail">
+                            <!-- 갤러리 타입 선택 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="pet-select">갤러리 타입</label>
+                                <div class="TabUI">
+                                    <ul class="TabListGallery">
+                                        <li class="TabItemGallery Active"
+                                            id="BoardType">바둑판형 갤러리</li>
+                                        <li class="TabItemGallery "
+                                            id="SlideType">슬라이드형 갤러리</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 사진 다중업로드 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label">
+                                    사진
+                                </label>
+
+                                <div class="gallerypreview">
+                                    <label class="ImgGroupUpload_Btn" for="ImgBtn">
+                                        <input type="file" id="ImgBtn" name="images" multiple="multiple"
+                                            enctype="multipart/form-data" class="form-control user_picked_files"
+                                            accept="image/jpeg, image/png, image/jpg">
+
+                                        <div class="galleryupload">
+                                            <label class="attatch" for="ImgBtn">첨부할 파일을 여기에 끌어서 추가할 수 있어요</label>
+                                            <div class="info">(30장까지 추가 하실 수 있어요)</div>
+                                        </div>
+                                    </label>
+                                    
+                                        <ul class="cvf_uploaded_files">
+                                            
+                                                
+                                                        
+                                        </ul>
+                                </div>
+                            </div>
+
+                            <!-- 확대방지 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="file">확대방지</label>
+                                <div class="InputArea">
+                                    <div class="ToggleUI">
+                                        <div class="ToggleTitle">
+                                            이미지 확대 및 다운로드를 방지합니다
+                                        </div>
+                                        <label for="toggle" class="toggleSwitch" id="BanFocus">
+                                            <span class="toggleButton"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 방명록 -->
+                    <div class="DesignSection">
+                        <div class="section">
+                            <div class="sectionFront">
+                                <div class="section-mark">
+                                    #9
+                                </div>
+                                <div class="section-title">
+                                    방명록
+                                </div>
+                            </div>
+                        </div>
+                        <div class="borderline"></div>
+                        <div class="coachmark">
+                            <div class="MarkIcon">
+                                💡
+                            </div>
+                            <div class="MarkText">
+                                방명록에서는 하객분들께서 신랑신부님을 메시지로 축하할 수 있어요
+                            </div>
+                        </div>
+                        <div class="contents_detail">
+
+                            <!-- 청첩장 URL 입력란 -->
+                            <div class="selectbox_detail">
+                                <label class="selectbox_label" for="file">비밀번호</label>
+                                <div class="InputArea">
+                                    <div class="NameBox">
+                                        <input class="base" id="boardpassword" name="base" type="base"
+                                            onkeyup="printGroom()" placeholder="삭제 비밀번호"
+                                            value="">
+                                    </div>
+                                    <div class="info">※ 방명록을 삭제할 때 필요한 비밀번호에요</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Section 순서 변경 -->
+                    <div class="DesignSection">
+                        <div class="section">
+                            <div class="sectionFront">
+                                <div class="section-mark">
+                                    #10
+                                </div>
+                                <div class="section-title">
+                                    순서 변경
+                                </div>
+                            </div>
+                        </div>
+                        <div class="borderline"></div>
+                        <div class="coachmark">
+                            <div class="MarkIcon">
+                                💡
+                            </div>
+                            <div class="MarkText">
+                                드래그 하여 청첩장 노출 순서를 변경하실 수 있어요
+                            </div>
+                        </div>
+                        <div class="contents_detail">
+                            <!-- 순서변경 -->
+                            <div class="selectbox_detail">
+                                <div class="ToggleSection">
+                                    <div class="selectbox_detail">
+                                        <div class="ToggleArea">
+                                            
+                                                
+                                                    <div class="ToggleUI" data-id="Toggle_Invite">
+                                                        <div class="ToggleTitle">
+                                                            
+                                                                초대합니다
+                                                                
+                                                        </div>
+                                                        <div class="orderlist">
+                                                            <img class="MenuIcon" src="../Resource/assets/Icon/menu.svg"
+                                                                alt="">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="ToggleUI" data-id="Toggle_Calendar">
+                                                        <div class="ToggleTitle">
+                                                            
+                                                                    캘린더
+                                                                    
+                                                        </div>
+                                                        <div class="orderlist">
+                                                            <img class="MenuIcon" src="../Resource/assets/Icon/menu.svg"
+                                                                alt="">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="ToggleUI" data-id="Toggle_Gallery">
+                                                        <div class="ToggleTitle">
+                                                            
+                                                                        갤러리
+                                                                        
+                                                        </div>
+                                                        <div class="orderlist">
+                                                            <img class="MenuIcon" src="../Resource/assets/Icon/menu.svg"
+                                                                alt="">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="ToggleUI" data-id="Toggle_WeddingLocation">
+                                                        <div class="ToggleTitle">
+                                                            
+                                                                            식장위치
+                                                                            
+                                                        </div>
+                                                        <div class="orderlist">
+                                                            <img class="MenuIcon" src="../Resource/assets/Icon/menu.svg"
+                                                                alt="">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="ToggleUI" data-id="Toggle_Account">
+                                                        <div class="ToggleTitle">
+                                                            
+                                                                                계좌번호
+                                                                                
+                                                        </div>
+                                                        <div class="orderlist">
+                                                            <img class="MenuIcon" src="../Resource/assets/Icon/menu.svg"
+                                                                alt="">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="ToggleUI" data-id="Toggle_Board">
+                                                        <div class="ToggleTitle">
+                                                            
+                                                                                    방명록
+                                                                                    
+                                                        </div>
+                                                        <div class="orderlist">
+                                                            <img class="MenuIcon" src="../Resource/assets/Icon/menu.svg"
+                                                                alt="">
+                                                        </div>
+                                                    </div>
+                                                    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="BottomNavigation">
+            <div class="BottomNavInnerWrap">
+                <div class="Progress">
+                    <!-- <div class="ProgressDes">포먼트에서는 누구나 무료로 청첩장을 만들어 보실 수 있어요</div> -->
+                </div>
+                <div class="NavButtonGroups">
+                    <button class="ProgressTemporarySave">청첩장 미리보기</button>
+                    <button class="ProgressSave" id="SavedBtn">청첩장 저장하기</button>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>
