@@ -76,7 +76,6 @@ const dbCtrl = {
       if (error) throw error;
 
       const userId = result[0].ID;
-      console.log('테스트입니다' + userId);
 
       // 사용자 ID값이 일치하고 template_ID 값이 일치하는 template 테이블의 행을 조회하는 SQL 쿼리
       const getTemplateIdSql = `SELECT user_ID FROM template WHERE user_ID=${userId} AND template_ID='${templateID}'`;

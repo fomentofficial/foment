@@ -7,7 +7,6 @@ const fs = require('fs').promises;
 const accountInfoController = {
   postInfo: (req, res) => {
     let templateURL = req.params.GetURLInfo; // :EditURLInfo 매개변수 가져오기
-    console.log(templateURL);
   
     try {
       const dataArray = req.body;
@@ -80,7 +79,6 @@ const accountInfoController = {
               } else {
                 // 조회 결과에 따라 삭제 또는 삽입 수행
                 if (results.length > 0) {
-                  console.log(results);
                   processAccountData(accordionTitle, bankNameTerms, holderInfo, bankBankName, bankAccountInfo);
                 } else {
                   processAccountData(accordionTitle, bankNameTerms, holderInfo, bankBankName, bankAccountInfo);

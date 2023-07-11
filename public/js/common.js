@@ -2850,7 +2850,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     accountData.push(accountItem);
                 });
 
-                console.log(JSON.stringify(accountData));
+                let accountInfoData = accountData;
+                console.log(JSON.stringify(accountInfoData));
 
 
                 // |- 이미지 갤러리 탭
@@ -2891,7 +2892,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 템플릿 ID 조회용
                 let templateID = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
                 console.log(`URLInfo: ${templateID}`);
-
 
                 // 청첩장 DB 저장 Data
 
@@ -2941,8 +2941,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     gallery_type: GalleryTypeData,
                     img_group_element: ImgGroupElementData,
                     board_password: BoardPasswordData,
-                    order_tab: OrderTabData
+                    order_tab: OrderTabData,
+                    accountInfoData: accountInfoData
                 }
+
 
                 // DB Post API
                 fetch('/api_DBtest', {
@@ -2955,7 +2957,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // 템플릿 ID 조회용
                 let templateIDParameter = window.location.pathname.split('/').pop().replace('template_', '').replace('.html', '');
-                let accountDataInfo = JSON.stringify(accountData)
+                let accountDataInfo = JSON.stringify(accountInfoData)
 
                 fetch(`/api_Account/${templateIDParameter}`, {
                     method: 'POST',

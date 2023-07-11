@@ -21,15 +21,20 @@ const saveFile = async (req, res) => {
   try {
     const {
       ModalGroups: ModalGroups,
-      imageUrls: imageUrls, // pass the image urls to the server
+      imageUrls: imageUrls,
       sideContents: updatedSideContents,
       URLINFO: URLINFO,
-      DBData: DBData
+      DBData, // 여전히 DBData를 가져옵니다.
+      DBData: { accountInfoData } // DBData에서 accountInfoData만 따로 추출합니다.
     } = req.body;
+    
+    const accountInfoDataJSON = JSON.stringify(accountInfoData, null, 2);
+    
 
     if (!updatedSideContents) {
       throw new Error('잘못된 요청');
     }
+
   
     const Templatedata = {
       // 이미지 정보 및 콘텐츠 내용 정리
@@ -81,11 +86,13 @@ const saveFile = async (req, res) => {
           gallery_type:DBData.gallery_type,
           img_group_element:JSON.stringify(DBData.img_group_element),
           board_password:DBData.board_password,
-          order_tab:JSON.stringify(DBData.order_tab)
+          order_tab:JSON.stringify(DBData.order_tab),
+          accountInfoData:accountInfoDataJSON
         }
       }
     };
     
+    console.log('계좌정보' + Templatedata);
     const detailHtml = await ejs.renderFile(detailEjsPath, Templatedata);
     
 

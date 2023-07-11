@@ -98,7 +98,7 @@ let CreateTemplate = {
                   img_group_element: '[]',
                   board_password: '',
                   order_tab: '[{"class":"InviteArea","data-id":"Toggle_Invite"},{"class":"sec_cal is-visible","data-id":"Toggle_Calendar"},{"class":"GalleryArea","data-id":"Toggle_Gallery"},{"class":"LocationSection","data-id":"Toggle_WeddingLocation"},{"class":"AccountSection","data-id":"Toggle_Account"},{"class":"BoardSection","data-id":"Toggle_Board"}]',
-                  accountData: [
+                  accountInfoData: [
                     {
                       accordionTitle: '신랑측 계좌번호',
                       innerData: [
@@ -161,7 +161,7 @@ let CreateTemplate = {
                 console.log('새로운 템플릿 파일이 생성되었습니다: ' + newTemplateFileName);
   
                 // account 데이터 추가
-                Templatedata.Templatedata.data.accountData.forEach((account) => {
+                Templatedata.Templatedata.data.accountInfoData.forEach((account) => {
                   const { accordionTitle, innerData } = account;
                   innerData.forEach((innerItem) => {
                     const { bankNameTerms, holderInfo, bankBankName, bankAccountInfo } = innerItem;
