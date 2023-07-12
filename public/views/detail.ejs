@@ -872,32 +872,36 @@
                                             <div class="InputArea">
                                                 <div class="AccountInputGroups">
 
-                                                    <% for (let i = 0; i < Templatedata.data.accountInfoData.length; i++) { %>
-                                                        <% if (Templatedata.data.accountInfoData[i].accordionTitle && i === 0) { %>
-                                                          <% console.log(Templatedata.data.accountInfoData[i].innerData.length); %>
-                                                          <% for (let j = 0; j < Templatedata.data.accountInfoData[i].innerData.length; j++) { %>
-                                                            <div class="AccountInputs">
-                                                              <div class="NameBox">
-                                                                <input class="base" id="bank_nameTerms_Input" name="base" type="base"
-                                                                  onkeyup="printBankNameTerms()" placeholder="호칭"
-                                                                  value="<%= Templatedata.data.accountInfoData[i].innerData[j].bankNameTerms %>">
-                                                                <input class="base" id="bank_holder_Input" name="base" type="base"
-                                                                  onkeyup="printBankHolderInfo()" placeholder="예금주"
-                                                                  value="<%= Templatedata.data.accountInfoData[i].innerData[j].holderInfo %>">
-                                                                <input class="base" id="bank_bankName_Input" name="base" type="base"
-                                                                  onkeyup="printBankName()" placeholder="은행"
-                                                                  value="<%= Templatedata.data.accountInfoData[i].innerData[j].bankBankName %>">
-                                                                <input class="base" id="bank_accountInfo_Input" name="base" type="base"
-                                                                  onkeyup="printBankAccountInfo()" placeholder="계좌번호"
-                                                                  value="<%= Templatedata.data.accountInfoData[i].innerData[j].bankAccountInfo %>">
-                                                                <div class="DeleteAccountBtn">
-                                                                  <img src="../Resource/assets/Icon/Del.svg" alt="" class="delIcon">
-                                                                </div>
-                                                              </div>
-                                                            </div>
+                                                    <% if (Templatedata.data.accountInfoData && Templatedata.data.accountInfoData.length > 0) { %>
+                                                        <% for (let i = 0; i < Templatedata.data.accountInfoData.length; i++) { %>
+                                                          <% if (Templatedata.data.accountInfoData[i].accordionTitle && i === 0) { %>
+                                                            <% console.log(Templatedata.data.accountInfoData[i].innerData.length); %>
+                                                            <% for (let j = 0; j < Templatedata.data.accountInfoData[i].innerData.length; j++) { %>
+                                                                <div class="AccountInputs">
+                                                                    <div class="NameBox">
+                                                                      <input class="base" id="bank_nameTerms_Input" name="base" type="base"
+                                                                        onkeyup="printBankNameTerms()" placeholder="호칭"
+                                                                        value="<%= Templatedata.data.accountInfoData[i].innerData[j].bankNameTerms %>">
+                                                                      <input class="base" id="bank_holder_Input" name="base" type="base"
+                                                                        onkeyup="printBankHolderInfo()" placeholder="예금주"
+                                                                        value="<%= Templatedata.data.accountInfoData[i].innerData[j].holderInfo %>">
+                                                                      <input class="base" id="bank_bankName_Input" name="base" type="base"
+                                                                        onkeyup="printBankName()" placeholder="은행"
+                                                                        value="<%= Templatedata.data.accountInfoData[i].innerData[j].bankBankName %>">
+                                                                      <input class="base" id="bank_accountInfo_Input" name="base" type="base"
+                                                                        onkeyup="printBankAccountInfo()" placeholder="계좌번호"
+                                                                        value="<%= Templatedata.data.accountInfoData[i].innerData[j].bankAccountInfo %>">
+                                                                      <div class="DeleteAccountBtn">
+                                                                        <img src="../Resource/assets/Icon/Del.svg" alt="" class="delIcon">
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+      
+                                                            <% } %>
                                                           <% } %>
                                                         <% } %>
                                                       <% } %>
+                                                      
                                                       
                                                       
                                                       
